@@ -1,63 +1,26 @@
-import { Share2, Lock, Building2, Ruler, TrendingUp, DollarSign } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-  BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-
-const stats = [
-  { label: "Стоимость объекта", value: "651 000 000 ₽", icon: DollarSign },
-  { label: "Стоимость за м²", value: "47 000 ₽", icon: Building2 },
-  { label: "Площадь", value: "13 850 м²", icon: Ruler },
-  { label: "Доходность", value: "24,13%", icon: TrendingUp, locked: true },
-];
+import { Share2 } from "lucide-react";
 
 const PropertyHero = () => {
   return (
-    <section className="container py-6">
-      <div className="flex flex-wrap items-center gap-3 mb-4">
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Каталог</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>ЗПИФН «Пайстартер двадцать один»</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-        <Badge variant="outline" className="ml-2 text-xs font-semibold">
-          Рейтинг: A
-        </Badge>
-        <Button variant="ghost" size="sm" className="ml-auto gap-1.5 text-muted-foreground">
-          <Share2 className="h-4 w-4" />
-          Поделиться
-        </Button>
-      </div>
-
-      <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl lg:text-5xl mb-8">
-        Терминал Чкаловский, Екатеринбург
-      </h1>
-
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        {stats.map((s) => (
-          <div
-            key={s.label}
-            className="rounded-xl bg-secondary p-4 flex flex-col gap-1"
-          >
-            <span className="text-xs text-muted-foreground flex items-center gap-1">
-              {s.label}
-              {s.locked && <Lock className="h-3 w-3" />}
-            </span>
-            <span className="text-lg font-bold">{s.value}</span>
+    <section className="flex items-start justify-center pt-[120px] pb-[36px] px-[70px] w-full">
+      <div className="flex flex-col gap-[6px] items-start flex-1">
+        {/* Breadcrumbs */}
+        <div className="flex gap-[12px] items-center flex-wrap">
+          <div className="flex gap-[12px] items-start font-medium text-[18px] text-grey-44">
+            <span>ЗПИФН «Пайстартер двадцать один»</span>
+            <span>•</span>
+            <span>Рейтинг: А</span>
+            <span>•</span>
           </div>
-        ))}
+          <div className="flex gap-[12px] items-center">
+            <span className="font-medium text-[18px] text-cyan-2 cursor-pointer">Поделиться</span>
+            <Share2 className="w-[18px] h-[18px] text-cyan-2" />
+          </div>
+        </div>
+        {/* Main Title */}
+        <h1 className="font-semibold text-[72px] leading-[68px] tracking-[-2.16px] text-azure-4">
+          Терминал Чкаловский, Екатеринбург
+        </h1>
       </div>
     </section>
   );

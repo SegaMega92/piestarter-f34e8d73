@@ -1,76 +1,60 @@
-import { MapPin, Train, Truck, Building2, TrendingUp } from "lucide-react";
-
-const locationFeatures = [
-  { icon: Train, text: "5 км до ж/д станции Кольцово" },
-  { icon: Truck, text: "Прямой выезд на ЕКАД" },
-  { icon: Building2, text: "Промышленная зона с развитой инфраструктурой" },
-  { icon: MapPin, text: "12 км от центра Екатеринбурга" },
-];
-
-const infoBlocks = [
-  {
-    title: "Будущий транспортно-торговый хаб",
-    desc: "Район активно развивается как логистический центр Урала. Планируется строительство нового транспортного узла, что повысит привлекательность объекта.",
-    icon: TrendingUp,
-  },
-  {
-    title: "Стабильный спрос на складские площади",
-    desc: "Дефицит качественных складских площадей класса А в Екатеринбурге составляет более 200 000 м², что обеспечивает высокую заполняемость.",
-    icon: Building2,
-  },
-];
+import { Copy, MapPin } from "lucide-react";
 
 const LocationSection = () => {
   return (
-    <section className="container py-16">
-      <h2 className="text-2xl font-bold mb-8">Расположение</h2>
-
-      <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
-        {/* Map placeholder */}
-        <div className="rounded-2xl bg-muted h-[340px] flex items-center justify-center">
+    <>
+      <section className="flex gap-[30px] items-start pb-[120px] px-[70px]">
+        {/* Map */}
+        <div className="bg-muted h-[480px] overflow-hidden rounded-[40px] w-[625px] shrink-0 flex items-center justify-center">
           <div className="text-center text-muted-foreground">
-            <MapPin className="h-10 w-10 mx-auto mb-2" />
+            <MapPin className="w-10 h-10 mx-auto mb-2" />
             <p className="text-sm">Карта</p>
-            <p className="text-xs mt-1">Екатеринбург, ул. Чкалова, 2А</p>
           </div>
         </div>
+        {/* Location Details */}
+        <div className="flex flex-col gap-[36px] items-start w-[625px]">
+          <div className="flex flex-col gap-[12px]">
+            <h2 className="font-semibold text-[48px] leading-[1.1] tracking-[-0.96px] text-azure-4 m-0">Расположение</h2>
+            <div className="flex gap-[6px] items-center">
+              <span className="font-medium text-[18px] text-grey-44">г. Екатеринбург, ул. Черняховского, 86к7</span>
+              <Copy className="w-[15px] h-[15px] text-grey-44 cursor-pointer" />
+            </div>
+          </div>
+          <ul className="font-medium text-[18px] text-cyan-2 leading-[24px] space-y-4 list-disc ml-[27px] m-0 p-0">
+            <li>Екатеринбург является важной точкой на маршруте транспортного коридора «Восток-Запад»</li>
+            <li>Объект расположен в черте города в 15 км от центра Екатеринбурга</li>
+            <li>Находится рядом с выездом на ЕКАД — кольцевую автодорогу, которую пересекают три федеральные и три областные трассы</li>
+            <li>В 5 км от склада находится международный аэропорт, обслуживающий прямые рейсы в Китай</li>
+          </ul>
+        </div>
+      </section>
 
-        {/* Location info */}
-        <div className="space-y-6">
-          <div>
-            <h3 className="font-bold text-lg mb-1">Адрес</h3>
-            <p className="text-muted-foreground">
-              620901, Свердловская обл., г. Екатеринбург, ул. Чкалова, 2А
+      {/* Advantages Cards */}
+      <section className="flex gap-[30px] items-stretch pb-[120px] px-[70px]">
+        <div className="bg-grey-96 flex flex-col gap-[24px] items-start p-[36px] rounded-[40px] w-[625px]">
+          <div className="flex flex-col gap-[12px]">
+            <h3 className="font-semibold text-[30px] leading-[39px] text-black m-0 w-[400px]">Будущий транспортно-торговый хаб</h3>
+            <p className="font-medium text-[18px] text-grey-44 leading-[24px] m-0">
+              В 2027 планируется строительство транспортно-пересадочного узла, что значительно увеличит пешеходный и транспортный поток
             </p>
           </div>
-          <div className="space-y-3">
-            {locationFeatures.map((f) => (
-              <div key={f.text} className="flex items-center gap-3">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
-                  <f.icon className="h-4 w-4 text-primary" />
-                </div>
-                <span className="text-sm">{f.text}</span>
-              </div>
-            ))}
+          <div className="bg-white h-[300px] overflow-hidden rounded-[20px] w-full flex items-center justify-center">
+            <span className="text-muted-foreground text-sm">Фото</span>
           </div>
         </div>
-      </div>
-
-      {/* Info blocks */}
-      <div className="grid gap-6 mt-10 md:grid-cols-2">
-        {infoBlocks.map((b) => (
-          <div key={b.title} className="rounded-2xl bg-secondary p-6 flex gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10">
-              <b.icon className="h-6 w-6 text-primary" />
-            </div>
-            <div>
-              <h4 className="font-bold mb-1">{b.title}</h4>
-              <p className="text-sm text-muted-foreground leading-relaxed">{b.desc}</p>
-            </div>
+        <div className="bg-grey-96 flex flex-col gap-[24px] items-start justify-between p-[36px] rounded-[40px] w-[625px]">
+          <div className="flex flex-col gap-[12px]">
+            <h3 className="font-semibold text-[30px] leading-[39px] text-black m-0 w-[400px]">Стабильный спрос на складские площади</h3>
+            <p className="font-medium text-[18px] text-grey-44 leading-[24px] m-0">
+              Екатеринбургская агломерация традиционно испытывает высокий спрос на современные логистические объекты
+            </p>
           </div>
-        ))}
-      </div>
-    </section>
+          <div className="bg-white h-[300px] overflow-hidden rounded-[20px] w-full flex items-center justify-center">
+            <span className="text-muted-foreground text-sm">Фото</span>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 
