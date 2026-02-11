@@ -4,9 +4,10 @@ const ContactForm = () => {
   const [agreed, setAgreed] = useState(false);
 
   return (
-    <section className="bg-grey-96 flex gap-[30px] items-start px-[70px] py-[120px] rounded-t-[40px] w-full">
+    <section className="bg-grey-96 rounded-t-[40px] w-full py-[120px]">
+      <div className="content-container flex gap-[30px] items-start">
       {/* Left */}
-      <div className="flex flex-col gap-[24px] items-start w-[625px]">
+      <div className="flex flex-col gap-[24px] items-start flex-1 min-w-0">
         <h2 className="font-semibold text-[48px] leading-[1.1] tracking-[-0.96px] text-black m-0">
           Остались вопросы? Напишите нам
         </h2>
@@ -17,16 +18,16 @@ const ContactForm = () => {
         </p>
       </div>
       {/* Right: Form */}
-      <div className="flex flex-col gap-[30px] items-start w-[625px]">
+      <div className="flex flex-col gap-[30px] items-start flex-1 min-w-0">
         <div className="flex gap-[31px] items-center w-full">
-          <div className="flex flex-col gap-[12px] items-start w-[297px]">
+          <div className="flex flex-col gap-[12px] items-start flex-1 min-w-0">
             <label className="font-semibold text-[18px] text-cyan-2 leading-[24px]">Как вас зовут?</label>
             <input
               type="text"
               className="bg-white border border-grey-71 h-[44px] rounded-[10px] w-full px-[12px] outline-none focus:border-blue-second focus:ring-1 focus:ring-blue-second transition-all"
             />
           </div>
-          <div className="flex flex-col gap-[12px] items-start w-[297px]">
+          <div className="flex flex-col gap-[12px] items-start flex-1 min-w-0">
             <label className="font-semibold text-[18px] text-cyan-2 leading-[24px]">Электронная почта</label>
             <input
               type="email"
@@ -69,6 +70,7 @@ const ContactForm = () => {
         <button className="bg-azure-13 flex items-center justify-center px-[30px] py-[18px] rounded-[30px] w-full cursor-pointer hover:bg-[#2a3040] active:scale-[0.99] transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled={!agreed}>
           <span className="font-semibold text-[18px] text-white">Отправить сообщение</span>
         </button>
+      </div>
       </div>
     </section>
   );

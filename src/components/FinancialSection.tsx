@@ -15,9 +15,10 @@ const FinancialSection = () => {
   const [activeTab, setActiveTab] = useState("income");
 
   return (
-    <section className="bg-azure-13 flex gap-[30px] items-start px-[70px] py-[120px] rounded-[40px] w-full">
+    <section className="bg-azure-13 rounded-[40px] w-full py-[120px]">
+      <div className="content-container flex gap-[30px] items-start">
       {/* Left */}
-      <div className="flex flex-col gap-[48px] items-start w-[408px]">
+      <div className="flex flex-col gap-[48px] items-start w-[408px] shrink-0">
         <h2 className="font-semibold text-[48px] leading-[1.1] tracking-[-0.96px] text-white m-0">
           Финансовые показатели
         </h2>
@@ -47,7 +48,7 @@ const FinancialSection = () => {
         </div>
       </div>
       {/* Right: Chart */}
-      <div className="bg-[#222936] h-[530px] overflow-hidden rounded-[40px] w-[828px] relative">
+      <div className="bg-[#222936] h-[530px] overflow-hidden rounded-[40px] flex-1 min-w-0 relative">
         <div className="absolute left-1/2 -translate-x-1/2 top-[6px] bg-white h-[420px] rounded-[40px] w-[816px] overflow-hidden p-[24px]">
           {/* Chart Tabs */}
           <div className="flex gap-[8px] items-center">
@@ -84,6 +85,7 @@ const FinancialSection = () => {
             <span className="font-medium text-[14.9px] text-white">Связаться с менеджером</span>
           </button>
         </div>
+      </div>
       </div>
     </section>
   );

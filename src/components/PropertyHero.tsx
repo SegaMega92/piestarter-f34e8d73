@@ -2,7 +2,7 @@ import shareAlt from "@/assets/share-alt.svg";
 
 const PropertyHero = () => {
   return (
-    <section className="flex items-start justify-center pt-[120px] pb-[36px] px-[70px] w-full">
+    <section className="flex items-start justify-center pt-[120px] pb-[36px] w-full">
       <div className="flex flex-col gap-[6px] items-start flex-1">
         {/* Breadcrumbs */}
         <div className="flex gap-[12px] items-center flex-wrap">
