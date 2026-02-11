@@ -1,4 +1,4 @@
-import { Lock } from "lucide-react";
+import lockIcon from "@/assets/lock.svg";
 
 const PropertyStats = () => {
   return (
@@ -21,7 +21,7 @@ const PropertyStats = () => {
       <div className="flex flex-col gap-[12px] w-[295px]">
         <span className="font-semibold text-[18px] text-grey-44 leading-[24px]">Доходность</span>
         <div className="w-[40px] h-[40px]">
-          <Lock className="w-[26px] h-[30px] mx-auto mt-[5px] text-grey-44" />
+          <img src={lockIcon} alt="Скрыто" className="w-[26px] h-[30px] mx-auto mt-[5px]" />
         </div>
       </div>
     </section>

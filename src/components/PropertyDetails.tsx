@@ -1,4 +1,6 @@
-import { Calendar, Briefcase, Download } from "lucide-react";
+import calendarAlt from "@/assets/calendar-alt.svg";
+import briefcase from "@/assets/briefcase.svg";
+import fileDownload from "@/assets/file-download.svg";
 
 const PropertyDetails = () => {
   return (
@@ -24,7 +26,7 @@ const PropertyDetails = () => {
         <div className="flex gap-[24px] w-full">
           <div className="border border-grey-71 flex flex-1 gap-[11px] items-start p-[12px] rounded-[20px]">
             <div className="w-[36px] h-[36px] shrink-0 flex items-center justify-center">
-              <Calendar className="w-[24px] h-[27px] text-cyan-2" />
+              <img src={calendarAlt} alt="" className="w-[24px] h-[27px]" />
             </div>
             <p className="font-medium text-[18px] text-cyan-2 leading-[24px] m-0">
               Ежемесячные выплаты дохода<br />на счет в вашем банке
@@ -32,7 +34,7 @@ const PropertyDetails = () => {
           </div>
           <div className="border border-grey-71 flex flex-1 gap-[11px] items-start p-[12px] rounded-[20px]">
             <div className="w-[36px] h-[36px] shrink-0 flex items-center justify-center">
-              <Briefcase className="w-[27px] h-[27px] text-cyan-2" />
+              <img src={briefcase} alt="" className="w-[27px] h-[27px]" />
             </div>
             <p className="font-medium text-[18px] text-cyan-2 leading-[24px] m-0">
               Доступно для неквалифицированных<br />инвесторов
@@ -54,7 +56,7 @@ const PropertyDetails = () => {
         <div className="flex flex-col w-full">
           <div className="flex items-center justify-center gap-[6px] px-[30px] py-[18px] rounded-[30px] cursor-pointer">
             <span className="font-semibold text-[18px] text-cyan-2">Презентация</span>
-            <Download className="w-[16px] h-[18px] text-cyan-2" />
+            <img src={fileDownload} alt="" className="w-[14px] h-[18px]" />
           </div>
           <div className="bg-azure-13 flex items-center justify-center px-[30px] py-[18px] rounded-[30px] w-full cursor-pointer">
             <span className="font-semibold text-[18px] text-white">Купить паи</span>
