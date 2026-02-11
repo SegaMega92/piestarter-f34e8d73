@@ -56,16 +56,16 @@ const SimilarProperties = () => {
       </h2>
       <div className="flex gap-[30px] items-start">
         {properties.map((p) => (
-          <div key={p.title} className="flex flex-col gap-[24px] items-start w-[408px] cursor-pointer">
+          <div key={p.title} className="flex flex-col gap-[24px] items-start w-[408px] cursor-pointer group">
             <div className="h-[292px] overflow-hidden rounded-[40px] w-[408px] relative">
-              <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+              <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               <div className={`absolute right-[16px] top-[16px] ${p.ratingBg} px-[8px] py-[3px] rounded-[15px]`}>
                 <span className={`font-semibold text-[14.9px] ${p.ratingColor}`}>{p.ratingText}</span>
               </div>
             </div>
             <div className="flex flex-col gap-[12px] w-full">
               <div className="flex flex-col gap-[6px]">
-                <h3 className="font-inter font-semibold text-[24px] leading-[24px] text-cyan-2 m-0">{p.title}</h3>
+                <h3 className="font-inter font-semibold text-[24px] leading-[24px] text-cyan-2 m-0 group-hover:text-blue-second transition-colors">{p.title}</h3>
                 <div className="flex gap-[6px] items-start text-[18px] text-grey-44 font-inter">
                   <span>{p.city}</span><span>•</span><span>{p.area}</span><span>•</span><span>{p.term}</span>
                 </div>
@@ -87,7 +87,9 @@ const SimilarProperties = () => {
                   <div className="flex gap-[8px] items-center">
                     <span className="text-grey-44">ISIN:</span>
                     <span className="text-black">{p.isin}</span>
-                    <img src={bxsCopyAlt1} alt="Копировать" className="w-[18px] h-[18px] cursor-pointer" />
+                    <button className="hover:opacity-60 transition-opacity" onClick={(e) => e.stopPropagation()}>
+                      <img src={bxsCopyAlt1} alt="Копировать" className="w-[18px] h-[18px]" />
+                    </button>
                   </div>
                 )}
               </div>

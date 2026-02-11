@@ -24,7 +24,7 @@ const PropertyDetails = () => {
         </div>
         {/* Feature Cards */}
         <div className="flex gap-[24px] w-full">
-          <div className="border border-grey-71 flex flex-1 gap-[11px] items-start p-[12px] rounded-[20px]">
+          <div className="border border-grey-71 flex flex-1 gap-[11px] items-start p-[12px] rounded-[20px] hover:border-cyan-2 hover:shadow-sm transition-all cursor-default">
             <div className="w-[36px] h-[36px] shrink-0 flex items-center justify-center">
               <img src={calendarAlt} alt="" className="w-[24px] h-[27px]" />
             </div>
@@ -32,7 +32,7 @@ const PropertyDetails = () => {
               Ежемесячные выплаты дохода<br />на счет в вашем банке
             </p>
           </div>
-          <div className="border border-grey-71 flex flex-1 gap-[11px] items-start p-[12px] rounded-[20px]">
+          <div className="border border-grey-71 flex flex-1 gap-[11px] items-start p-[12px] rounded-[20px] hover:border-cyan-2 hover:shadow-sm transition-all cursor-default">
             <div className="w-[36px] h-[36px] shrink-0 flex items-center justify-center">
               <img src={briefcase} alt="" className="w-[27px] h-[27px]" />
             </div>
@@ -44,7 +44,7 @@ const PropertyDetails = () => {
       </div>
       {/* Right: Price Card */}
       <div
-        className="flex flex-col gap-[12px] items-center px-[20px] py-[24px] rounded-[40px] w-[427px]"
+        className="flex flex-col gap-[12px] items-center px-[20px] py-[24px] rounded-[40px] w-[427px] sticky top-[120px]"
         style={{
           background: "linear-gradient(90deg, rgba(254,255,255,0.5), rgba(254,255,255,0.5)), linear-gradient(90deg, #abe4f5, #abe4f5)",
         }}
@@ -54,13 +54,13 @@ const PropertyDetails = () => {
           <span className="font-semibold text-[36px] leading-[1.1] tracking-[-1px]">120 364₽</span>
         </div>
         <div className="flex flex-col w-full">
-          <div className="flex items-center justify-center gap-[6px] px-[30px] py-[18px] rounded-[30px] cursor-pointer">
+          <button className="flex items-center justify-center gap-[6px] px-[30px] py-[18px] rounded-[30px] cursor-pointer hover:bg-white/40 transition-colors">
             <span className="font-semibold text-[18px] text-cyan-2">Презентация</span>
             <img src={fileDownload} alt="" className="w-[14px] h-[18px]" />
-          </div>
-          <div className="bg-azure-13 flex items-center justify-center px-[30px] py-[18px] rounded-[30px] w-full cursor-pointer">
+          </button>
+          <button className="bg-azure-13 flex items-center justify-center px-[30px] py-[18px] rounded-[30px] w-full cursor-pointer hover:bg-[#2a3040] active:scale-[0.98] transition-all">
             <span className="font-semibold text-[18px] text-white">Купить паи</span>
-          </div>
+          </button>
         </div>
       </div>
     </section>
