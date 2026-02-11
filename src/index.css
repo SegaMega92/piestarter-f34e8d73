@@ -66,3 +66,9 @@
     font-weight: 700;
   }
 }
+
+@layer components {
+  .content-container {
+    @apply max-w-[1280px] mx-auto px-4 md:px-8 lg:px-[70px] w-full;
+  }
+}

@@ -4,9 +4,9 @@ import fileDownload from "@/assets/file-download.svg";
 
 const PropertyDetails = () => {
   return (
-    <section className="flex gap-[30px] items-start pt-[60px] pb-[120px] px-[70px] w-full">
+    <section className="flex gap-[30px] items-start pt-[60px] pb-[120px] w-full">
       {/* Left: Description */}
-      <div className="flex flex-col gap-[24px] items-start w-[828px]">
+      <div className="flex flex-col gap-[24px] items-start flex-1 min-w-0">
         <div className="flex flex-col gap-[12px] text-[18px] text-cyan-2">
           <h3 className="font-semibold leading-[24px] m-0">Характеристики</h3>
           <p className="font-medium leading-[24px] m-0">
@@ -44,7 +44,7 @@ const PropertyDetails = () => {
       </div>
       {/* Right: Price Card */}
       <div
-        className="flex flex-col gap-[12px] items-center px-[20px] py-[24px] rounded-[40px] w-[427px] sticky top-[120px]"
+        className="flex flex-col gap-[12px] items-center px-[20px] py-[24px] rounded-[40px] w-[380px] shrink-0 sticky top-[120px]"
         style={{
           background: "linear-gradient(90deg, rgba(254,255,255,0.5), rgba(254,255,255,0.5)), linear-gradient(90deg, #abe4f5, #abe4f5)",
         }}

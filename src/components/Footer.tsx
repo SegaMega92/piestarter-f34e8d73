@@ -3,7 +3,8 @@ import telegram from "@/assets/telegram.svg";
 
 const Footer = () => {
   return (
-    <footer className="bg-azure-13 flex flex-col gap-[24px] items-start px-[70px] py-[120px] w-full">
+    <footer className="bg-azure-13 py-[120px] w-full">
+      <div className="content-container flex flex-col gap-[24px] items-start">
       <div className="flex gap-[30px] items-start w-full">
         {/* Logo & Info */}
         <div className="flex flex-col gap-[24px] items-start w-[640px]">
@@ -67,6 +68,7 @@ const Footer = () => {
           <a href="#" className="hover:text-white transition-colors">Политика обработки персональных данных</a>
           <a href="#" className="hover:text-white transition-colors">Политика видов деятельности</a>
         </div>
+      </div>
       </div>
     </footer>
   );

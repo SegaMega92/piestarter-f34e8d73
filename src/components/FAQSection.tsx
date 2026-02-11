@@ -25,12 +25,12 @@ const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="flex flex-col gap-[60px] items-center px-[70px] py-[120px] max-w-[1425px] mx-auto">
+    <section className="flex flex-col gap-[60px] items-center py-[120px]">
       <h2 className="font-semibold text-[72px] leading-[68px] tracking-[-2.16px] text-black text-center m-0">
         Вопросы и ответы
       </h2>
       <div className="flex flex-col gap-[24px] items-center w-full">
-        <p className="font-medium text-[18px] text-grey-44 text-center w-[625px] leading-[24px] m-0">
+        <p className="font-medium text-[18px] text-grey-44 text-center max-w-[625px] leading-[24px] m-0">
           Разобраться в инвестициях можно без экономического образования. Ниже — ответы на вопросы, которые мы чаще всего получаем.
         </p>
         <div className="flex flex-col items-center w-full">

@@ -15,14 +15,18 @@ const Index = () => {
     <div className="min-h-screen bg-bg-main overflow-x-hidden">
       <Header />
       <main>
-        <PropertyHero />
-        <PropertyStats />
-        <PhotoGallery />
-        <PropertyDetails />
-        <LocationSection />
+        <div className="content-container">
+          <PropertyHero />
+          <PropertyStats />
+          <PhotoGallery />
+          <PropertyDetails />
+          <LocationSection />
+        </div>
         <FinancialSection />
-        <SimilarProperties />
-        <FAQSection />
+        <div className="content-container">
+          <SimilarProperties />
+          <FAQSection />
+        </div>
         <ContactForm />
       </main>
       <Footer />

@@ -6,13 +6,13 @@ import bxsCopyAlt1 from "@/assets/bxs-copy-alt1.svg";
 const LocationSection = () => {
   return (
     <>
-      <section className="flex gap-[30px] items-start pb-[120px] px-[70px]">
+      <section className="flex gap-[30px] items-start pb-[120px]">
         {/* Map */}
-        <div className="h-[480px] overflow-hidden rounded-[40px] w-[625px] shrink-0 cursor-pointer group">
+        <div className="h-[480px] overflow-hidden rounded-[40px] flex-1 min-w-0 cursor-pointer group">
           <img src={imageMap} alt="Карта" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         </div>
         {/* Location Details */}
-        <div className="flex flex-col gap-[36px] items-start w-[625px]">
+        <div className="flex flex-col gap-[36px] items-start flex-1 min-w-0">
           <div className="flex flex-col gap-[12px]">
             <h2 className="font-semibold text-[48px] leading-[1.1] tracking-[-0.96px] text-azure-4 m-0">Расположение</h2>
             <button className="flex gap-[6px] items-center group hover:opacity-70 transition-opacity">
@@ -30,10 +30,10 @@ const LocationSection = () => {
       </section>
 
       {/* Advantages Cards */}
-      <section className="flex gap-[30px] items-stretch pb-[120px] px-[70px]">
-        <div className="bg-grey-96 flex flex-col gap-[24px] items-start p-[36px] rounded-[40px] w-[625px] hover:shadow-lg transition-shadow">
+      <section className="flex gap-[30px] items-stretch pb-[120px]">
+        <div className="bg-grey-96 flex flex-col gap-[24px] items-start p-[36px] rounded-[40px] flex-1 min-w-0 hover:shadow-lg transition-shadow">
           <div className="flex flex-col gap-[12px]">
-            <h3 className="font-semibold text-[30px] leading-[39px] text-black m-0 w-[400px]">Будущий транспортно-торговый хаб</h3>
+            <h3 className="font-semibold text-[30px] leading-[39px] text-black m-0 max-w-[400px]">Будущий транспортно-торговый хаб</h3>
             <p className="font-medium text-[18px] text-grey-44 leading-[24px] m-0">
               В 2027 планируется строительство транспортно-пересадочного узла, что значительно увеличит пешеходный и транспортный поток
             </p>
@@ -42,9 +42,9 @@ const LocationSection = () => {
             <img src={imageHub} alt="Хаб" className="w-full h-full object-cover" />
           </div>
         </div>
-        <div className="bg-grey-96 flex flex-col gap-[24px] items-start justify-between p-[36px] rounded-[40px] w-[625px] hover:shadow-lg transition-shadow">
+        <div className="bg-grey-96 flex flex-col gap-[24px] items-start justify-between p-[36px] rounded-[40px] flex-1 min-w-0 hover:shadow-lg transition-shadow">
           <div className="flex flex-col gap-[12px]">
-            <h3 className="font-semibold text-[30px] leading-[39px] text-black m-0 w-[400px]">Стабильный спрос на складские площади</h3>
+            <h3 className="font-semibold text-[30px] leading-[39px] text-black m-0 max-w-[400px]">Стабильный спрос на складские площади</h3>
             <p className="font-medium text-[18px] text-grey-44 leading-[24px] m-0">
               Екатеринбургская агломерация традиционно испытывает высокий спрос на современные логистические объекты
             </p>
