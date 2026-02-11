@@ -37,9 +37,10 @@ const FAQSection = () => {
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className={`flex items-start justify-between py-[40px] w-full ${i < faqs.length - 1 ? "border-b border-grey-71" : ""}`}
+              className={`flex items-start justify-between py-[40px] w-full cursor-pointer select-none ${i < faqs.length - 1 ? "border-b border-grey-71" : ""}`}
+              onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
             >
-              <span className={`font-semibold text-[30px] leading-[39px] shrink-0 w-[60px] ${openIndex === i ? "text-black" : "text-grey-71"}`}>
+              <span className={`font-semibold text-[30px] leading-[39px] shrink-0 w-[60px] transition-colors ${openIndex === i ? "text-black" : "text-grey-71"}`}>
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div className="flex flex-col gap-[24px] items-start flex-1">
@@ -49,11 +50,10 @@ const FAQSection = () => {
                 )}
               </div>
               <button
-                onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
-                className={`rounded-[22px] w-[44px] h-[44px] flex items-center justify-center shrink-0 border ${
+                className={`rounded-[22px] w-[44px] h-[44px] flex items-center justify-center shrink-0 border transition-all hover:scale-110 ${
                   openIndex === i
                     ? "bg-azure-13 border-azure-13"
-                    : "bg-white border-grey-71"
+                    : "bg-white border-grey-71 hover:border-cyan-2"
                 }`}
               >
                 <img
