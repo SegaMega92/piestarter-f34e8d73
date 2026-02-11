@@ -1,4 +1,6 @@
-import { Send } from "lucide-react";
+import image107 from "@/assets/image107.png";
+import group33 from "@/assets/group33.svg";
+import telegram from "@/assets/telegram.svg";
 
 const Footer = () => {
   return (
@@ -7,8 +9,8 @@ const Footer = () => {
         {/* Logo & Info */}
         <div className="flex flex-col gap-[24px] items-start w-[640px]">
           <div className="flex items-center gap-[14px]">
-            <div className="bg-black rounded-[20px] w-[60px] h-[60px] flex items-center justify-center">
-              <span className="text-white font-bold text-[28px]">п</span>
+            <div className="relative w-[60px] h-[60px] rounded-[20px] overflow-hidden">
+              <img src={image107} alt="" className="w-full h-full object-cover" />
             </div>
             <div className="logo-text text-[22px] leading-[21px] tracking-[0.66px] text-white">
               <p className="m-0">пай</p>
@@ -20,9 +22,7 @@ const Footer = () => {
             ОГРН: 1187746382941, ИНН: 7731456723
           </p>
           <div className="flex gap-[12px] items-start">
-            <div className="w-[45px] h-[45px] rounded-full bg-[#0088cc] flex items-center justify-center">
-              <Send className="w-5 h-5 text-white" />
-            </div>
+            <img src={telegram} alt="Telegram" className="w-[45px] h-[45px]" />
             <div className="text-[16px] text-grey-96 leading-[24px] font-normal">
               <p className="m-0">Подпишитесь</p>
               <p className="m-0">на телеграм-канал <span className="underline cursor-pointer">@piestarer</span></p>

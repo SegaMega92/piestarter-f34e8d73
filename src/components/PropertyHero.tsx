@@ -1,4 +1,4 @@
-import { Share2 } from "lucide-react";
+import shareAlt from "@/assets/share-alt.svg";
 
 const PropertyHero = () => {
   return (
@@ -14,7 +14,7 @@ const PropertyHero = () => {
           </div>
           <div className="flex gap-[12px] items-center">
             <span className="font-medium text-[18px] text-cyan-2 cursor-pointer">Поделиться</span>
-            <Share2 className="w-[18px] h-[18px] text-cyan-2" />
+            <img src={shareAlt} alt="" className="w-[18px] h-[18px]" />
           </div>
         </div>
         {/* Main Title */}

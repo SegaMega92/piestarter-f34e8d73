@@ -1,15 +1,16 @@
-import { Copy, MapPin } from "lucide-react";
+import { Copy } from "lucide-react";
+import imageMap from "@/assets/image-map.png";
+import imageHub from "@/assets/image-hub.png";
+import imageWarehouse from "@/assets/image-warehouse.png";
+import bxsCopyAlt1 from "@/assets/bxs-copy-alt1.svg";
 
 const LocationSection = () => {
   return (
     <>
       <section className="flex gap-[30px] items-start pb-[120px] px-[70px]">
         {/* Map */}
-        <div className="bg-muted h-[480px] overflow-hidden rounded-[40px] w-[625px] shrink-0 flex items-center justify-center">
-          <div className="text-center text-muted-foreground">
-            <MapPin className="w-10 h-10 mx-auto mb-2" />
-            <p className="text-sm">Карта</p>
-          </div>
+        <div className="h-[480px] overflow-hidden rounded-[40px] w-[625px] shrink-0">
+          <img src={imageMap} alt="Карта" className="w-full h-full object-cover" />
         </div>
         {/* Location Details */}
         <div className="flex flex-col gap-[36px] items-start w-[625px]">
@@ -17,7 +18,7 @@ const LocationSection = () => {
             <h2 className="font-semibold text-[48px] leading-[1.1] tracking-[-0.96px] text-azure-4 m-0">Расположение</h2>
             <div className="flex gap-[6px] items-center">
               <span className="font-medium text-[18px] text-grey-44">г. Екатеринбург, ул. Черняховского, 86к7</span>
-              <Copy className="w-[15px] h-[15px] text-grey-44 cursor-pointer" />
+              <img src={bxsCopyAlt1} alt="Копировать" className="w-[15px] h-[15px] cursor-pointer" />
             </div>
           </div>
           <ul className="font-medium text-[18px] text-cyan-2 leading-[24px] space-y-4 list-disc ml-[27px] m-0 p-0">
@@ -38,8 +39,8 @@ const LocationSection = () => {
               В 2027 планируется строительство транспортно-пересадочного узла, что значительно увеличит пешеходный и транспортный поток
             </p>
           </div>
-          <div className="bg-white h-[300px] overflow-hidden rounded-[20px] w-full flex items-center justify-center">
-            <span className="text-muted-foreground text-sm">Фото</span>
+          <div className="h-[300px] overflow-hidden rounded-[20px] w-full">
+            <img src={imageHub} alt="Хаб" className="w-full h-full object-cover" />
           </div>
         </div>
         <div className="bg-grey-96 flex flex-col gap-[24px] items-start justify-between p-[36px] rounded-[40px] w-[625px]">
@@ -49,8 +50,8 @@ const LocationSection = () => {
               Екатеринбургская агломерация традиционно испытывает высокий спрос на современные логистические объекты
             </p>
           </div>
-          <div className="bg-white h-[300px] overflow-hidden rounded-[20px] w-full flex items-center justify-center">
-            <span className="text-muted-foreground text-sm">Фото</span>
+          <div className="h-[300px] overflow-hidden rounded-[20px] w-full">
+            <img src={imageWarehouse} alt="Склад" className="w-full h-full object-cover" />
           </div>
         </div>
       </section>

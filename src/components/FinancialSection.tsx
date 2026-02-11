@@ -1,13 +1,8 @@
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-
-const chartData = [
-  { month: "июн. 25", income: 500 },
-  { month: "июл. 25", income: 1200 },
-  { month: "авг. 25", income: 650 },
-  { month: "сен. 25", income: 2200 },
-];
+import arrowRight from "@/assets/arrow-right.svg";
+import graph from "@/assets/graph.svg";
+import graph1 from "@/assets/graph1.svg";
+import ellipse12 from "@/assets/ellipse12.svg";
 
 const FinancialSection = () => {
   const [period, setPeriod] = useState<"12m" | "all">("all");
@@ -22,7 +17,7 @@ const FinancialSection = () => {
         <div className="flex flex-col gap-[30px] w-full">
           <div className="flex flex-col gap-[24px]">
             <div className="flex gap-[12px] items-center">
-              <ArrowRight className="w-[16px] h-[18px] text-p-blue" />
+              <img src={arrowRight} alt="" className="w-[16px] h-[18px]" />
               <span className="font-semibold text-[36px] text-p-blue tracking-[-1px] leading-[1.1]">Доход на пай</span>
             </div>
             <p className="font-medium text-[18px] text-grey-71 leading-[24px] m-0">
@@ -55,31 +50,12 @@ const FinancialSection = () => {
               <span className="font-semibold text-cyan-2 text-[18px] leading-[24px]">8 560₽</span>
             </div>
           </div>
-          {/* Chart */}
-          <div className="mt-[20px] h-[300px] w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={chartData}>
-                <defs>
-                  <linearGradient id="incomeGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#397fff" stopOpacity={0.3} />
-                    <stop offset="100%" stopColor="#397fff" stopOpacity={0.05} />
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "#707070" }} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "#707070" }} />
-                <Tooltip
-                  contentStyle={{
-                    background: "#000709",
-                    border: "none",
-                    borderRadius: "8px",
-                    color: "#fff",
-                    fontSize: 12,
-                  }}
-                  formatter={(value: number) => [`${value}₽`, "Доход на паи"]}
-                />
-                <Area type="monotone" dataKey="income" stroke="#397fff" strokeWidth={2} fill="url(#incomeGrad)" />
-              </AreaChart>
-            </ResponsiveContainer>
+          {/* Graph SVGs */}
+          <div className="mt-[20px] h-[300px] w-full relative">
+            <img src={graph} alt="" className="absolute bottom-0 left-0 w-full h-[262px]" />
+            <img src={graph1} alt="" className="absolute bottom-0 left-0 w-full h-[221px]" />
+            {/* Tooltip dot */}
+            <img src={ellipse12} alt="" className="absolute top-[0px] right-[140px] w-[12px] h-[12px]" />
           </div>
         </div>
         {/* Bottom buttons */}

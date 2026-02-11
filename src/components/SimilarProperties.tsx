@@ -1,4 +1,7 @@
-import { Copy } from "lucide-react";
+import bxsCopyAlt1 from "@/assets/bxs-copy-alt1.svg";
+import imageCard1 from "@/assets/image-card1.png";
+import imageCard2 from "@/assets/image-card2.png";
+import imageCard3 from "@/assets/image-card3.png";
 
 const properties = [
   {
@@ -13,6 +16,7 @@ const properties = [
     ratingText: "A+",
     ratingBg: "bg-p-blue",
     ratingColor: "text-black",
+    image: imageCard1,
   },
   {
     title: "Пай девятнадцать",
@@ -26,6 +30,7 @@ const properties = [
     ratingText: "B+",
     ratingBg: "bg-blue-second",
     ratingColor: "text-white",
+    image: imageCard2,
   },
   {
     title: "ТРК «Малина»",
@@ -39,6 +44,7 @@ const properties = [
     ratingText: "B+",
     ratingBg: "bg-blue-second",
     ratingColor: "text-white",
+    image: imageCard3,
   },
 ];
 
@@ -51,8 +57,8 @@ const SimilarProperties = () => {
       <div className="flex gap-[30px] items-start">
         {properties.map((p) => (
           <div key={p.title} className="flex flex-col gap-[24px] items-start w-[408px] cursor-pointer">
-            <div className="bg-muted h-[292px] overflow-hidden rounded-[40px] w-[408px] relative flex items-center justify-center">
-              <span className="text-muted-foreground text-sm">Фото</span>
+            <div className="h-[292px] overflow-hidden rounded-[40px] w-[408px] relative">
+              <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
               <div className={`absolute right-[16px] top-[16px] ${p.ratingBg} px-[8px] py-[3px] rounded-[15px]`}>
                 <span className={`font-semibold text-[14.9px] ${p.ratingColor}`}>{p.ratingText}</span>
               </div>
@@ -81,7 +87,7 @@ const SimilarProperties = () => {
                   <div className="flex gap-[8px] items-center">
                     <span className="text-grey-44">ISIN:</span>
                     <span className="text-black">{p.isin}</span>
-                    <Copy className="w-[18px] h-[18px] text-grey-44 cursor-pointer" />
+                    <img src={bxsCopyAlt1} alt="Копировать" className="w-[18px] h-[18px] cursor-pointer" />
                   </div>
                 )}
               </div>

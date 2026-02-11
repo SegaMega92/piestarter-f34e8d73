@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Plus, Minus } from "lucide-react";
+import svgPlus from "@/assets/svg-plus.svg";
+import svgMinus from "@/assets/svg-minus.svg";
 
 const faqs = [
   {
@@ -55,11 +56,11 @@ const FAQSection = () => {
                     : "bg-white border-grey-71"
                 }`}
               >
-                {openIndex === i ? (
-                  <Minus className="w-[10px] h-[10px] text-white" />
-                ) : (
-                  <Plus className="w-[10px] h-[10px] text-grey-44" />
-                )}
+                <img
+                  src={openIndex === i ? svgMinus : svgPlus}
+                  alt=""
+                  className="w-[10px] h-[10px]"
+                />
               </button>
             </div>
           ))}
