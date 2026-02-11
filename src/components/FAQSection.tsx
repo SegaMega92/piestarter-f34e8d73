@@ -1,49 +1,69 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { useState } from "react";
+import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
-    q: "Что такое пай и как он работает?",
-    a: "Пай — это ценная бумага, удостоверяющая долю владельца в имуществе фонда. Покупая пай, вы становитесь совладельцем недвижимости и получаете доход от аренды пропорционально количеству паёв.",
+    q: "Что вообще такое пай и зачем он мне?",
+    a: "Пай — это доля в объекте недвижимости, который сдают в аренду. Вы получаете часть дохода от аренды, пропорционально своему вкладу.",
   },
   {
-    q: "Какие риски связаны с инвестициями в паи?",
-    a: "Как и любые инвестиции, паи несут риски: изменение рыночной стоимости недвижимости, риск невыплаты аренды, инфляционные риски. Однако диверсификация по объектам и профессиональное управление снижают эти риски.",
+    q: "Как я буду получать доход?",
+    a: "Доход выплачивается ежемесячно на ваш банковский счёт. Размер дохода зависит от арендных поступлений за период.",
   },
   {
-    q: "Как получать доход от паёв?",
-    a: "Доход выплачивается ежеквартально на ваш банковский счёт. Размер дохода зависит от арендных поступлений за период. Историю выплат можно посмотреть в личном кабинете.",
+    q: "Могу ли я вывести деньги досрочно?",
+    a: "Паи можно продать на вторичном рынке через нашу платформу или через брокера.",
   },
   {
-    q: "Как продать паи?",
-    a: "Паи можно продать на вторичном рынке через нашу платформу или через брокера. Также возможен выкуп паёв управляющей компанией по текущей стоимости.",
+    q: "Какие риски есть у таких инвестиций?",
+    a: "Как и любые инвестиции, паи несут риски: изменение рыночной стоимости недвижимости, риск невыплаты аренды, инфляционные риски.",
   },
 ];
 
 const FAQSection = () => {
+  const [openIndex, setOpenIndex] = useState(0);
+
   return (
-    <section className="container py-16">
-      <h2 className="text-2xl font-bold mb-8">Вопросы и ответы</h2>
-      <div className="max-w-3xl">
-        <Accordion type="single" collapsible>
+    <section className="flex flex-col gap-[60px] items-center px-[70px] py-[120px] max-w-[1425px] mx-auto">
+      <h2 className="font-semibold text-[72px] leading-[68px] tracking-[-2.16px] text-black text-center m-0">
+        Вопросы и ответы
+      </h2>
+      <div className="flex flex-col gap-[24px] items-center w-full">
+        <p className="font-medium text-[18px] text-grey-44 text-center w-[625px] leading-[24px] m-0">
+          Разобраться в инвестициях можно без экономического образования. Ниже — ответы на вопросы, которые мы чаще всего получаем.
+        </p>
+        <div className="flex flex-col items-center w-full">
           {faqs.map((faq, i) => (
-            <AccordionItem key={i} value={`item-${i}`}>
-              <AccordionTrigger className="text-left gap-4">
-                <span className="text-muted-foreground font-mono text-sm mr-3 shrink-0">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                {faq.q}
-              </AccordionTrigger>
-              <AccordionContent className="pl-10 text-muted-foreground">
-                {faq.a}
-              </AccordionContent>
-            </AccordionItem>
+            <div
+              key={i}
+              className={`flex items-start justify-between py-[40px] w-full ${i < faqs.length - 1 ? "border-b border-grey-71" : ""}`}
+            >
+              <span className={`font-semibold text-[30px] leading-[39px] shrink-0 w-[60px] ${openIndex === i ? "text-black" : "text-grey-71"}`}>
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div className="flex flex-col gap-[24px] items-start flex-1">
+                <h3 className="font-semibold text-[30px] text-black leading-[39px] m-0">{faq.q}</h3>
+                {openIndex === i && (
+                  <p className="font-normal text-[16px] text-grey-30 leading-[24px] m-0">{faq.a}</p>
+                )}
+              </div>
+              <button
+                onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
+                className={`rounded-[22px] w-[44px] h-[44px] flex items-center justify-center shrink-0 border ${
+                  openIndex === i
+                    ? "bg-azure-13 border-azure-13"
+                    : "bg-white border-grey-71"
+                }`}
+              >
+                {openIndex === i ? (
+                  <Minus className="w-[10px] h-[10px] text-white" />
+                ) : (
+                  <Plus className="w-[10px] h-[10px] text-grey-44" />
+                )}
+              </button>
+            </div>
           ))}
-        </Accordion>
+        </div>
       </div>
     </section>
   );

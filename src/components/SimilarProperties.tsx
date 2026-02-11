@@ -1,93 +1,90 @@
-import { Badge } from "@/components/ui/badge";
-import { Building2, Calendar, Coins } from "lucide-react";
+import { Copy } from "lucide-react";
 
 const properties = [
   {
-    title: "Склад «Южный»",
-    city: "Краснодар",
-    rating: "A+",
-    area: "8 200 м²",
-    term: "5 лет",
-    price: "320 000 000 ₽",
-    shares: "2 660",
-    yield: "22,5%",
-    isin: "RU000A106K43",
+    title: "ТЦ «Зеленый берег»",
+    city: "Тюмень",
+    area: "19 560 м2",
+    term: "2 года 1 мес",
+    price: "1 126 959 346 ₽",
+    shares: "200",
+    yield: "25,9%",
+    isin: "RU000A10CLY1",
+    ratingText: "A+",
+    ratingBg: "bg-p-blue",
+    ratingColor: "text-black",
   },
   {
-    title: "ТЦ «Меридиан»",
-    city: "Новосибирск",
-    rating: "A",
-    area: "15 400 м²",
-    term: "7 лет",
-    price: "890 000 000 ₽",
-    shares: "7 400",
-    yield: "19,8%",
-    isin: "RU000A107B21",
+    title: "Пай девятнадцать",
+    city: "г. Ульяновск",
+    area: "18 226 м2",
+    term: "3 года 2 мес",
+    price: "1 531 529 489 ₽",
+    shares: "500",
+    yield: "25,9%",
+    isin: "1 531 529 489 ₽",
+    ratingText: "B+",
+    ratingBg: "bg-blue-second",
+    ratingColor: "text-white",
   },
   {
-    title: "Офис-центр «Высота»",
-    city: "Казань",
-    rating: "B+",
-    area: "6 100 м²",
-    term: "4 года",
-    price: "245 000 000 ₽",
-    shares: "2 040",
-    yield: "26,1%",
-    isin: "RU000A108C55",
+    title: "ТРК «Малина»",
+    city: "Рязань",
+    area: "27 184 м2",
+    term: "2 года 10 мес",
+    price: "840 376 659 ₽",
+    shares: "500",
+    yield: "37.1%",
+    isin: "",
+    ratingText: "B+",
+    ratingBg: "bg-blue-second",
+    ratingColor: "text-white",
   },
 ];
 
 const SimilarProperties = () => {
   return (
-    <section className="container py-16">
-      <h2 className="text-2xl font-bold mb-8">Похожие объекты</h2>
-      <div className="grid gap-6 md:grid-cols-3">
+    <section className="flex flex-col gap-[60px] items-center pt-[120px] px-[70px] max-w-[1425px] mx-auto">
+      <h2 className="font-semibold text-[72px] leading-[68px] tracking-[-2.16px] text-black text-center m-0">
+        Похожие объекты
+      </h2>
+      <div className="flex gap-[30px] items-start">
         {properties.map((p) => (
-          <div
-            key={p.isin}
-            className="rounded-2xl border bg-card overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group"
-          >
-            {/* Image placeholder */}
-            <div className="relative h-48 bg-muted flex items-center justify-center">
-              <Building2 className="h-10 w-10 text-muted-foreground" />
-              <Badge className="absolute top-3 left-3 bg-foreground text-background font-bold">
-                {p.rating}
-              </Badge>
+          <div key={p.title} className="flex flex-col gap-[24px] items-start w-[408px] cursor-pointer">
+            <div className="bg-muted h-[292px] overflow-hidden rounded-[40px] w-[408px] relative flex items-center justify-center">
+              <span className="text-muted-foreground text-sm">Фото</span>
+              <div className={`absolute right-[16px] top-[16px] ${p.ratingBg} px-[8px] py-[3px] rounded-[15px]`}>
+                <span className={`font-semibold text-[14.9px] ${p.ratingColor}`}>{p.ratingText}</span>
+              </div>
             </div>
-
-            <div className="p-5 space-y-3">
-              <div>
-                <h3 className="font-bold group-hover:text-primary transition-colors">{p.title}</h3>
-                <p className="text-sm text-muted-foreground">{p.city}</p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                <div className="flex items-center gap-1.5 text-muted-foreground">
-                  <Building2 className="h-3.5 w-3.5" />
-                  {p.area}
-                </div>
-                <div className="flex items-center gap-1.5 text-muted-foreground">
-                  <Calendar className="h-3.5 w-3.5" />
-                  {p.term}
+            <div className="flex flex-col gap-[12px] w-full">
+              <div className="flex flex-col gap-[6px]">
+                <h3 className="font-inter font-semibold text-[24px] leading-[24px] text-cyan-2 m-0">{p.title}</h3>
+                <div className="flex gap-[6px] items-start text-[18px] text-grey-44 font-inter">
+                  <span>{p.city}</span><span>•</span><span>{p.area}</span><span>•</span><span>{p.term}</span>
                 </div>
               </div>
-
-              <div className="pt-2 border-t space-y-1.5 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Стоимость</span>
-                  <span className="font-semibold">{p.price}</span>
+              <div className="flex flex-col gap-[6px] text-[18px] font-inter">
+                <div className="flex gap-[8px]">
+                  <span className="text-grey-44">Стоимость:</span>
+                  <span className="text-black">{p.price}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Паёв</span>
-                  <span className="font-medium">{p.shares}</span>
+                <div className="flex gap-[8px]">
+                  <span className="text-grey-44">Количество паев:</span>
+                  <span className="text-black">{p.shares}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Доходность</span>
-                  <span className="font-bold text-primary">{p.yield}</span>
+                <div className="flex gap-[8px]">
+                  <span className="text-grey-44">Общая доходность:</span>
+                  <span className="text-black">{p.yield}</span>
                 </div>
+                {p.isin && (
+                  <div className="flex gap-[8px] items-center">
+                    <span className="text-grey-44">ISIN:</span>
+                    <span className="text-black">{p.isin}</span>
+                    <Copy className="w-[18px] h-[18px] text-grey-44 cursor-pointer" />
+                  </div>
+                )}
               </div>
-
-              <p className="text-xs text-muted-foreground pt-1">ISIN: {p.isin}</p>
             </div>
           </div>
         ))}

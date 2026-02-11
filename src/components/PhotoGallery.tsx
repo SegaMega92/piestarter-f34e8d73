@@ -1,46 +1,35 @@
-import { Button } from "@/components/ui/button";
-import { Images } from "lucide-react";
-
-const placeholders = [
-  "bg-muted",
-  "bg-muted/80",
-  "bg-muted/70",
-  "bg-muted/60",
-  "bg-muted/50",
-];
+import { Play, Grid3X3 } from "lucide-react";
 
 const PhotoGallery = () => {
   return (
-    <section className="container pb-8">
-      <div className="grid grid-cols-4 grid-rows-2 gap-3 h-[420px] md:h-[480px]">
-        {/* Main large image */}
-        <div className={`col-span-2 row-span-2 rounded-xl ${placeholders[0]} flex items-center justify-center overflow-hidden`}>
-          <div className="text-muted-foreground text-sm flex flex-col items-center gap-2">
-            <Images className="h-10 w-10" />
-            <span>Фото объекта</span>
+    <section className="flex gap-[23px] items-center justify-center px-[70px]">
+      {/* Main Image */}
+      <div className="bg-muted h-[474px] overflow-hidden rounded-[40px] w-[625px] shrink-0 flex items-center justify-center">
+        <span className="text-muted-foreground text-sm">Фото объекта</span>
+      </div>
+      {/* Grid Images */}
+      <div className="flex flex-wrap gap-[30px] w-[624px]">
+        <div className="bg-muted h-[222px] overflow-hidden rounded-[40px] w-[297px] flex items-center justify-center">
+          <span className="text-muted-foreground text-xs">Фото 2</span>
+        </div>
+        <div className="bg-muted h-[222px] overflow-hidden rounded-[40px] w-[297px] flex items-center justify-center">
+          <span className="text-muted-foreground text-xs">Фото 3</span>
+        </div>
+        <div className="bg-muted h-[222px] overflow-hidden rounded-[40px] w-[297px] relative flex items-center justify-center">
+          <span className="text-muted-foreground text-xs">Фото 4</span>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-[96px] h-[96px] rounded-full bg-white/80 flex items-center justify-center cursor-pointer">
+              <Play className="w-10 h-10 text-cyan-2 fill-cyan-2" />
+            </div>
           </div>
         </div>
-
-        {/* 4 smaller images */}
-        {placeholders.slice(1).map((bg, i) => (
-          <div
-            key={i}
-            className={`rounded-xl ${bg} flex items-center justify-center relative overflow-hidden`}
-          >
-            {i === 3 && (
-              <Button
-                variant="secondary"
-                size="sm"
-                className="absolute inset-0 w-full h-full rounded-xl bg-foreground/40 text-background hover:bg-foreground/50 font-medium"
-              >
-                Показать все
-              </Button>
-            )}
-            {i !== 3 && (
-              <span className="text-muted-foreground text-xs">Фото {i + 2}</span>
-            )}
+        <div className="bg-muted h-[222px] overflow-hidden rounded-[40px] w-[297px] relative flex items-center justify-center">
+          <span className="text-muted-foreground text-xs">Фото 5</span>
+          <div className="absolute bottom-[20px] left-1/2 -translate-x-1/2 bg-white flex items-center gap-[10px] px-[30px] py-[18px] rounded-[30px] cursor-pointer">
+            <Grid3X3 className="w-[24px] h-[24px] text-cyan-2" />
+            <span className="font-semibold text-[18px] text-cyan-2 whitespace-nowrap">Показать все</span>
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );

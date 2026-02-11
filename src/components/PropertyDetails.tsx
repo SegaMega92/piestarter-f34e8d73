@@ -1,105 +1,63 @@
-import { Building, ShieldCheck, TrendingUp, Users, FileText, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-
-const advantages = [
-  { icon: ShieldCheck, title: "Надёжный арендатор", desc: "Федеральная логистическая компания с долгосрочным контрактом" },
-  { icon: TrendingUp, title: "Высокая доходность", desc: "Ежеквартальные выплаты с доходностью выше рынка" },
-  { icon: Building, title: "Качественный актив", desc: "Современный складской комплекс класса А" },
-  { icon: Users, title: "Профессиональное управление", desc: "Объектом управляет лицензированная УК" },
-];
+import { Calendar, Briefcase, Download } from "lucide-react";
 
 const PropertyDetails = () => {
   return (
-    <section className="container pb-16">
-      <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
-        {/* Left: Description */}
-        <div className="space-y-8">
-          <div>
-            <h2 className="text-2xl font-bold mb-4">Об объекте</h2>
-            <p className="text-muted-foreground leading-relaxed">
-              Терминал Чкаловский — современный логистический комплекс площадью 13 850 м², 
-              расположенный в промышленной зоне Екатеринбурга. Объект введён в эксплуатацию в 2021 году 
-              и полностью сдан в аренду крупной федеральной логистической компании. 
-              Договор аренды заключён на 7 лет с ежегодной индексацией арендной ставки.
-            </p>
-          </div>
-
-          <Separator />
-
-          <div>
-            <h3 className="text-lg font-bold mb-2 flex items-center gap-2">
-              <Users className="h-5 w-5 text-primary" />
-              Арендатор
-            </h3>
-            <p className="text-muted-foreground leading-relaxed">
-              ООО «ЛогистикПро» — федеральный оператор складской логистики, входит в ТОП-20 
-              логистических компаний России. Выручка за 2024 год — более 12 млрд ₽. 
-              Рейтинг кредитоспособности — A (стабильный).
-            </p>
-          </div>
-
-          <Separator />
-
-          <div>
-            <h3 className="text-lg font-bold mb-4">Преимущества объекта</h3>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {advantages.map((a) => (
-                <div key={a.title} className="flex gap-3 rounded-xl bg-secondary p-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                    <a.icon className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-sm">{a.title}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{a.desc}</p>
-                  </div>
-                </div>
-              ))}
+    <section className="flex gap-[30px] items-start pt-[60px] pb-[120px] px-[70px] w-full">
+      {/* Left: Description */}
+      <div className="flex flex-col gap-[24px] items-start w-[828px]">
+        <div className="flex flex-col gap-[12px] text-[18px] text-cyan-2">
+          <h3 className="font-semibold leading-[24px] m-0">Характеристики</h3>
+          <p className="font-medium leading-[24px] m-0">
+            Находится в черте Екатеринбурга — города-миллионника и крупного логистического хаба, обслуживающего Урал, Западную Сибирь и Китай.
+          </p>
+          <p className="font-medium leading-[24px] m-0">
+            Здание введено в эксплуатацию в 2015 г. Электрическая мощность — 380 кВт, высота потолка — 11 м, в зоне разгрузки — 29 доков.
+          </p>
+        </div>
+        <div className="flex flex-col gap-[12px] text-[18px] text-cyan-2">
+          <h3 className="font-semibold leading-[24px] m-0">Арендатор</h3>
+          <p className="font-medium leading-[24px] m-0">
+            С 2017 г. арендатором является федеральная компания «Деловые линии». Это один из ведущих транспортно-логистических операторов России. «Деловые линии» отправляют грузы в 66 стран мира. Данный склад стратегически важен для компании в связи с удачным расположением и подходящей инфраструктурой.
+          </p>
+        </div>
+        {/* Feature Cards */}
+        <div className="flex gap-[24px] w-full">
+          <div className="border border-grey-71 flex flex-1 gap-[11px] items-start p-[12px] rounded-[20px]">
+            <div className="w-[36px] h-[36px] shrink-0 flex items-center justify-center">
+              <Calendar className="w-[24px] h-[27px] text-cyan-2" />
             </div>
+            <p className="font-medium text-[18px] text-cyan-2 leading-[24px] m-0">
+              Ежемесячные выплаты дохода<br />на счет в вашем банке
+            </p>
+          </div>
+          <div className="border border-grey-71 flex flex-1 gap-[11px] items-start p-[12px] rounded-[20px]">
+            <div className="w-[36px] h-[36px] shrink-0 flex items-center justify-center">
+              <Briefcase className="w-[27px] h-[27px] text-cyan-2" />
+            </div>
+            <p className="font-medium text-[18px] text-cyan-2 leading-[24px] m-0">
+              Доступно для неквалифицированных<br />инвесторов
+            </p>
           </div>
         </div>
-
-        {/* Right: Sticky panel */}
-        <div className="lg:sticky lg:top-24 h-fit">
-          <div className="rounded-2xl border bg-card p-6 space-y-5 shadow-lg">
-            <div>
-              <span className="text-sm text-muted-foreground">Стоимость 1 пая</span>
-              <p className="text-3xl font-extrabold mt-1">120 364 ₽</p>
-            </div>
-
-            <div className="space-y-3 text-sm">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Паёв в обращении</span>
-                <span className="font-medium">5 408</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Мин. инвестиция</span>
-                <span className="font-medium">120 364 ₽</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Выплаты</span>
-                <span className="font-medium">Ежеквартально</span>
-              </div>
-            </div>
-
-            <Separator />
-
-            <div className="flex flex-col gap-3">
-              <Button className="w-full h-12 text-base font-semibold">
-                Купить пай
-              </Button>
-              <Button variant="outline" className="w-full gap-2">
-                <FileText className="h-4 w-4" />
-                Презентация
-              </Button>
-            </div>
-
-            <div className="flex items-start gap-2 rounded-lg bg-secondary p-3">
-              <CheckCircle2 className="h-4 w-4 mt-0.5 text-primary shrink-0" />
-              <p className="text-xs text-muted-foreground">
-                Покупка паёв доступна для квалифицированных инвесторов. Подробности — в презентации.
-              </p>
-            </div>
+      </div>
+      {/* Right: Price Card */}
+      <div
+        className="flex flex-col gap-[12px] items-center px-[20px] py-[24px] rounded-[40px] w-[427px]"
+        style={{
+          background: "linear-gradient(90deg, rgba(254,255,255,0.5), rgba(254,255,255,0.5)), linear-gradient(90deg, #abe4f5, #abe4f5)",
+        }}
+      >
+        <div className="bg-white/50 flex flex-col gap-[4px] items-center py-[12px] rounded-[20px] w-full text-cyan-2">
+          <span className="font-semibold text-[14px] leading-[18px]">Цена за 1 пай</span>
+          <span className="font-semibold text-[36px] leading-[1.1] tracking-[-1px]">120 364₽</span>
+        </div>
+        <div className="flex flex-col w-full">
+          <div className="flex items-center justify-center gap-[6px] px-[30px] py-[18px] rounded-[30px] cursor-pointer">
+            <span className="font-semibold text-[18px] text-cyan-2">Презентация</span>
+            <Download className="w-[16px] h-[18px] text-cyan-2" />
+          </div>
+          <div className="bg-azure-13 flex items-center justify-center px-[30px] py-[18px] rounded-[30px] w-full cursor-pointer">
+            <span className="font-semibold text-[18px] text-white">Купить паи</span>
           </div>
         </div>
       </div>
