@@ -1,4 +1,5 @@
-import { Grid3X3 } from "lucide-react";
+import { useState, useCallback, useEffect } from "react";
+import { Grid3X3, X, ChevronLeft, ChevronRight } from "lucide-react";
 import imageSlide1 from "@/assets/image-slide1.png";
 import imageSlide2 from "@/assets/image-slide2.png";
 import imageSlide3 from "@/assets/image-slide3.png";
@@ -6,38 +7,124 @@ import imageSlide4 from "@/assets/image-slide4.png";
 import imageSlide5 from "@/assets/image-slide5.png";
 import playBtn from "@/assets/play-btn.svg";
 
+const images = [
+  { src: imageSlide1, alt: "Фото №1" },
+  { src: imageSlide2, alt: "Фото №2" },
+  { src: imageSlide3, alt: "Фото №3" },
+  { src: imageSlide4, alt: "Фото №4" },
+  { src: imageSlide5, alt: "Фото №5" },
+];
+
 const PhotoGallery = () => {
+  const [lightbox, setLightbox] = useState<number | null>(null);
+
+  const open = (i: number) => setLightbox(i);
+  const close = () => setLightbox(null);
+  const prev = useCallback(() => setLightbox((c) => (c !== null ? (c - 1 + images.length) % images.length : null)), []);
+  const next = useCallback(() => setLightbox((c) => (c !== null ? (c + 1) % images.length : null)), []);
+
+  useEffect(() => {
+    if (lightbox === null) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", handler);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", handler);
+      document.body.style.overflow = "";
+    };
+  }, [lightbox, prev, next]);
+
   return (
-    <section className="flex flex-col md:flex-row gap-[16px] md:gap-[23px] items-center justify-center">
-      {/* Main Image */}
-      <div className="h-[240px] sm:h-[340px] md:h-[474px] overflow-hidden rounded-[20px] md:rounded-[40px] w-full md:flex-1 md:min-w-0 cursor-pointer group">
-        <img src={imageSlide1} alt="Фото объекта" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-      </div>
-      {/* Grid Images */}
-      <div className="grid grid-cols-2 gap-[12px] md:gap-[30px] w-full md:flex-1 md:min-w-0">
-        <div className="h-[120px] sm:h-[160px] md:h-[222px] overflow-hidden rounded-[16px] md:rounded-[40px] cursor-pointer group">
-          <img src={imageSlide2} alt="Фото 2" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+    <>
+      <section className="flex flex-col md:flex-row gap-[16px] md:gap-[23px] items-center justify-center">
+        {/* Main Image */}
+        <div onClick={() => open(0)} className="h-[240px] sm:h-[340px] md:h-[474px] overflow-hidden rounded-[20px] md:rounded-[40px] w-full md:flex-1 md:min-w-0 cursor-pointer group">
+          <img src={imageSlide1} alt="Фото объекта" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         </div>
-        <div className="h-[120px] sm:h-[160px] md:h-[222px] overflow-hidden rounded-[16px] md:rounded-[40px] cursor-pointer group">
-          <img src={imageSlide3} alt="Фото 3" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-        </div>
-        <div className="h-[120px] sm:h-[160px] md:h-[222px] overflow-hidden rounded-[16px] md:rounded-[40px] relative cursor-pointer group">
-          <img src={imageSlide4} alt="Фото 4" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-[56px] h-[56px] md:w-[96px] md:h-[96px] rounded-full bg-white/80 flex items-center justify-center group-hover:bg-white group-hover:scale-110 transition-all duration-300">
-              <img src={playBtn} alt="Play" className="w-6 h-6 md:w-10 md:h-10" />
+        {/* Grid Images */}
+        <div className="grid grid-cols-2 gap-[12px] md:gap-[30px] w-full md:flex-1 md:min-w-0">
+          <div onClick={() => open(1)} className="h-[120px] sm:h-[160px] md:h-[222px] overflow-hidden rounded-[16px] md:rounded-[40px] cursor-pointer group">
+            <img src={imageSlide2} alt="Фото 2" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          </div>
+          <div onClick={() => open(2)} className="h-[120px] sm:h-[160px] md:h-[222px] overflow-hidden rounded-[16px] md:rounded-[40px] cursor-pointer group">
+            <img src={imageSlide3} alt="Фото 3" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          </div>
+          <div onClick={() => open(3)} className="h-[120px] sm:h-[160px] md:h-[222px] overflow-hidden rounded-[16px] md:rounded-[40px] relative cursor-pointer group">
+            <img src={imageSlide4} alt="Фото 4" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-[56px] h-[56px] md:w-[96px] md:h-[96px] rounded-full bg-white/80 flex items-center justify-center group-hover:bg-white group-hover:scale-110 transition-all duration-300">
+                <img src={playBtn} alt="Play" className="w-6 h-6 md:w-10 md:h-10" />
+              </div>
+            </div>
+          </div>
+          <div onClick={() => open(4)} className="h-[120px] sm:h-[160px] md:h-[222px] overflow-hidden rounded-[16px] md:rounded-[40px] relative cursor-pointer group">
+            <img src={imageSlide5} alt="Фото 5" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div className="absolute bottom-[10px] md:bottom-[20px] left-1/2 -translate-x-1/2 bg-white flex items-center gap-[8px] md:gap-[10px] px-[16px] md:px-[30px] py-[10px] md:py-[18px] rounded-[20px] md:rounded-[30px] hover:shadow-lg transition-shadow">
+              <Grid3X3 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] text-cyan-2" />
+              <span className="font-semibold text-[14px] md:text-[18px] text-cyan-2 whitespace-nowrap">Показать все</span>
             </div>
           </div>
         </div>
-        <div className="h-[120px] sm:h-[160px] md:h-[222px] overflow-hidden rounded-[16px] md:rounded-[40px] relative cursor-pointer group">
-          <img src={imageSlide5} alt="Фото 5" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-          <div className="absolute bottom-[10px] md:bottom-[20px] left-1/2 -translate-x-1/2 bg-white flex items-center gap-[8px] md:gap-[10px] px-[16px] md:px-[30px] py-[10px] md:py-[18px] rounded-[20px] md:rounded-[30px] hover:shadow-lg transition-shadow">
-            <Grid3X3 className="w-[18px] h-[18px] md:w-[24px] md:h-[24px] text-cyan-2" />
-            <span className="font-semibold text-[14px] md:text-[18px] text-cyan-2 whitespace-nowrap">Показать все</span>
+      </section>
+
+      {/* Lightbox Overlay */}
+      {lightbox !== null && (
+        <div className="fixed inset-0 z-50 bg-black/90 flex flex-col animate-fade-in">
+          {/* Header */}
+          <div className="flex items-center justify-between px-4 md:px-8 py-4 shrink-0">
+            <span className="text-white/70 text-sm md:text-base">
+              Фото {lightbox + 1} из {images.length}
+            </span>
+            <button onClick={close} className="text-white/70 hover:text-white transition-colors p-2">
+              <X className="w-6 h-6 md:w-8 md:h-8" />
+            </button>
+          </div>
+
+          {/* Main image area */}
+          <div className="flex-1 flex items-center justify-center relative min-h-0 px-4 md:px-16">
+            <button
+              onClick={prev}
+              className="absolute left-2 md:left-6 z-10 text-white/60 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2 md:p-3 transition-all"
+            >
+              <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
+            </button>
+
+            <img
+              key={lightbox}
+              src={images[lightbox].src}
+              alt={images[lightbox].alt}
+              className="max-h-full max-w-full object-contain rounded-lg animate-scale-in"
+            />
+
+            <button
+              onClick={next}
+              className="absolute right-2 md:right-6 z-10 text-white/60 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2 md:p-3 transition-all"
+            >
+              <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
+            </button>
+          </div>
+
+          {/* Thumbnails */}
+          <div className="flex items-center justify-center gap-2 md:gap-3 py-4 px-4 shrink-0 overflow-x-auto">
+            {images.map((img, i) => (
+              <button
+                key={i}
+                onClick={() => setLightbox(i)}
+                className={`w-[60px] h-[44px] md:w-[80px] md:h-[60px] rounded-lg overflow-hidden shrink-0 border-2 transition-all ${
+                  i === lightbox ? "border-white opacity-100 scale-105" : "border-transparent opacity-50 hover:opacity-80"
+                }`}
+              >
+                <img src={img.src} alt={img.alt} className="w-full h-full object-cover" />
+              </button>
+            ))}
           </div>
         </div>
-      </div>
-    </section>
+      )}
+    </>
   );
 };
 
