@@ -29,7 +29,7 @@ const PropertyDetails = () => {
             <div className="w-[36px] h-[36px] shrink-0 flex items-center justify-center">
               <img src={calendarAlt} alt="" className="w-[24px] h-[27px]" />
             </div>
-            <p className="font-normal text-[16px] md:text-[18px] text-cyan-2 leading-[24px] m-0">
+            <p className="font-normal text-[14px] md:text-[16px] text-cyan-2 leading-[20px] m-0">
               Ежемесячные выплаты дохода на счет в вашем банке
             </p>
           </div>
@@ -37,7 +37,7 @@ const PropertyDetails = () => {
             <div className="w-[36px] h-[36px] shrink-0 flex items-center justify-center">
               <img src={briefcase} alt="" className="w-[27px] h-[27px]" />
             </div>
-            <p className="font-normal text-[16px] md:text-[18px] text-cyan-2 leading-[24px] m-0">
+            <p className="font-normal text-[14px] md:text-[16px] text-cyan-2 leading-[20px] m-0">
               Доступно для неквалифицированных инвесторов
             </p>
           </div>
