@@ -93,7 +93,7 @@ const PropertyPage = () => {
           {isEnabled("PropertyHero") && <PropertyHero content={getContent("PropertyHero")} />}
           {isEnabled("PropertyStats") && <PropertyStats content={getContent("PropertyStats")} />}
           {isEnabled("PhotoGallery") && <PhotoGallery />}
-          {isEnabled("PropertyDetails") && <PropertyDetails />}
+          {isEnabled("PropertyDetails") && <PropertyDetails content={getContent("PropertyDetails")} />}
           {isEnabled("LocationSection") && <LocationSection />}
         </div>
         {isEnabled("FinancialSection") && <FinancialSection />}
