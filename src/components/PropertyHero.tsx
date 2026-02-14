@@ -2,7 +2,7 @@ import shareAlt from "@/assets/share-alt.svg";
 
 const PropertyHero = () => {
   return (
-    <section className="flex items-start justify-center pt-[60px] md:pt-[90px] lg:pt-[120px] pb-[24px] md:pb-[36px] w-full">
+    <section className="flex items-start justify-center pt-[60px] md:pt-[90px] lg:pt-[120px] pb-[24px] md:pb-[36px] w-full py-[24px]">
       <div className="flex flex-col gap-[6px] items-start flex-1">
         {/* Breadcrumbs */}
         <div className="flex gap-[8px] md:gap-[12px] items-center flex-wrap">
@@ -22,8 +22,8 @@ const PropertyHero = () => {
           Терминал Чкаловский, Екатеринбург
         </h1>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default PropertyHero;
