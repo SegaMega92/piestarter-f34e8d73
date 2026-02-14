@@ -46,7 +46,7 @@ const FAQSection = () => {
               <div className="flex flex-col gap-[24px] items-start flex-1">
                 <h3 className="font-semibold text-[30px] text-black leading-[39px] m-0">{faq.q}</h3>
                 {openIndex === i && (
-                  <p className="font-normal text-[16px] text-grey-30 leading-[24px] m-0">{faq.a}</p>
+                  <p className="font-light text-[16px] text-grey-30 leading-[24px] m-0">{faq.a}</p>
                 )}
               </div>
               <button
