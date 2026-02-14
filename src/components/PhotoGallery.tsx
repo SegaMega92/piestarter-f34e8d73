@@ -53,13 +53,8 @@ const PhotoGallery = () => {
           <div onClick={() => open(2)} className="h-[120px] sm:h-[160px] md:h-[222px] overflow-hidden rounded-[16px] md:rounded-[40px] cursor-pointer group">
             <img src={imageSlide3} alt="Фото 3" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
           </div>
-          <div onClick={() => open(3)} className="h-[120px] sm:h-[160px] md:h-[222px] overflow-hidden rounded-[16px] md:rounded-[40px] relative cursor-pointer group">
+          <div onClick={() => open(3)} className="h-[120px] sm:h-[160px] md:h-[222px] overflow-hidden rounded-[16px] md:rounded-[40px] cursor-pointer group">
             <img src={imageSlide4} alt="Фото 4" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-[56px] h-[56px] md:w-[96px] md:h-[96px] rounded-full bg-white/80 flex items-center justify-center group-hover:bg-white group-hover:scale-110 transition-all duration-300">
-                <img src={playBtn} alt="Play" className="w-6 h-6 md:w-10 md:h-10" />
-              </div>
-            </div>
           </div>
           <div onClick={() => open(4)} className="h-[120px] sm:h-[160px] md:h-[222px] overflow-hidden rounded-[16px] md:rounded-[40px] relative cursor-pointer group">
             <img src={imageSlide5} alt="Фото 5" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
