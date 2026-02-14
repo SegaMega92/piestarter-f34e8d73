@@ -72,17 +72,23 @@ const FAQItem = ({ faq, index, isOpen, onToggle, isLast }: {
   );
 };
 
-const FAQSection = () => {
+interface FAQSectionProps {
+  content?: Record<string, any>;
+}
+
+const FAQSection = ({ content }: FAQSectionProps) => {
   const [openIndex, setOpenIndex] = useState(0);
+  const sectionTitle = content?.title || "Вопросы и ответы";
+  const sectionDescription = content?.description || "Разобраться в инвестициях можно без экономического образования. Ниже — ответы на вопросы, которые мы чаще всего получаем.";
 
   return (
     <section className="flex flex-col gap-[30px] md:gap-[60px] items-center py-[60px] md:py-[120px]">
       <h2 className="font-semibold text-[36px] md:text-[72px] leading-[1.05] tracking-[-1px] md:tracking-[-2.16px] text-black text-center m-0">
-        Вопросы и ответы
+        {sectionTitle}
       </h2>
       <div className="flex flex-col gap-[16px] md:gap-[24px] items-center w-full">
         <p className="font-normal text-[16px] md:text-[18px] text-grey-44 text-center max-w-[625px] leading-[24px] m-0">
-          Разобраться в инвестициях можно без экономического образования. Ниже — ответы на вопросы, которые мы чаще всего получаем.
+          {sectionDescription}
         </p>
         <div className="flex flex-col items-center w-full">
           {faqs.map((faq, i) => (

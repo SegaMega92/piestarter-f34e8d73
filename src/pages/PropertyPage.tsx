@@ -19,20 +19,8 @@ interface Block {
   block_type: string;
   sort_order: number;
   enabled: boolean;
-  content: Json;
+  content: Record<string, any>;
 }
-
-const BLOCK_COMPONENTS: Record<string, React.ComponentType<any>> = {
-  PropertyHero,
-  PropertyStats,
-  PhotoGallery,
-  PropertyDetails,
-  LocationSection,
-  FinancialSection,
-  SimilarProperties,
-  FAQSection,
-  ContactForm,
-};
 
 const PropertyPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -42,14 +30,14 @@ const PropertyPage = () => {
 
   useEffect(() => {
     const fetchPage = async () => {
-      const { data: page, error: pageError } = await supabase
+      const { data: page } = await supabase
         .from("pages")
         .select("*")
         .eq("slug", slug!)
         .eq("status", "published")
         .maybeSingle();
 
-      if (pageError || !page) {
+      if (!page) {
         setNotFound(true);
         setLoading(false);
         return;
@@ -61,7 +49,9 @@ const PropertyPage = () => {
         .eq("page_id", page.id)
         .order("sort_order", { ascending: true });
 
-      setBlocks((blocksData || []).filter((b) => b.enabled));
+      setBlocks(
+        ((blocksData || []) as unknown as Block[]).filter((b) => b.enabled)
+      );
       setLoading(false);
     };
 
@@ -88,42 +78,30 @@ const PropertyPage = () => {
     );
   }
 
-  const renderBlock = (block: Block) => {
-    const Component = BLOCK_COMPONENTS[block.block_type];
-    if (!Component) return null;
-
-    // For now, render the component as-is (static).
-    // Content from block.content can be passed as props later when components support it.
-    const needsContainer = !["FinancialSection", "ContactForm"].includes(block.block_type);
-
-    if (needsContainer) {
-      return <Component key={block.id} />;
-    }
-    return <Component key={block.id} />;
+  const getContent = (blockType: string): Record<string, any> => {
+    const block = blocks.find((b) => b.block_type === blockType);
+    return (block?.content as Record<string, any>) || {};
   };
 
-  // Group blocks: some need content-container wrapper, some don't
-  const containerBlocks = ["PropertyHero", "PropertyStats", "PhotoGallery", "PropertyDetails", "LocationSection", "SimilarProperties", "FAQSection"];
-  const fullWidthBlocks = ["FinancialSection", "ContactForm"];
+  const isEnabled = (blockType: string) => blocks.some((b) => b.block_type === blockType);
 
   return (
     <div className="min-h-screen bg-bg-main overflow-x-hidden">
       <Header />
       <main>
         <div className="content-container">
-          {blocks
-            .filter((b) => containerBlocks.includes(b.block_type))
-            .map((block) => {
-              const Component = BLOCK_COMPONENTS[block.block_type];
-              return Component ? <Component key={block.id} /> : null;
-            })}
+          {isEnabled("PropertyHero") && <PropertyHero content={getContent("PropertyHero")} />}
+          {isEnabled("PropertyStats") && <PropertyStats content={getContent("PropertyStats")} />}
+          {isEnabled("PhotoGallery") && <PhotoGallery />}
+          {isEnabled("PropertyDetails") && <PropertyDetails />}
+          {isEnabled("LocationSection") && <LocationSection />}
         </div>
-        {blocks
-          .filter((b) => fullWidthBlocks.includes(b.block_type))
-          .map((block) => {
-            const Component = BLOCK_COMPONENTS[block.block_type];
-            return Component ? <Component key={block.id} /> : null;
-          })}
+        {isEnabled("FinancialSection") && <FinancialSection />}
+        <div className="content-container">
+          {isEnabled("SimilarProperties") && <SimilarProperties />}
+          {isEnabled("FAQSection") && <FAQSection content={getContent("FAQSection")} />}
+        </div>
+        {isEnabled("ContactForm") && <ContactForm />}
       </main>
       <Footer />
     </div>
