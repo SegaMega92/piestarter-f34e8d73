@@ -17,13 +17,13 @@ const Footer = () => {
               <p className="m-0">стартер</p>
             </div>
           </a>
-          <p className="text-[16px] text-grey-96 leading-[24px] font-light m-0">
+          <p className="text-[16px] text-grey-96 leading-[24px] font-normal m-0">
             Общество с ограниченной ответственностью «ПАЙСТАРТЕР»<br />
             ОГРН: 1187746382941, ИНН: 7731456723
           </p>
           <a href="https://t.me/piestarer" target="_blank" rel="noopener noreferrer" className="flex gap-[12px] items-start hover:opacity-80 transition-opacity">
             <img src={telegram} alt="Telegram" className="w-[45px] h-[45px]" />
-            <div className="text-[16px] text-grey-96 leading-[24px] font-light">
+            <div className="text-[16px] text-grey-96 leading-[24px] font-normal">
               <p className="m-0">Подпишитесь</p>
               <p className="m-0">на телеграм-канал <span className="underline">@piestarer</span></p>
             </div>
@@ -33,7 +33,7 @@ const Footer = () => {
         <div className="flex gap-[30px] items-start">
           <div className="flex flex-col gap-[30px] items-start w-[190px]">
             <h4 className="font-semibold text-[18px] text-grey-96 leading-[24px] m-0">Категории</h4>
-            <div className="flex flex-col gap-[15px] text-[16px] text-grey-71 leading-[24px] font-light">
+            <div className="flex flex-col gap-[15px] text-[16px] text-grey-71 leading-[24px] font-normal">
               <a href="#" className="cursor-pointer hover:text-white transition-colors">Все объекты</a>
               <a href="#" className="cursor-pointer hover:text-white transition-colors">Торговые центры</a>
               <a href="#" className="cursor-pointer hover:text-white transition-colors">Отели</a>
@@ -43,7 +43,7 @@ const Footer = () => {
           </div>
           <div className="flex flex-col gap-[30px] items-start w-[190px]">
             <h4 className="font-semibold text-[18px] text-grey-96 leading-[24px] m-0">О компании</h4>
-            <div className="flex flex-col gap-[15px] text-[16px] text-grey-71 leading-[24px] font-light">
+            <div className="flex flex-col gap-[15px] text-[16px] text-grey-71 leading-[24px] font-normal">
               <a href="#" className="cursor-pointer hover:text-white transition-colors">Пайстартер сегодня</a>
               <a href="#" className="cursor-pointer hover:text-white transition-colors">О команде</a>
               <a href="#" className="cursor-pointer hover:text-white transition-colors">Блог</a>
@@ -51,7 +51,7 @@ const Footer = () => {
           </div>
           <div className="flex flex-col gap-[30px] items-start w-[190px]">
             <h4 className="font-semibold text-[18px] text-grey-96 leading-[24px] m-0">Контакты</h4>
-            <div className="flex flex-col gap-[15px] text-[16px] text-grey-71 leading-[24px] font-light">
+            <div className="flex flex-col gap-[15px] text-[16px] text-grey-71 leading-[24px] font-normal">
               <a href="mailto:hi@piestarter.ru" className="underline hover:text-white transition-colors">hi@piestarter.ru</a>
               <a href="tel:+79001234567" className="hover:text-white transition-colors">+7 900 123-45-67</a>
               <span>Адрес: пер. Большой Афанасьевский, д. 41, стр. 2, этаж 5, Россия, Москва, 119019</span>
@@ -62,7 +62,7 @@ const Footer = () => {
       {/* Divider */}
       <div className="w-full h-[1px] bg-grey-71 opacity-30" />
       {/* Bottom */}
-      <div className="flex items-center justify-between w-full text-[16px] text-grey-96 leading-[24px] font-light">
+      <div className="flex items-center justify-between w-full text-[16px] text-grey-96 leading-[24px] font-normal">
         <span>© 2025 ООО «Пайстартер». Все права защищены</span>
         <div className="flex gap-[24px] items-center">
           <a href="#" className="hover:text-white transition-colors">Политика обработки персональных данных</a>
