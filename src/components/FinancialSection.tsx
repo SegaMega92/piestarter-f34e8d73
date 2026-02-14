@@ -79,7 +79,7 @@ const FinancialSection = () => {
       </div>
       {/* Right: Chart */}
       <div className="bg-[#222936] min-h-[360px] md:min-h-[530px] overflow-hidden rounded-[24px] md:rounded-[40px] w-full lg:flex-1 lg:min-w-0 relative">
-        <div className="relative md:absolute md:left-1/2 md:-translate-x-1/2 md:top-[6px] bg-white min-h-[280px] md:h-[420px] rounded-[20px] md:rounded-[40px] w-full md:w-[816px] overflow-hidden p-[16px] md:p-[24px]">
+        <div className="relative md:absolute md:inset-x-[6px] md:top-[6px] bg-white min-h-[280px] md:h-[420px] rounded-[20px] md:rounded-[40px] w-full overflow-hidden p-[16px] md:p-[24px]">
           {/* Chart Tabs */}
           <div className="flex flex-wrap gap-[8px] items-center">
             <button
