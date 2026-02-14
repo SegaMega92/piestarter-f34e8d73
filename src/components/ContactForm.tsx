@@ -11,7 +11,7 @@ const ContactForm = () => {
         <h2 className="font-semibold text-[48px] leading-[1.1] tracking-[-0.96px] text-black m-0">
           Остались вопросы? Напишите нам
         </h2>
-        <p className="font-medium text-[18px] text-grey-44 leading-[24px] m-0">
+        <p className="font-normal text-[18px] text-grey-44 leading-[24px] m-0">
           Вы также можете написать менеджеру в{" "}
           <span className="text-cyan-2 cursor-pointer hover:underline transition-all">телеграм</span> или на электронную почту:{" "}
           <span className="text-cyan-2 cursor-pointer hover:underline transition-all">hi@piestarter.ru</span>
