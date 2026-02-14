@@ -1,4 +1,3 @@
-import imageMap from "@/assets/image-map.png";
 import imageHub from "@/assets/image-hub.png";
 import imageWarehouse from "@/assets/image-warehouse.png";
 import bxsCopyAlt1 from "@/assets/bxs-copy-alt1.svg";
@@ -8,8 +7,16 @@ const LocationSection = () => {
     <>
       <section className="flex flex-col md:flex-row gap-[20px] md:gap-[30px] items-start pb-[60px] md:pb-[120px]">
         {/* Map */}
-        <div className="h-[240px] sm:h-[340px] md:h-[480px] overflow-hidden rounded-[20px] md:rounded-[40px] w-full md:flex-1 md:min-w-0 cursor-pointer group">
-          <img src={imageMap} alt="Карта" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        <div className="h-[240px] sm:h-[340px] md:h-[480px] overflow-hidden rounded-[20px] md:rounded-[40px] w-full md:flex-1 md:min-w-0">
+          <iframe
+            src="https://yandex.ru/map-widget/v1/?pt=60.676417,56.795588&z=15&l=map"
+            width="100%"
+            height="100%"
+            frameBorder="0"
+            allowFullScreen
+            style={{ border: 0, borderRadius: 'inherit' }}
+            title="Карта расположения объекта"
+          />
         </div>
         {/* Location Details */}
         <div className="flex flex-col gap-[24px] md:gap-[36px] items-start w-full md:flex-1 md:min-w-0">
