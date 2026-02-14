@@ -24,7 +24,7 @@ const PropertyDetails = () => {
           </p>
         </div>
         {/* Feature Cards */}
-        <div className="flex flex-col sm:flex-row gap-[16px] md:gap-[24px] w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-[16px] md:gap-[24px] w-full">
           <div className="border border-grey-71 flex flex-1 gap-[11px] items-start p-[12px] rounded-[20px] hover:border-cyan-2 hover:shadow-sm transition-all cursor-default">
             <div className="w-[36px] h-[36px] shrink-0 flex items-center justify-center">
               <img src={calendarAlt} alt="" className="w-[24px] h-[27px]" />
