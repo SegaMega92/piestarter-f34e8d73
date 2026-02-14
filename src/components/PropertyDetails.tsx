@@ -44,9 +44,10 @@ const PropertyDetails = () => {
       </div>
       {/* Right: Price Card */}
       <div
-        className="flex flex-col gap-[12px] items-center px-[20px] py-[24px] rounded-[40px] w-[380px] shrink-0 sticky top-[120px]"
+        className="flex flex-col gap-[12px] items-center px-[20px] py-[24px] rounded-[40px] w-[380px] shrink-0 sticky top-[120px] animate-gradient-shift"
         style={{
-          background: "linear-gradient(90deg, rgba(254,255,255,0.5), rgba(254,255,255,0.5)), linear-gradient(90deg, #abe4f5, #abe4f5)",
+          backgroundSize: "200% 200%",
+          backgroundImage: "linear-gradient(135deg, #abe4f5, #c4eaf3, #dac0f0, #abe4f5, #c4eaf3)",
         }}
       >
         <div className="bg-white/50 flex flex-col gap-[4px] items-center py-[12px] rounded-[20px] w-full text-cyan-2">

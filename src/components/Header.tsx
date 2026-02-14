@@ -1,5 +1,4 @@
-import image107 from "@/assets/image107.png";
-import group33 from "@/assets/group33.svg";
+import logoPie from "@/assets/logo_pie.svg";
 import svgSearch from "@/assets/svg-search.svg";
 import svgUser from "@/assets/svg-user.svg";
 
@@ -8,10 +7,7 @@ const Header = () => {
     <header className="flex items-center justify-between px-[70px] py-[20px] w-full sticky top-0 bg-bg-main/95 backdrop-blur-sm z-50">
       {/* Logo */}
       <a href="/" className="flex items-center gap-[14px] cursor-pointer hover:opacity-80 transition-opacity">
-        <div className="relative w-[60px] h-[60px] rounded-[20px] overflow-hidden">
-          <img src={image107} alt="" className="w-full h-full object-cover" />
-          <img src={group33} alt="" className="absolute top-[14px] left-[11px] w-[38px] h-[33px]" />
-        </div>
+        <img src={logoPie} alt="Пайстартер" className="w-[60px] h-[60px]" />
         <div className="logo-text text-[22px] leading-[21px] tracking-[0.66px] text-black">
           <p className="m-0">пай</p>
           <p className="m-0">стартер</p>
