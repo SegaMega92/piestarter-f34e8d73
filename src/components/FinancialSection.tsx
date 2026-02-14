@@ -78,8 +78,8 @@ const FinancialSection = () => {
         </div>
       </div>
       {/* Right: Chart */}
-      <div className="bg-[#222936] min-h-[360px] md:min-h-[530px] overflow-hidden rounded-[24px] md:rounded-[40px] w-full lg:flex-1 lg:min-w-0 relative">
-        <div className="relative md:absolute md:inset-x-[6px] md:top-[6px] bg-white min-h-[280px] md:h-[420px] rounded-[20px] md:rounded-[40px] w-full overflow-hidden p-[16px] md:p-[24px]">
+      <div className="bg-[#222936] overflow-hidden rounded-[24px] md:rounded-[40px] w-full lg:flex-1 lg:min-w-0 flex flex-col">
+        <div className="bg-white rounded-[20px] md:rounded-[40px] w-full overflow-hidden p-[16px] md:p-[24px] m-[4px] md:m-[6px]" style={{ width: 'calc(100% - 8px)', maxWidth: 'calc(100% - 12px)' }}>
           {/* Chart Tabs */}
           <div className="flex flex-wrap gap-[8px] items-center">
             <button
@@ -100,12 +100,12 @@ const FinancialSection = () => {
             </div>
           </div>
           {/* Recharts Graph */}
-          <div className="mt-[16px] md:mt-[20px] h-[180px] md:h-[300px] w-full">
+          <div className="mt-[16px] md:mt-[20px] h-[200px] md:h-[320px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={data} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
+              <AreaChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 5 }}>
                 <defs>
                   <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#397fff" stopOpacity={0.15} />
+                    <stop offset="5%" stopColor="#397fff" stopOpacity={0.12} />
                     <stop offset="95%" stopColor="#397fff" stopOpacity={0.01} />
                   </linearGradient>
                 </defs>
@@ -124,20 +124,20 @@ const FinancialSection = () => {
                 />
                 <Tooltip content={<CustomTooltip />} cursor={false} />
                 <Area
-                  type="monotone"
+                  type="natural"
                   dataKey="value"
                   stroke="#397fff"
-                  strokeWidth={3}
+                  strokeWidth={2.5}
                   fill="url(#colorValue)"
                   dot={false}
-                  activeDot={{ r: 6, fill: '#fff', stroke: '#397fff', strokeWidth: 2 }}
+                  activeDot={{ r: 5, fill: '#fff', stroke: '#397fff', strokeWidth: 2 }}
                 />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
         {/* Bottom buttons */}
-        <div className="flex flex-wrap gap-[8px] md:gap-[12px] items-center p-[16px] md:absolute md:left-[35px] md:top-[450px]">
+        <div className="flex flex-wrap gap-[8px] md:gap-[12px] items-center px-[16px] md:px-[30px] py-[16px] md:py-[24px]">
           <button className="bg-p-blue flex items-center justify-center px-[20px] md:px-[30px] py-[12px] md:py-[18px] rounded-[30px] cursor-pointer hover:bg-[#96d9ec] active:scale-[0.98] transition-all">
             <span className="font-medium text-[13px] md:text-[14.9px] text-black">Купить паи</span>
           </button>
