@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import svgPlus from "@/assets/svg-plus.svg";
 import svgMinus from "@/assets/svg-minus.svg";
 
@@ -21,6 +21,57 @@ const faqs = [
   },
 ];
 
+const FAQItem = ({ faq, index, isOpen, onToggle, isLast }: {
+  faq: { q: string; a: string };
+  index: number;
+  isOpen: boolean;
+  onToggle: () => void;
+  isLast: boolean;
+}) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      setHeight(isOpen ? contentRef.current.scrollHeight : 0);
+    }
+  }, [isOpen]);
+
+  return (
+    <div
+      className={`flex items-start justify-between py-[20px] md:py-[40px] w-full cursor-pointer select-none gap-[12px] md:gap-[16px] ${!isLast ? "border-b border-grey-71" : ""}`}
+      onClick={onToggle}
+    >
+      <span className={`font-semibold text-[20px] md:text-[30px] leading-[1.3] shrink-0 w-[36px] md:w-[60px] transition-colors duration-300 ${isOpen ? "text-black" : "text-grey-71"}`}>
+        {String(index + 1).padStart(2, "0")}
+      </span>
+      <div className="flex flex-col gap-0 items-start flex-1 min-w-0">
+        <h3 className="font-semibold text-[18px] md:text-[30px] text-black leading-[1.3] m-0">{faq.q}</h3>
+        <div
+          ref={contentRef}
+          className="overflow-hidden transition-all duration-400 ease-in-out"
+          style={{ maxHeight: height, opacity: isOpen ? 1 : 0, marginTop: isOpen ? 12 : 0, transition: 'max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease' }}
+        >
+          <p className="font-normal text-[14px] md:text-[16px] text-grey-30 leading-[22px] md:leading-[24px] m-0">{faq.a}</p>
+        </div>
+      </div>
+      <button
+        className={`rounded-[22px] w-[36px] h-[36px] md:w-[44px] md:h-[44px] flex items-center justify-center shrink-0 border transition-all duration-300 hover:scale-110 ${
+          isOpen
+            ? "bg-azure-13 border-azure-13"
+            : "bg-white border-grey-71 hover:border-cyan-2"
+        }`}
+      >
+        <img
+          src={isOpen ? svgMinus : svgPlus}
+          alt=""
+          className="w-[10px] h-[10px]"
+        />
+      </button>
+    </div>
+  );
+};
+
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
@@ -35,34 +86,14 @@ const FAQSection = () => {
         </p>
         <div className="flex flex-col items-center w-full">
           {faqs.map((faq, i) => (
-            <div
+            <FAQItem
               key={i}
-              className={`flex items-start justify-between py-[20px] md:py-[40px] w-full cursor-pointer select-none gap-[12px] md:gap-[16px] ${i < faqs.length - 1 ? "border-b border-grey-71" : ""}`}
-              onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
-            >
-              <span className={`font-semibold text-[20px] md:text-[30px] leading-[1.3] shrink-0 w-[36px] md:w-[60px] transition-colors ${openIndex === i ? "text-black" : "text-grey-71"}`}>
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div className="flex flex-col gap-[12px] md:gap-[24px] items-start flex-1 min-w-0">
-                <h3 className="font-semibold text-[18px] md:text-[30px] text-black leading-[1.3] m-0">{faq.q}</h3>
-                {openIndex === i && (
-                  <p className="font-normal text-[14px] md:text-[16px] text-grey-30 leading-[22px] md:leading-[24px] m-0">{faq.a}</p>
-                )}
-              </div>
-              <button
-                className={`rounded-[22px] w-[36px] h-[36px] md:w-[44px] md:h-[44px] flex items-center justify-center shrink-0 border transition-all hover:scale-110 ${
-                  openIndex === i
-                    ? "bg-azure-13 border-azure-13"
-                    : "bg-white border-grey-71 hover:border-cyan-2"
-                }`}
-              >
-                <img
-                  src={openIndex === i ? svgMinus : svgPlus}
-                  alt=""
-                  className="w-[10px] h-[10px]"
-                />
-              </button>
-            </div>
+              faq={faq}
+              index={i}
+              isOpen={openIndex === i}
+              onToggle={() => setOpenIndex(openIndex === i ? -1 : i)}
+              isLast={i === faqs.length - 1}
+            />
           ))}
         </div>
       </div>
