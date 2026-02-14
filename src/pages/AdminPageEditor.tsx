@@ -259,6 +259,27 @@ const BlockEditorForm = ({
           ))}
         </div>
       );
+    case "PropertyDetails":
+      return (
+        <div className="space-y-3">
+          <div className="space-y-1">
+            <Label className="text-xs">Цена за 1 пай</Label>
+            <Input
+              value={content.price || ""}
+              onChange={(e) => onUpdate("price", e.target.value)}
+              placeholder="120 364₽"
+            />
+          </div>
+          <div className="space-y-1">
+            <Label className="text-xs">Ссылка на презентацию</Label>
+            <Input
+              value={content.presentation_url || ""}
+              onChange={(e) => onUpdate("presentation_url", e.target.value)}
+              placeholder="https://..."
+            />
+          </div>
+        </div>
+      );
     case "FAQSection":
       return (
         <div className="space-y-3">
