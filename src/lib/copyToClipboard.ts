@@ -20,10 +20,10 @@ export function copyWithTooltip(text: string, event: React.MouseEvent) {
   `;
   document.body.appendChild(el);
 
-  requestAnimationFrame(() => {
+  setTimeout(() => {
     el.style.opacity = "0";
     el.style.transform = "translateY(-10px)";
-  });
+  }, 800);
 
-  setTimeout(() => el.remove(), 500);
+  setTimeout(() => el.remove(), 1300);
 }
