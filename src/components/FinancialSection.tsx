@@ -1,8 +1,6 @@
 import { useState } from "react";
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import arrowRight from "@/assets/arrow-right.svg";
-import graph from "@/assets/graph.svg";
-import graph1 from "@/assets/graph1.svg";
-import ellipse12 from "@/assets/ellipse12.svg";
 
 const tabs = [
   { key: "income", label: "Доход на пай", desc: "Это прибыль, приходящаяся на один инвестиционный пай фонда. Начисляется ежемесячно." },
@@ -10,9 +8,41 @@ const tabs = [
   { key: "turnover", label: "Оборот паев", desc: "Объём торгов паями за выбранный период." },
 ];
 
+const chartDataAll = [
+  { month: "янв. 25", value: 200 },
+  { month: "фев. 25", value: 800 },
+  { month: "мар. 25", value: 1700 },
+  { month: "апр. 25", value: 1400 },
+  { month: "май. 25", value: 650 },
+  { month: "июн. 25", value: 400 },
+  { month: "июл. 25", value: 650 },
+  { month: "авг. 25", value: 2100 },
+  { month: "сен. 25", value: 2500 },
+  { month: "окт. 25", value: 1800 },
+  { month: "ноя. 25", value: 800 },
+  { month: "дек. 25", value: 560 },
+];
+
+const chartData12m = chartDataAll.slice(-6);
+
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-cyan-2 text-white px-3 py-2 rounded-lg text-sm font-medium shadow-lg">
+        <p className="m-0">Доход на паи</p>
+        <p className="m-0 text-base font-semibold">{payload[0].value}₽</p>
+      </div>
+    );
+  }
+  return null;
+};
+
 const FinancialSection = () => {
   const [period, setPeriod] = useState<"12m" | "all">("all");
   const [activeTab, setActiveTab] = useState("income");
+
+  const data = period === "all" ? chartDataAll : chartData12m;
+  const total = period === "all" ? "8 560₽" : "5 310₽";
 
   return (
     <section className="bg-azure-13 rounded-[24px] md:rounded-[40px] w-full py-[60px] md:py-[120px]">
@@ -66,14 +96,44 @@ const FinancialSection = () => {
             </button>
             <div className="ml-auto flex flex-col items-end">
               <span className="font-medium text-grey-44 text-[14px] md:text-[18px] leading-[20px] md:leading-[24px]">Итого доход</span>
-              <span className="font-semibold text-cyan-2 text-[14px] md:text-[18px] leading-[20px] md:leading-[24px]">8 560₽</span>
+              <span className="font-semibold text-cyan-2 text-[14px] md:text-[18px] leading-[20px] md:leading-[24px]">{total}</span>
             </div>
           </div>
-          {/* Graph SVGs */}
-          <div className="mt-[16px] md:mt-[20px] h-[180px] md:h-[300px] w-full relative">
-            <img src={graph} alt="" className="absolute bottom-0 left-0 w-full h-[70%] md:h-[262px]" />
-            <img src={graph1} alt="" className="absolute bottom-0 left-0 w-full h-[60%] md:h-[221px]" />
-            <img src={ellipse12} alt="" className="absolute top-[0px] right-[60px] md:right-[140px] w-[10px] h-[10px] md:w-[12px] md:h-[12px]" />
+          {/* Recharts Graph */}
+          <div className="mt-[16px] md:mt-[20px] h-[180px] md:h-[300px] w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={data} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#397fff" stopOpacity={0.15} />
+                    <stop offset="95%" stopColor="#397fff" stopOpacity={0.01} />
+                  </linearGradient>
+                </defs>
+                <XAxis
+                  dataKey="month"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 12, fill: '#828485' }}
+                  dy={10}
+                />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 12, fill: '#828485' }}
+                  dx={-5}
+                />
+                <Tooltip content={<CustomTooltip />} cursor={false} />
+                <Area
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#397fff"
+                  strokeWidth={3}
+                  fill="url(#colorValue)"
+                  dot={false}
+                  activeDot={{ r: 6, fill: '#fff', stroke: '#397fff', strokeWidth: 2 }}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
           </div>
         </div>
         {/* Bottom buttons */}
