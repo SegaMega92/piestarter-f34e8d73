@@ -15,7 +15,7 @@ const LocationSection = () => {
             height="100%"
             frameBorder="0"
             allowFullScreen={false}
-            style={{ border: 0, borderRadius: 'inherit', pointerEvents: 'none' }}
+            style={{ border: 0, borderRadius: 'inherit' }}
             title="Карта расположения объекта"
           />
         </div>
