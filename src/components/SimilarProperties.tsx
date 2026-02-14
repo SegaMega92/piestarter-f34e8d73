@@ -50,27 +50,27 @@ const properties = [
 
 const SimilarProperties = () => {
   return (
-    <section className="flex flex-col gap-[60px] items-center pt-[120px]">
-      <h2 className="font-semibold text-[72px] leading-[68px] tracking-[-2.16px] text-black text-center m-0">
+    <section className="flex flex-col gap-[30px] md:gap-[60px] items-center pt-[60px] md:pt-[120px]">
+      <h2 className="font-semibold text-[36px] md:text-[72px] leading-[1.05] tracking-[-1px] md:tracking-[-2.16px] text-black text-center m-0">
         Похожие объекты
       </h2>
-      <div className="flex gap-[30px] items-start w-full">
+      <div className="flex flex-col md:flex-row gap-[24px] md:gap-[30px] items-start w-full">
         {properties.map((p) => (
-          <div key={p.title} className="flex flex-col gap-[24px] items-start flex-1 min-w-0 cursor-pointer group">
-            <div className="h-[292px] overflow-hidden rounded-[40px] w-full relative">
+          <div key={p.title} className="flex flex-col gap-[16px] md:gap-[24px] items-start w-full md:flex-1 md:min-w-0 cursor-pointer group">
+            <div className="h-[200px] sm:h-[240px] md:h-[292px] overflow-hidden rounded-[24px] md:rounded-[40px] w-full relative">
               <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className={`absolute right-[16px] top-[16px] ${p.ratingBg} px-[8px] py-[3px] rounded-[15px]`}>
+              <div className={`absolute right-[12px] top-[12px] md:right-[16px] md:top-[16px] ${p.ratingBg} px-[8px] py-[3px] rounded-[15px]`}>
                 <span className={`font-semibold text-[14.9px] ${p.ratingColor}`}>{p.ratingText}</span>
               </div>
             </div>
             <div className="flex flex-col gap-[12px] w-full">
               <div className="flex flex-col gap-[6px]">
-                <h3 className="font-semibold text-[24px] leading-[24px] text-cyan-2 m-0 group-hover:text-blue-second transition-colors">{p.title}</h3>
-                <div className="flex gap-[6px] items-start text-[18px] text-grey-44">
+                <h3 className="font-semibold text-[20px] md:text-[24px] leading-[24px] text-cyan-2 m-0 group-hover:text-blue-second transition-colors">{p.title}</h3>
+                <div className="flex gap-[6px] items-start text-[14px] md:text-[18px] text-grey-44">
                   <span>{p.city}</span><span>•</span><span>{p.area}</span><span>•</span><span>{p.term}</span>
                 </div>
               </div>
-              <div className="flex flex-col gap-[6px] text-[18px]">
+              <div className="flex flex-col gap-[6px] text-[14px] md:text-[18px]">
                 <div className="flex gap-[8px]">
                   <span className="text-grey-44">Стоимость:</span>
                   <span className="text-black">{p.price}</span>
