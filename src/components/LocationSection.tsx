@@ -15,11 +15,9 @@ const LocationSection = () => {
             height="100%"
             frameBorder="0"
             allowFullScreen={false}
-            style={{ border: 0, borderRadius: 'inherit' }}
+            style={{ border: 0, borderRadius: 'inherit', pointerEvents: 'none' }}
             title="Карта расположения объекта"
           />
-          {/* Overlay to hide top search/traffic controls only */}
-          <div className="absolute top-0 left-0 right-0 h-[48px] bg-card pointer-events-none z-10" style={{ borderRadius: 'inherit' }} />
         </div>
         {/* Location Details */}
         <div className="flex flex-col gap-[24px] md:gap-[36px] items-start w-full md:flex-1 md:min-w-0">
