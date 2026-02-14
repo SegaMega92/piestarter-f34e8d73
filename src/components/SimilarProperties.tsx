@@ -65,12 +65,12 @@ const SimilarProperties = () => {
             </div>
             <div className="flex flex-col gap-[12px] w-full">
               <div className="flex flex-col gap-[6px]">
-                <h3 className="font-inter font-semibold text-[24px] leading-[24px] text-cyan-2 m-0 group-hover:text-blue-second transition-colors">{p.title}</h3>
-                <div className="flex gap-[6px] items-start text-[18px] text-grey-44 font-inter">
+                <h3 className="font-semibold text-[24px] leading-[24px] text-cyan-2 m-0 group-hover:text-blue-second transition-colors">{p.title}</h3>
+                <div className="flex gap-[6px] items-start text-[18px] text-grey-44">
                   <span>{p.city}</span><span>•</span><span>{p.area}</span><span>•</span><span>{p.term}</span>
                 </div>
               </div>
-              <div className="flex flex-col gap-[6px] text-[18px] font-inter">
+              <div className="flex flex-col gap-[6px] text-[18px]">
                 <div className="flex gap-[8px]">
                   <span className="text-grey-44">Стоимость:</span>
                   <span className="text-black">{p.price}</span>

@@ -63,7 +63,7 @@ const ContactForm = () => {
               </svg>
             )}
           </button>
-          <span className="font-inter text-[18px] text-grey-44 leading-[24px] cursor-pointer select-none" onClick={() => setAgreed(!agreed)}>
+          <span className="text-[18px] text-grey-44 leading-[24px] cursor-pointer select-none" onClick={() => setAgreed(!agreed)}>
             Соглашаюсь с <span className="hover:underline">политикой обработки данных</span>
           </span>
         </div>
