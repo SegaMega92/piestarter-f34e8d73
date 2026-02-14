@@ -1,6 +1,7 @@
 import calendarAlt from "@/assets/calendar-alt.svg";
 import briefcase from "@/assets/briefcase.svg";
 import fileDownload from "@/assets/file-download.svg";
+import priceBg from "@/assets/price-bg.svg";
 
 const PropertyDetails = () => {
   return (
@@ -44,17 +45,18 @@ const PropertyDetails = () => {
       </div>
       {/* Right: Price Card */}
       <div
-        className="flex flex-col gap-[12px] items-center px-[16px] md:px-[20px] py-[20px] md:py-[24px] rounded-[30px] md:rounded-[40px] w-full lg:w-[380px] shrink-0 lg:sticky lg:top-[120px] animate-gradient-shift order-1 lg:order-2"
+        className="flex flex-col gap-[12px] items-center px-[16px] md:px-[20px] py-[20px] md:py-[24px] rounded-[30px] md:rounded-[40px] w-full lg:w-[380px] shrink-0 lg:sticky lg:top-[120px] order-1 lg:order-2"
         style={{
-          backgroundSize: "200% 200%",
-          backgroundImage: "linear-gradient(135deg, #abe4f5, #c4eaf3, #dac0f0, #abe4f5, #c4eaf3)",
+          backgroundImage: `url(${priceBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
         <div className="bg-white/50 flex flex-col gap-[4px] items-center py-[12px] rounded-[20px] w-full text-cyan-2">
           <span className="font-semibold text-[14px] leading-[18px]">Цена за 1 пай</span>
           <span className="font-semibold text-[30px] md:text-[36px] leading-[1.1] tracking-[-1px]">120 364₽</span>
         </div>
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col gap-[8px] w-full">
           <button className="flex items-center justify-center gap-[6px] px-[30px] py-[14px] md:py-[18px] rounded-[30px] cursor-pointer hover:bg-white/40 transition-colors">
             <span className="font-semibold text-[16px] md:text-[18px] text-cyan-2">Презентация</span>
             <img src={fileDownload} alt="" className="w-[14px] h-[18px]" />
