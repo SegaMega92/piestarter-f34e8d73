@@ -17,13 +17,13 @@ const Header = () => {
         </div>
       </a>
       {/* Search - hidden on mobile */}
-      <div className="hidden lg:flex bg-white border border-grey-88 items-center justify-between px-[20px] py-[18px] rounded-[40px] w-[600px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)] cursor-pointer hover:border-grey-71 hover:shadow-[0px_2px_6px_0px_rgba(0,0,0,0.15)] transition-all">
+      <div className="hidden lg:flex bg-white border border-grey-88 items-center justify-between px-[20px] py-[18px] rounded-[40px] flex-1 max-w-[600px] min-w-[200px] mx-4 xl:mx-8 shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)] cursor-pointer hover:border-grey-71 hover:shadow-[0px_2px_6px_0px_rgba(0,0,0,0.15)] transition-all">
         <span className="text-p-gray font-medium text-[15px]">Поиск по объектам</span>
         <img src={svgSearch} alt="Поиск" className="w-[22px] h-[22px]" />
       </div>
       {/* CTA - hidden on mobile */}
-      <button className="hidden md:flex bg-p-blue items-center gap-[10px] px-[30px] py-[18px] rounded-[30px] cursor-pointer hover:bg-[#96d9ec] active:scale-[0.98] transition-all">
-        <span className="font-medium text-[14.9px] text-black">Личный кабинет</span>
+      <button className="hidden md:flex bg-p-blue items-center gap-[10px] px-[20px] lg:px-[30px] py-[14px] lg:py-[18px] rounded-[30px] cursor-pointer hover:bg-[#96d9ec] active:scale-[0.98] transition-all whitespace-nowrap shrink-0">
+        <span className="font-medium text-[14px] lg:text-[14.9px] text-black">Личный кабинет</span>
         <img src={svgUser} alt="" className="w-[22px] h-[22px]" />
       </button>
       {/* Mobile buttons */}
