@@ -39,7 +39,7 @@ const FinancialSection = () => {
                 </span>
               </button>
               {activeTab === tab.key && (
-                <p className="font-medium text-[18px] text-grey-71 leading-[24px] m-0">
+                <p className="font-normal text-[18px] text-grey-71 leading-[24px] m-0">
                   {tab.desc}
                 </p>
               )}

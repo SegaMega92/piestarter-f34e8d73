@@ -16,11 +16,11 @@ const LocationSection = () => {
           <div className="flex flex-col gap-[12px]">
             <h2 className="font-semibold text-[48px] leading-[1.1] tracking-[-0.96px] text-azure-4 m-0">Расположение</h2>
             <button className="flex gap-[6px] items-center group hover:opacity-70 transition-opacity">
-              <span className="font-medium text-[18px] text-grey-44">г. Екатеринбург, ул. Черняховского, 86к7</span>
+              <span className="font-normal text-[18px] text-grey-44">г. Екатеринбург, ул. Черняховского, 86к7</span>
               <img src={bxsCopyAlt1} alt="Копировать" className="w-[15px] h-[15px]" />
             </button>
           </div>
-          <ul className="font-medium text-[18px] text-cyan-2 leading-[24px] space-y-4 list-disc ml-[27px] m-0 p-0">
+          <ul className="font-normal text-[18px] text-cyan-2 leading-[24px] space-y-4 list-disc ml-[27px] m-0 p-0">
             <li>Екатеринбург является важной точкой на маршруте транспортного коридора «Восток-Запад»</li>
             <li>Объект расположен в черте города в 15 км от центра Екатеринбурга</li>
             <li>Находится рядом с выездом на ЕКАД — кольцевую автодорогу, которую пересекают три федеральные и три областные трассы</li>
@@ -34,7 +34,7 @@ const LocationSection = () => {
         <div className="bg-grey-96 flex flex-col gap-[24px] items-start p-[36px] rounded-[40px] flex-1 min-w-0 hover:shadow-lg transition-shadow">
           <div className="flex flex-col gap-[12px]">
             <h3 className="font-semibold text-[30px] leading-[39px] text-black m-0 max-w-[400px]">Будущий транспортно-торговый хаб</h3>
-            <p className="font-medium text-[18px] text-grey-44 leading-[24px] m-0">
+            <p className="font-normal text-[18px] text-grey-44 leading-[24px] m-0">
               В 2027 планируется строительство транспортно-пересадочного узла, что значительно увеличит пешеходный и транспортный поток
             </p>
           </div>
@@ -45,7 +45,7 @@ const LocationSection = () => {
         <div className="bg-grey-96 flex flex-col gap-[24px] items-start justify-between p-[36px] rounded-[40px] flex-1 min-w-0 hover:shadow-lg transition-shadow">
           <div className="flex flex-col gap-[12px]">
             <h3 className="font-semibold text-[30px] leading-[39px] text-black m-0 max-w-[400px]">Стабильный спрос на складские площади</h3>
-            <p className="font-medium text-[18px] text-grey-44 leading-[24px] m-0">
+            <p className="font-normal text-[18px] text-grey-44 leading-[24px] m-0">
               Екатеринбургская агломерация традиционно испытывает высокий спрос на современные логистические объекты
             </p>
           </div>

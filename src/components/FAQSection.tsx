@@ -30,7 +30,7 @@ const FAQSection = () => {
         Вопросы и ответы
       </h2>
       <div className="flex flex-col gap-[24px] items-center w-full">
-        <p className="font-medium text-[18px] text-grey-44 text-center max-w-[625px] leading-[24px] m-0">
+        <p className="font-normal text-[18px] text-grey-44 text-center max-w-[625px] leading-[24px] m-0">
           Разобраться в инвестициях можно без экономического образования. Ниже — ответы на вопросы, которые мы чаще всего получаем.
         </p>
         <div className="flex flex-col items-center w-full">

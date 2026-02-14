@@ -9,16 +9,16 @@ const PropertyDetails = () => {
       <div className="flex flex-col gap-[24px] items-start flex-1 min-w-0">
         <div className="flex flex-col gap-[12px] text-[18px] text-cyan-2">
           <h3 className="font-semibold leading-[24px] m-0">Характеристики</h3>
-          <p className="font-medium leading-[24px] m-0">
+          <p className="font-normal leading-[24px] m-0">
             Находится в черте Екатеринбурга — города-миллионника и крупного логистического хаба, обслуживающего Урал, Западную Сибирь и Китай.
           </p>
-          <p className="font-medium leading-[24px] m-0">
+          <p className="font-normal leading-[24px] m-0">
             Здание введено в эксплуатацию в 2015 г. Электрическая мощность — 380 кВт, высота потолка — 11 м, в зоне разгрузки — 29 доков.
           </p>
         </div>
         <div className="flex flex-col gap-[12px] text-[18px] text-cyan-2">
           <h3 className="font-semibold leading-[24px] m-0">Арендатор</h3>
-          <p className="font-medium leading-[24px] m-0">
+          <p className="font-normal leading-[24px] m-0">
             С 2017 г. арендатором является федеральная компания «Деловые линии». Это один из ведущих транспортно-логистических операторов России. «Деловые линии» отправляют грузы в 66 стран мира. Данный склад стратегически важен для компании в связи с удачным расположением и подходящей инфраструктурой.
           </p>
         </div>
@@ -28,7 +28,7 @@ const PropertyDetails = () => {
             <div className="w-[36px] h-[36px] shrink-0 flex items-center justify-center">
               <img src={calendarAlt} alt="" className="w-[24px] h-[27px]" />
             </div>
-            <p className="font-medium text-[18px] text-cyan-2 leading-[24px] m-0">
+            <p className="font-normal text-[18px] text-cyan-2 leading-[24px] m-0">
               Ежемесячные выплаты дохода<br />на счет в вашем банке
             </p>
           </div>
@@ -36,7 +36,7 @@ const PropertyDetails = () => {
             <div className="w-[36px] h-[36px] shrink-0 flex items-center justify-center">
               <img src={briefcase} alt="" className="w-[27px] h-[27px]" />
             </div>
-            <p className="font-medium text-[18px] text-cyan-2 leading-[24px] m-0">
+            <p className="font-normal text-[18px] text-cyan-2 leading-[24px] m-0">
               Доступно для неквалифицированных<br />инвесторов
             </p>
           </div>
