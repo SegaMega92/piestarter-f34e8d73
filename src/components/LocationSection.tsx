@@ -24,7 +24,10 @@ const LocationSection = () => {
         <div className="flex flex-col gap-[24px] md:gap-[36px] items-start w-full md:flex-1 md:min-w-0">
           <div className="flex flex-col gap-[12px]">
             <h2 className="font-semibold text-[32px] md:text-[48px] leading-[1.1] tracking-[-0.96px] text-azure-4 m-0">Расположение</h2>
-            <button className="flex gap-[6px] items-center group hover:opacity-70 transition-opacity">
+            <button
+              className="flex gap-[6px] items-center group hover:opacity-70 transition-opacity"
+              onClick={() => navigator.clipboard.writeText("г. Екатеринбург, ул. Черняховского, 86к7")}
+            >
               <span className="font-normal text-[16px] md:text-[18px] text-grey-44">г. Екатеринбург, ул. Черняховского, 86к7</span>
               <img src={bxsCopyAlt1} alt="Копировать" className="w-[15px] h-[15px]" />
             </button>

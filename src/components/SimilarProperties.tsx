@@ -87,7 +87,7 @@ const SimilarProperties = () => {
                   <div className="flex gap-[8px] items-center">
                     <span className="text-grey-44">ISIN:</span>
                     <span className="text-black">{p.isin}</span>
-                    <button className="hover:opacity-60 transition-opacity" onClick={(e) => e.stopPropagation()}>
+                    <button className="hover:opacity-60 transition-opacity" onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(p.isin); }}>
                       <img src={bxsCopyAlt1} alt="Копировать" className="w-[18px] h-[18px]" />
                     </button>
                   </div>
