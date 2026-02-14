@@ -1,14 +1,20 @@
+import { useState } from "react";
 import imageHub from "@/assets/image-hub.png";
 import imageWarehouse from "@/assets/image-warehouse.png";
 import bxsCopyAlt1 from "@/assets/bxs-copy-alt1.svg";
 import { copyWithTooltip } from "@/lib/copyToClipboard";
 
 const LocationSection = () => {
+  const [mapActive, setMapActive] = useState(false);
+
   return (
     <>
       <section className="flex flex-col md:flex-row gap-[20px] md:gap-[30px] items-start pb-[60px] md:pb-[120px]">
         {/* Map */}
-        <div className="h-[240px] sm:h-[340px] md:h-[480px] overflow-hidden rounded-[20px] md:rounded-[40px] w-full md:flex-1 md:min-w-0 relative">
+        <div
+          className="h-[240px] sm:h-[340px] md:h-[480px] overflow-hidden rounded-[20px] md:rounded-[40px] w-full md:flex-1 md:min-w-0 relative"
+          onMouseLeave={() => setMapActive(false)}
+        >
           <iframe
             src="https://yandex.ru/map-widget/v1/?ll=60.752964,56.757702&z=15&l=map&pt=60.752964,56.757702,pm2blm&lang=ru_RU"
             width="100%"
@@ -18,6 +24,12 @@ const LocationSection = () => {
             style={{ border: 0, borderRadius: 'inherit' }}
             title="Карта расположения объекта"
           />
+          {!mapActive && (
+            <div
+              className="absolute inset-0 z-10 cursor-pointer"
+              onClick={() => setMapActive(true)}
+            />
+          )}
         </div>
         {/* Location Details */}
         <div className="flex flex-col gap-[24px] md:gap-[36px] items-start w-full md:flex-1 md:min-w-0">
