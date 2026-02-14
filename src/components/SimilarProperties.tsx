@@ -1,4 +1,5 @@
 import bxsCopyAlt1 from "@/assets/bxs-copy-alt1.svg";
+import { copyWithTooltip } from "@/lib/copyToClipboard";
 import imageCard1 from "@/assets/image-card1.png";
 import imageCard2 from "@/assets/image-card2.png";
 import imageCard3 from "@/assets/image-card3.png";
@@ -87,7 +88,7 @@ const SimilarProperties = () => {
                   <div className="flex gap-[8px] items-center">
                     <span className="text-grey-44">ISIN:</span>
                     <span className="text-black">{p.isin}</span>
-                    <button className="hover:opacity-60 transition-opacity" onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(p.isin); }}>
+                    <button className="hover:opacity-60 transition-opacity" onClick={(e) => { e.stopPropagation(); copyWithTooltip(p.isin, e); }}>
                       <img src={bxsCopyAlt1} alt="Копировать" className="w-[18px] h-[18px]" />
                     </button>
                   </div>
