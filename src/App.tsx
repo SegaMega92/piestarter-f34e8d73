@@ -10,6 +10,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminPages from "./pages/AdminPages";
 import AdminPageEditor from "./pages/AdminPageEditor";
 import AdminLayout from "./components/admin/AdminLayout";
+import PropertyPage from "./pages/PropertyPage";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/objects/:slug" element={<PropertyPage />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<AdminPages />} />
