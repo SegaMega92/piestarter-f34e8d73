@@ -1,6 +1,7 @@
 import imageHub from "@/assets/image-hub.png";
 import imageWarehouse from "@/assets/image-warehouse.png";
 import bxsCopyAlt1 from "@/assets/bxs-copy-alt1.svg";
+import { copyWithTooltip } from "@/lib/copyToClipboard";
 
 const LocationSection = () => {
   return (
@@ -26,7 +27,7 @@ const LocationSection = () => {
             <h2 className="font-semibold text-[32px] md:text-[48px] leading-[1.1] tracking-[-0.96px] text-azure-4 m-0">Расположение</h2>
             <button
               className="flex gap-[6px] items-center group hover:opacity-70 transition-opacity"
-              onClick={() => navigator.clipboard.writeText("г. Екатеринбург, ул. Черняховского, 86к7")}
+              onClick={(e) => copyWithTooltip("г. Екатеринбург, ул. Черняховского, 86к7", e)}
             >
               <span className="font-normal text-[16px] md:text-[18px] text-grey-44">г. Екатеринбург, ул. Черняховского, 86к7</span>
               <img src={bxsCopyAlt1} alt="Копировать" className="w-[15px] h-[15px]" />
