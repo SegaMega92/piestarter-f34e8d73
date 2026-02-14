@@ -9,7 +9,7 @@ const LocationSection = () => {
         {/* Map */}
         <div className="h-[240px] sm:h-[340px] md:h-[480px] overflow-hidden rounded-[20px] md:rounded-[40px] w-full md:flex-1 md:min-w-0 relative">
           <iframe
-            src="https://yandex.ru/map-widget/v1/?ll=60.680,56.802&z=14&l=map&pt=60.680,56.802,pm2blm&lang=ru_RU"
+            src="https://yandex.ru/map-widget/v1/?ll=60.752964,56.757702&z=15&l=map&pt=60.752964,56.757702,pm2blm&lang=ru_RU"
             width="130%"
             height="140%"
             frameBorder="0"
