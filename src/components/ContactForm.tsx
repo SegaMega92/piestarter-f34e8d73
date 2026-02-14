@@ -45,7 +45,7 @@ const ContactForm = () => {
         <div className="flex flex-col gap-[12px] items-start w-full">
           <label className="font-semibold text-[18px] text-cyan-2 leading-[24px]">Сообщение</label>
           <textarea
-            className="bg-white border border-grey-71 rounded-[10px] w-full p-[10px] text-[16px] font-light leading-[24px] text-grey-71 resize-none outline-none focus:border-blue-second focus:ring-1 focus:ring-blue-second transition-all"
+            className="bg-white border border-grey-71 rounded-[10px] w-full p-[10px] text-[16px] font-normal leading-[24px] text-grey-71 resize-none outline-none focus:border-blue-second focus:ring-1 focus:ring-blue-second transition-all"
             rows={3}
             placeholder="Можете указать как и во сколько с вами лучше связаться"
           />
