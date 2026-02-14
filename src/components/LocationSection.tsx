@@ -10,15 +10,15 @@ const LocationSection = () => {
         <div className="h-[240px] sm:h-[340px] md:h-[480px] overflow-hidden rounded-[20px] md:rounded-[40px] w-full md:flex-1 md:min-w-0 relative">
           <iframe
             src="https://yandex.ru/map-widget/v1/?ll=60.752964,56.757702&z=15&l=map&pt=60.752964,56.757702,pm2blm&lang=ru_RU"
-            width="130%"
-            height="140%"
+            width="100%"
+            height="100%"
             frameBorder="0"
             allowFullScreen={false}
-            style={{ border: 0, position: 'absolute', top: '-20%', left: '-15%' }}
+            style={{ border: 0, borderRadius: 'inherit' }}
             title="Карта расположения объекта"
           />
-          {/* Transparent overlay to block interactions and hide controls */}
-          <div className="absolute inset-0 z-10" style={{ borderRadius: 'inherit' }} />
+          {/* Overlay to hide top search/traffic controls only */}
+          <div className="absolute top-0 left-0 right-0 h-[48px] bg-card pointer-events-none z-10" style={{ borderRadius: 'inherit' }} />
         </div>
         {/* Location Details */}
         <div className="flex flex-col gap-[24px] md:gap-[36px] items-start w-full md:flex-1 md:min-w-0">
