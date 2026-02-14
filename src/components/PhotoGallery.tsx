@@ -8,11 +8,11 @@ import imageSlide5 from "@/assets/image-slide5.png";
 import playBtn from "@/assets/play-btn.svg";
 
 const images = [
-  { src: imageSlide1, alt: "Фото №1" },
-  { src: imageSlide2, alt: "Фото №2" },
-  { src: imageSlide3, alt: "Фото №3" },
-  { src: imageSlide4, alt: "Фото №4" },
-  { src: imageSlide5, alt: "Фото №5" },
+  { src: imageSlide1, alt: "Фото №1", caption: "Фото №1 — Общий вид объекта" },
+  { src: imageSlide2, alt: "Фото №2", caption: "Фото №2 — Вид сбоку" },
+  { src: imageSlide3, alt: "Фото №3", caption: "Фото №3 — Территория" },
+  { src: imageSlide4, alt: "Фото №4", caption: "Фото №4 — Внутреннее пространство" },
+  { src: imageSlide5, alt: "Фото №5", caption: "Фото №5 — Окружение" },
 ];
 
 const PhotoGallery = () => {
@@ -93,12 +93,17 @@ const PhotoGallery = () => {
               <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
             </button>
 
-            <img
-              key={lightbox}
-              src={images[lightbox].src}
-              alt={images[lightbox].alt}
-              className="max-h-full max-w-full object-contain rounded-lg animate-scale-in"
-            />
+            <div className="flex flex-col items-center gap-3">
+              <img
+                key={lightbox}
+                src={images[lightbox].src}
+                alt={images[lightbox].alt}
+                className="max-h-[calc(100%-2rem)] max-w-full object-contain rounded-lg animate-scale-in"
+              />
+              {images[lightbox].caption && (
+                <span className="text-white/70 text-sm md:text-base">{images[lightbox].caption}</span>
+              )}
+            </div>
 
             <button
               onClick={next}
