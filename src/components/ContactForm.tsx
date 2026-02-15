@@ -63,19 +63,15 @@ const ContactForm = () => {
         </div>
         {/* Right: Form */}
         <div className="flex flex-col gap-[20px] md:gap-[30px] items-start w-full md:flex-1 md:min-w-0">
-          {shortFields.length > 0 && (
-            <div className={`flex flex-col sm:flex-row gap-[16px] md:gap-[31px] items-center w-full`}>
-              {shortFields.map((field) => (
-                <div key={field.name} className="flex flex-col gap-[8px] md:gap-[12px] items-start w-full sm:flex-1 sm:min-w-0">
-                  <label className="font-semibold text-[16px] md:text-[18px] text-cyan-2 leading-[24px]">{field.label}</label>
-                  <input
-                    type={field.type}
-                    className="bg-white border border-grey-71 h-[44px] rounded-[10px] w-full px-[12px] outline-none focus:border-blue-second focus:ring-1 focus:ring-blue-second transition-all"
-                  />
-                </div>
-              ))}
+          {shortFields.map((field) => (
+            <div key={field.name} className="flex flex-col gap-[8px] md:gap-[12px] items-start w-full">
+              <label className="font-semibold text-[16px] md:text-[18px] text-cyan-2 leading-[24px]">{field.label}</label>
+              <input
+                type={field.type}
+                className="bg-white border border-grey-71 h-[44px] rounded-[10px] w-full px-[12px] outline-none focus:border-blue-second focus:ring-1 focus:ring-blue-second transition-all"
+              />
             </div>
-          )}
+          ))}
           {textareaFields.map((field) => (
             <div key={field.name} className="flex flex-col gap-[8px] md:gap-[12px] items-start w-full">
               <label className="font-semibold text-[16px] md:text-[18px] text-cyan-2 leading-[24px]">{field.label}</label>
