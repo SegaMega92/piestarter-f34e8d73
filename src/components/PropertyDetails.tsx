@@ -22,6 +22,7 @@ const PropertyDetails = ({ content }: PropertyDetailsProps) => {
 
   const price = content?.price || "120 364₽";
   const presentationUrl = content?.presentation_url || "";
+  const descriptionHtml = content?.description_html;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,21 +50,30 @@ const PropertyDetails = ({ content }: PropertyDetailsProps) => {
       <section className="flex flex-col lg:flex-row gap-[24px] lg:gap-[30px] items-start pt-[40px] md:pt-[60px] pb-[60px] md:pb-[120px] w-full">
         {/* Left: Description */}
         <div className="flex flex-col gap-[24px] items-start flex-1 min-w-0 order-2 lg:order-1">
-          <div className="flex flex-col gap-[12px] text-[16px] md:text-[18px] text-cyan-2">
-            <h3 className="font-semibold leading-[24px] m-0">Характеристики</h3>
-            <p className="font-normal leading-[24px] m-0">
-              Находится в черте Екатеринбурга — города-миллионника и крупного логистического хаба, обслуживающего Урал, Западную Сибирь и Китай.
-            </p>
-            <p className="font-normal leading-[24px] m-0">
-              Здание введено в эксплуатацию в 2015 г. Электрическая мощность — 380 кВт, высота потолка — 11 м, в зоне разгрузки — 29 доков.
-            </p>
-          </div>
-          <div className="flex flex-col gap-[12px] text-[16px] md:text-[18px] text-cyan-2">
-            <h3 className="font-semibold leading-[24px] m-0">Арендатор</h3>
-            <p className="font-normal leading-[24px] m-0">
-              С 2017 г. арендатором является федеральная компания «Деловые линии». Это один из ведущих транспортно-логистических операторов России. «Деловые линии» отправляют грузы в 66 стран мира. Данный склад стратегически важен для компании в связи с удачным расположением и подходящей инфраструктурой.
-            </p>
-          </div>
+          {descriptionHtml ? (
+            <div
+              className="flex flex-col gap-[12px] text-[16px] md:text-[18px] text-cyan-2 prose prose-sm max-w-none"
+              dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+            />
+          ) : (
+            <>
+              <div className="flex flex-col gap-[12px] text-[16px] md:text-[18px] text-cyan-2">
+                <h3 className="font-semibold leading-[24px] m-0">Характеристики</h3>
+                <p className="font-normal leading-[24px] m-0">
+                  Находится в черте Екатеринбурга — города-миллионника и крупного логистического хаба, обслуживающего Урал, Западную Сибирь и Китай.
+                </p>
+                <p className="font-normal leading-[24px] m-0">
+                  Здание введено в эксплуатацию в 2015 г. Электрическая мощность — 380 кВт, высота потолка — 11 м, в зоне разгрузки — 29 доков.
+                </p>
+              </div>
+              <div className="flex flex-col gap-[12px] text-[16px] md:text-[18px] text-cyan-2">
+                <h3 className="font-semibold leading-[24px] m-0">Арендатор</h3>
+                <p className="font-normal leading-[24px] m-0">
+                  С 2017 г. арендатором является федеральная компания «Деловые линии». Это один из ведущих транспортно-логистических операторов России. «Деловые линии» отправляют грузы в 66 стран мира. Данный склад стратегически важен для компании в связи с удачным расположением и подходящей инфраструктурой.
+                </p>
+              </div>
+            </>
+          )}
           {/* Feature Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-[16px] md:gap-[24px] w-full">
             <div className="border border-grey-71 flex flex-1 gap-[11px] items-start p-[12px] rounded-[20px] hover:border-cyan-2 hover:shadow-sm transition-all cursor-default">

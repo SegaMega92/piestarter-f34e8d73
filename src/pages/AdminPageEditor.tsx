@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { ArrowLeft, Save, GripVertical, Eye } from "lucide-react";
+import { ArrowLeft, Save, GripVertical, Eye, ChevronDown } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import BlockEditorForm from "@/components/admin/BlockEditorForm";
 
 interface PageData {
   id: string;
@@ -40,7 +42,6 @@ const AdminPageEditor = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState<PageData | null>(null);
   const [blocks, setBlocks] = useState<Block[]>([]);
-  const [activeBlock, setActiveBlock] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [draggedIdx, setDraggedIdx] = useState<number | null>(null);
 
@@ -74,9 +75,7 @@ const AdminPageEditor = () => {
   };
 
   const toggleBlock = (blockId: string, enabled: boolean) => {
-    setBlocks((prev) =>
-      prev.map((b) => (b.id === blockId ? { ...b, enabled } : b))
-    );
+    setBlocks((prev) => prev.map((b) => (b.id === blockId ? { ...b, enabled } : b)));
   };
 
   const handleDragStart = (idx: number) => setDraggedIdx(idx);
@@ -100,18 +99,16 @@ const AdminPageEditor = () => {
     );
   };
 
-  const activeBlockData = blocks.find((b) => b.id === activeBlock);
-
   if (!page) return <p className="text-muted-foreground">Загрузка...</p>;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-4xl mx-auto">
       {/* Top bar */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 flex-wrap">
         <Button variant="ghost" size="sm" onClick={() => navigate("/admin")}>
           <ArrowLeft className="h-4 w-4 mr-1" /> Назад
         </Button>
-        <div className="flex-1 flex items-center gap-3">
+        <div className="flex-1 flex items-center gap-3 flex-wrap">
           <Input
             value={page.title}
             onChange={(e) => setPage({ ...page, title: e.target.value })}
@@ -146,185 +143,46 @@ const AdminPageEditor = () => {
         )}
       </div>
 
-      {/* Two-column layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-6">
-        {/* Left: blocks panel */}
-        <div className="space-y-3">
-          <h2 className="font-semibold text-foreground">Блоки</h2>
-          <div className="space-y-1">
-            {blocks.map((block, idx) => (
-              <div
-                key={block.id}
-                draggable
-                onDragStart={() => handleDragStart(idx)}
-                onDragOver={(e) => handleDragOver(e, idx)}
-                onDragEnd={handleDragEnd}
-                onClick={() => setActiveBlock(block.id === activeBlock ? null : block.id)}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg border cursor-pointer transition-colors ${
-                  activeBlock === block.id
-                    ? "border-primary bg-primary/5"
-                    : "border-border hover:bg-muted/50"
-                } ${!block.enabled ? "opacity-50" : ""}`}
-              >
+      {/* Blocks accordion */}
+      <div className="space-y-2">
+        {blocks.map((block, idx) => (
+          <div
+            key={block.id}
+            draggable
+            onDragStart={() => handleDragStart(idx)}
+            onDragOver={(e) => handleDragOver(e, idx)}
+            onDragEnd={handleDragEnd}
+            className={`border rounded-lg transition-colors ${!block.enabled ? "opacity-50" : ""} ${
+              draggedIdx === idx ? "border-primary" : "border-border"
+            }`}
+          >
+            <Collapsible defaultOpen>
+              <div className="flex items-center gap-2 px-4 py-3">
                 <GripVertical className="h-4 w-4 text-muted-foreground cursor-grab shrink-0" />
-                <span className="flex-1 text-sm font-medium">
-                  {BLOCK_LABELS[block.block_type] || block.block_type}
-                </span>
+                <CollapsibleTrigger className="flex-1 flex items-center gap-2 text-left">
+                  <span className="font-medium text-sm">{BLOCK_LABELS[block.block_type] || block.block_type}</span>
+                  <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform [[data-state=open]>&]:rotate-180" />
+                </CollapsibleTrigger>
                 <Switch
                   checked={block.enabled}
-                  onCheckedChange={(checked) => {
-                    toggleBlock(block.id, checked);
-                  }}
-                  onClick={(e) => e.stopPropagation()}
+                  onCheckedChange={(checked) => toggleBlock(block.id, checked)}
                 />
               </div>
-            ))}
+              <CollapsibleContent>
+                <div className="px-4 pb-4 pt-1">
+                  <BlockEditorForm
+                    block={block}
+                    pageId={page.id}
+                    onUpdate={(field, value) => updateBlockContent(block.id, field, value)}
+                  />
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
           </div>
-
-          {/* Block editor form */}
-          {activeBlockData && (
-            <div className="border rounded-lg p-4 space-y-3 mt-4">
-              <h3 className="font-semibold text-sm">
-                {BLOCK_LABELS[activeBlockData.block_type]}
-              </h3>
-              <BlockEditorForm
-                block={activeBlockData}
-                onUpdate={(field, value) => updateBlockContent(activeBlockData.id, field, value)}
-              />
-            </div>
-          )}
-        </div>
-
-        {/* Right: preview placeholder */}
-        <div className="border rounded-lg bg-muted/30 min-h-[600px] flex items-center justify-center">
-          <p className="text-muted-foreground text-sm">
-            Предпросмотр будет доступен после сохранения и публикации
-          </p>
-        </div>
+        ))}
       </div>
     </div>
   );
-};
-
-// Simple block editor form
-const BlockEditorForm = ({
-  block,
-  onUpdate,
-}: {
-  block: Block;
-  onUpdate: (field: string, value: any) => void;
-}) => {
-  const content = block.content || {};
-
-  switch (block.block_type) {
-    case "PropertyHero":
-      return (
-        <div className="space-y-3">
-          <div className="space-y-1">
-            <Label className="text-xs">Заголовок</Label>
-            <Input value={content.title || ""} onChange={(e) => onUpdate("title", e.target.value)} />
-          </div>
-          <div className="space-y-1">
-            <Label className="text-xs">Подзаголовок</Label>
-            <Input value={content.subtitle || ""} onChange={(e) => onUpdate("subtitle", e.target.value)} />
-          </div>
-          <div className="space-y-1">
-            <Label className="text-xs">Рейтинг</Label>
-            <Input value={content.rating || ""} onChange={(e) => onUpdate("rating", e.target.value)} />
-          </div>
-        </div>
-      );
-    case "PropertyStats":
-      return (
-        <div className="space-y-3">
-          {[0, 1, 2, 3].map((i) => (
-            <div key={i} className="grid grid-cols-2 gap-2">
-              <div className="space-y-1">
-                <Label className="text-xs">Показатель {i + 1}</Label>
-                <Input
-                  value={content[`stat_label_${i}`] || ""}
-                  onChange={(e) => onUpdate(`stat_label_${i}`, e.target.value)}
-                  placeholder="Название"
-                />
-              </div>
-              <div className="space-y-1">
-                <Label className="text-xs">Значение</Label>
-                <Input
-                  value={content[`stat_value_${i}`] || ""}
-                  onChange={(e) => onUpdate(`stat_value_${i}`, e.target.value)}
-                  placeholder="Значение"
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      );
-    case "PropertyDetails":
-      return (
-        <div className="space-y-3">
-          <div className="space-y-1">
-            <Label className="text-xs">Цена за 1 пай</Label>
-            <Input
-              value={content.price || ""}
-              onChange={(e) => onUpdate("price", e.target.value)}
-              placeholder="120 364₽"
-            />
-          </div>
-          <div className="space-y-1">
-            <Label className="text-xs">Ссылка на презентацию</Label>
-            <Input
-              value={content.presentation_url || ""}
-              onChange={(e) => onUpdate("presentation_url", e.target.value)}
-              placeholder="https://..."
-            />
-          </div>
-        </div>
-      );
-    case "FAQSection":
-      return (
-        <div className="space-y-3">
-          <div className="space-y-1">
-            <Label className="text-xs">Заголовок секции</Label>
-            <Input value={content.title || ""} onChange={(e) => onUpdate("title", e.target.value)} />
-          </div>
-          <div className="space-y-1">
-            <Label className="text-xs">Описание</Label>
-            <Input value={content.description || ""} onChange={(e) => onUpdate("description", e.target.value)} />
-          </div>
-          <p className="text-xs text-muted-foreground">Управление вопросами будет добавлено позже</p>
-        </div>
-      );
-    case "ContactForm":
-      return (
-        <div className="space-y-3">
-          <div className="space-y-1">
-            <Label className="text-xs">Заголовок</Label>
-            <Input value={content.title || ""} onChange={(e) => onUpdate("title", e.target.value)} />
-          </div>
-          <div className="space-y-1">
-            <Label className="text-xs">Телефон</Label>
-            <Input value={content.phone || ""} onChange={(e) => onUpdate("phone", e.target.value)} />
-          </div>
-          <div className="space-y-1">
-            <Label className="text-xs">Email</Label>
-            <Input value={content.email || ""} onChange={(e) => onUpdate("email", e.target.value)} />
-          </div>
-        </div>
-      );
-    default:
-      return (
-        <div className="space-y-3">
-          <div className="space-y-1">
-            <Label className="text-xs">Заголовок</Label>
-            <Input value={content.title || ""} onChange={(e) => onUpdate("title", e.target.value)} />
-          </div>
-          <div className="space-y-1">
-            <Label className="text-xs">Описание</Label>
-            <Input value={content.description || ""} onChange={(e) => onUpdate("description", e.target.value)} />
-          </div>
-        </div>
-      );
-  }
 };
 
 export default AdminPageEditor;
