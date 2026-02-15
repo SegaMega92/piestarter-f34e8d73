@@ -69,10 +69,7 @@ const BlockEditorForm = ({ block, pageId, onUpdate }: BlockEditorFormProps) => {
         <div className="space-y-3">
           <Field label="Заголовок" value={content.title} onChange={(v) => onUpdate("title", v)} />
           <Field label="Адрес" value={content.address} onChange={(v) => onUpdate("address", v)} />
-          <div className="grid grid-cols-2 gap-2">
-            <Field label="Широта" value={content.lat} onChange={(v) => onUpdate("lat", v)} placeholder="56.757702" />
-            <Field label="Долгота" value={content.lon} onChange={(v) => onUpdate("lon", v)} placeholder="60.752964" />
-          </div>
+          <Field label="Координаты (широта, долгота)" value={content.coordinates} onChange={(v) => onUpdate("coordinates", v)} placeholder="56.757702, 60.752964" />
           <RichTextEditor value={content.description_html || ""} onChange={(v) => onUpdate("description_html", v)} label="Описание" />
           <ImageUploader value={content.card1_image || ""} onChange={(v) => onUpdate("card1_image", v)} pageId={pageId} blockId={block.id} label="Изображение карточки 1" />
           <ImageUploader value={content.card2_image || ""} onChange={(v) => onUpdate("card2_image", v)} pageId={pageId} blockId={block.id} label="Изображение карточки 2" />

@@ -13,8 +13,8 @@ const LocationSection = ({ content }: LocationSectionProps) => {
 
   const title = content?.title || "Расположение";
   const address = content?.address || "г. Екатеринбург, ул. Черняховского, 86к7";
-  const lat = content?.lat || "56.757702";
-  const lon = content?.lon || "60.752964";
+  const coords = content?.coordinates || "56.757702, 60.752964";
+  const [lat, lon] = coords.split(",").map((s: string) => s.trim());
   const descriptionHtml = content?.description_html;
   const card1Image = content?.card1_image || imageHub;
   const card2Image = content?.card2_image || imageWarehouse;
