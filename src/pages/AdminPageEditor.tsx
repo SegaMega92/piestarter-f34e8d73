@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { ArrowLeft, Save, GripVertical, Eye, ChevronDown } from "lucide-react";
+import { ArrowLeft, Save, GripVertical, Eye, ChevronDown, Check, AlertCircle } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import BlockEditorForm from "@/components/admin/BlockEditorForm";
 
@@ -43,7 +43,19 @@ const AdminPageEditor = () => {
   const [page, setPage] = useState<PageData | null>(null);
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [saving, setSaving] = useState(false);
+  const [dirty, setDirty] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [draggedIdx, setDraggedIdx] = useState<number | null>(null);
+  const initialLoadDone = useRef(false);
+
+  // Warn on page close if unsaved
+  useEffect(() => {
+    const handler = (e: BeforeUnloadEvent) => {
+      if (dirty) { e.preventDefault(); }
+    };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [dirty]);
 
   useEffect(() => {
     if (!id) return;
@@ -57,6 +69,8 @@ const AdminPageEditor = () => {
     ]);
     if (pageData) setPage(pageData as PageData);
     if (blocksData) setBlocks(blocksData as Block[]);
+    initialLoadDone.current = true;
+    setDirty(false);
   };
 
   const savePage = async () => {
@@ -71,7 +85,15 @@ const AdminPageEditor = () => {
         .eq("id", block.id);
     }
     setSaving(false);
+    setDirty(false);
+    setLastSaved(new Date());
     toast.success("Сохранено");
+  };
+
+  // Mark dirty on any page/block change after initial load
+  useEffect(() => {
+    if (initialLoadDone.current) setDirty(true);
+  }, [page, blocks]);
   };
 
   const toggleBlock = (blockId: string, enabled: boolean) => {
@@ -130,16 +152,36 @@ const AdminPageEditor = () => {
             <Label className="text-sm">{page.status === "published" ? "Опубликован" : "Черновик"}</Label>
           </div>
         </div>
-        <Button onClick={savePage} disabled={saving}>
-          <Save className="h-4 w-4 mr-2" />
-          {saving ? "Сохранение..." : "Сохранить"}
-        </Button>
-        {page.status === "published" && (
-          <Button variant="outline" size="sm" asChild>
-            <a href={`/objects/${page.slug}`} target="_blank" rel="noopener">
-              <Eye className="h-4 w-4 mr-1" /> Просмотр
-            </a>
+        <div className="flex items-center gap-2">
+          <Button onClick={savePage} disabled={saving}>
+            <Save className="h-4 w-4 mr-2" />
+            {saving ? "Сохранение..." : "Сохранить"}
           </Button>
+          {page.status === "published" && (
+            <Button variant="outline" size="sm" asChild>
+              <a href={`/objects/${page.slug}`} target="_blank" rel="noopener">
+                <Eye className="h-4 w-4 mr-1" /> Просмотр
+              </a>
+            </Button>
+          )}
+        </div>
+      </div>
+
+      {/* Save status bar */}
+      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+        {dirty ? (
+          <>
+            <AlertCircle className="h-3.5 w-3.5 text-amber-500" />
+            <span className="text-amber-600">Есть несохранённые изменения</span>
+          </>
+        ) : (
+          <>
+            <Check className="h-3.5 w-3.5 text-emerald-500" />
+            <span>Все изменения сохранены</span>
+          </>
+        )}
+        {lastSaved && (
+          <span className="ml-auto">Последнее сохранение: {lastSaved.toLocaleTimeString("ru-RU")}</span>
         )}
       </div>
 
