@@ -20,9 +20,12 @@ interface PhotoGalleryProps {
 }
 
 const PhotoGallery = ({ content }: PhotoGalleryProps) => {
-  const dynamicImages = content?.images as string[] | undefined;
-  const images = dynamicImages?.length
-    ? dynamicImages.map((src, i) => ({ src, alt: `Фото ${i + 1}` }))
+  const rawImages = content?.images as any[] | undefined;
+  const images = rawImages?.length
+    ? rawImages.map((item, i) => {
+        if (typeof item === "string") return { src: item, alt: `Фото ${i + 1}` };
+        return { src: item.url, alt: item.caption || `Фото ${i + 1}` };
+      })
     : defaultImages;
 
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);

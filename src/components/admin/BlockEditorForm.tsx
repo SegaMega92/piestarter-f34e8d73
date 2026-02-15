@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import ImageUploader, { MultiImageUploader } from "./ImageUploader";
+import ImageUploader, { MultiImageUploader, GalleryImage } from "./ImageUploader";
 import RichTextEditor from "./RichTextEditor";
 
 interface Block {
@@ -41,16 +41,21 @@ const BlockEditorForm = ({ block, pageId, onUpdate }: BlockEditorFormProps) => {
           ))}
         </div>
       );
-    case "PhotoGallery":
+    case "PhotoGallery": {
+      // Normalize: support both old string[] and new GalleryImage[] format
+      const imgs: GalleryImage[] = (content.images || []).map((item: any) =>
+        typeof item === "string" ? { url: item, caption: "" } : item
+      );
       return (
         <MultiImageUploader
-          values={content.images || []}
+          values={imgs}
           onChange={(v) => onUpdate("images", v)}
           pageId={pageId}
           blockId={block.id}
           label="Фотографии галереи"
         />
       );
+    }
     case "PropertyDetails":
       return (
         <div className="space-y-3">
