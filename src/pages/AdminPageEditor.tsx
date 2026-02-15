@@ -94,7 +94,6 @@ const AdminPageEditor = () => {
   useEffect(() => {
     if (initialLoadDone.current) setDirty(true);
   }, [page, blocks]);
-  };
 
   const toggleBlock = (blockId: string, enabled: boolean) => {
     setBlocks((prev) => prev.map((b) => (b.id === blockId ? { ...b, enabled } : b)));
