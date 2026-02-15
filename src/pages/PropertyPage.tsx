@@ -99,9 +99,11 @@ const PropertyPage = () => {
         {isEnabled("FinancialSection") && <FinancialSection />}
         <div className="content-container">
           {isEnabled("SimilarProperties") && <SimilarProperties />}
-          {isEnabled("FAQSection") && <FAQSection content={getContent("FAQSection")} />}
         </div>
-        {isEnabled("ContactForm") && <ContactForm />}
+        <div className="content-container">
+          <FAQSection />
+        </div>
+        <ContactForm />
       </main>
       <Footer />
     </div>

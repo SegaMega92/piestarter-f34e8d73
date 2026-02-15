@@ -33,8 +33,6 @@ const BLOCK_LABELS: Record<string, string> = {
   LocationSection: "Локация",
   FinancialSection: "Финансы",
   SimilarProperties: "Похожие объекты",
-  FAQSection: "FAQ",
-  ContactForm: "Контактная форма",
 };
 
 const AdminPageEditor = () => {

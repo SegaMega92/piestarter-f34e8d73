@@ -22,8 +22,6 @@ const BLOCK_TYPES = [
   "LocationSection",
   "FinancialSection",
   "SimilarProperties",
-  "FAQSection",
-  "ContactForm",
 ];
 
 const AdminPages = () => {

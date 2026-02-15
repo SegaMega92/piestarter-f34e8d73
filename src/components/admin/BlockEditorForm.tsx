@@ -74,22 +74,6 @@ const BlockEditorForm = ({ block, pageId, onUpdate }: BlockEditorFormProps) => {
           <ImageUploader value={content.card2_image || ""} onChange={(v) => onUpdate("card2_image", v)} pageId={pageId} blockId={block.id} label="Изображение карточки 2" />
         </div>
       );
-    case "FAQSection":
-      return (
-        <div className="space-y-3">
-          <Field label="Заголовок секции" value={content.title} onChange={(v) => onUpdate("title", v)} />
-          <RichTextEditor value={content.description_html || ""} onChange={(v) => onUpdate("description_html", v)} label="Описание" />
-          <p className="text-xs text-muted-foreground">Управление вопросами будет добавлено позже</p>
-        </div>
-      );
-    case "ContactForm":
-      return (
-        <div className="space-y-3">
-          <Field label="Заголовок" value={content.title} onChange={(v) => onUpdate("title", v)} />
-          <Field label="Телефон" value={content.phone} onChange={(v) => onUpdate("phone", v)} />
-          <Field label="Email" value={content.email} onChange={(v) => onUpdate("email", v)} />
-        </div>
-      );
     default:
       return (
         <div className="space-y-3">
