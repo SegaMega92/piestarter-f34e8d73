@@ -123,7 +123,7 @@ const AdminPageEditor = () => {
   if (!page) return <p className="text-muted-foreground">Загрузка...</p>;
 
   return (
-    <div className="space-y-4 max-w-4xl mx-auto">
+    <div className="space-y-4 max-w-4xl mx-auto pb-20">
       {/* Top bar */}
       <div className="flex items-center gap-4 flex-wrap">
         <Button variant="ghost" size="sm" onClick={() => navigate("/admin")}>
@@ -151,37 +151,39 @@ const AdminPageEditor = () => {
             <Label className="text-sm">{page.status === "published" ? "Опубликован" : "Черновик"}</Label>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Button onClick={savePage} disabled={saving}>
+        {page.status === "published" && (
+          <Button variant="outline" size="sm" asChild>
+            <a href={`/objects/${page.slug}`} target="_blank" rel="noopener">
+              <Eye className="h-4 w-4 mr-1" /> Просмотр
+            </a>
+          </Button>
+        )}
+      </div>
+
+      {/* Sticky save bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+        <div className="max-w-4xl mx-auto flex items-center gap-3 px-4 py-3">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground flex-1">
+            {dirty ? (
+              <>
+                <AlertCircle className="h-3.5 w-3.5 text-amber-500" />
+                <span className="text-amber-600">Есть несохранённые изменения</span>
+              </>
+            ) : (
+              <>
+                <Check className="h-3.5 w-3.5 text-emerald-500" />
+                <span>Все изменения сохранены</span>
+              </>
+            )}
+            {lastSaved && (
+              <span className="ml-auto mr-3">Последнее сохранение: {lastSaved.toLocaleTimeString("ru-RU")}</span>
+            )}
+          </div>
+          <Button onClick={savePage} disabled={saving} size="sm">
             <Save className="h-4 w-4 mr-2" />
             {saving ? "Сохранение..." : "Сохранить"}
           </Button>
-          {page.status === "published" && (
-            <Button variant="outline" size="sm" asChild>
-              <a href={`/objects/${page.slug}`} target="_blank" rel="noopener">
-                <Eye className="h-4 w-4 mr-1" /> Просмотр
-              </a>
-            </Button>
-          )}
         </div>
-      </div>
-
-      {/* Save status bar */}
-      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-        {dirty ? (
-          <>
-            <AlertCircle className="h-3.5 w-3.5 text-amber-500" />
-            <span className="text-amber-600">Есть несохранённые изменения</span>
-          </>
-        ) : (
-          <>
-            <Check className="h-3.5 w-3.5 text-emerald-500" />
-            <span>Все изменения сохранены</span>
-          </>
-        )}
-        {lastSaved && (
-          <span className="ml-auto">Последнее сохранение: {lastSaved.toLocaleTimeString("ru-RU")}</span>
-        )}
       </div>
 
       {/* Blocks accordion */}
