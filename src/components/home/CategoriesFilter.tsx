@@ -12,7 +12,7 @@ const CategoriesFilter = () => {
   const [active, setActive] = useState("all");
 
   return (
-    <div className="border-b border-grey-88 sticky top-[78px] md:top-[100px] bg-bg-main/95 backdrop-blur-sm z-40">
+    <div className="border-b border-grey-88 sticky top-[78px] md:top-[100px] bg-transparent backdrop-blur-sm z-40">
       <div className="content-container">
         <div className="flex items-center gap-[16px] md:gap-[24px] py-[12px] overflow-x-auto scrollbar-hide">
           {categories.map((cat) => (
