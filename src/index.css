@@ -80,4 +80,36 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  .aurora-glow {
+    position: absolute;
+    top: -30%;
+    right: -10%;
+    width: 70%;
+    height: 120%;
+    pointer-events: none;
+    opacity: 0.45;
+    filter: blur(80px);
+    will-change: background-position;
+    background-image:
+      repeating-linear-gradient(100deg, hsl(213 80% 60% / 0.3) 10%, transparent 15%, transparent 20%, hsl(190 70% 55% / 0.25) 25%, transparent 30%),
+      repeating-linear-gradient(100deg, hsl(213 80% 65% / 0.15) 0%, hsl(190 70% 60% / 0.2) 7%, transparent 12%, transparent 17%, hsl(220 60% 70% / 0.15) 22%);
+    background-size: 300% 200%, 200% 200%;
+    animation: aurora 45s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .aurora-glow {
+      animation: none;
+    }
+  }
+}
+
+@keyframes aurora {
+  from {
+    background-position: 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
+  }
 }
