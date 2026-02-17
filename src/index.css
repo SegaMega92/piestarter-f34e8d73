@@ -83,10 +83,10 @@
 
   .aurora-glow {
     position: absolute;
-    top: -100px;
-    right: -100px;
-    width: 600px;
-    height: 600px;
+    top: -150px;
+    right: -150px;
+    width: 900px;
+    height: 800px;
     pointer-events: none;
     opacity: 0.45;
     filter: blur(80px);
