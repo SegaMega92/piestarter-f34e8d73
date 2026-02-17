@@ -7,7 +7,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="flex items-center justify-between px-4 md:px-8 lg:px-[70px] py-[14px] md:py-[20px] w-full sticky top-0 bg-bg-main/95 backdrop-blur-sm z-50">
+    <header className="flex items-center justify-between px-4 md:px-8 lg:px-[70px] py-[14px] md:py-[20px] w-full sticky top-0 bg-transparent backdrop-blur-sm z-50">
       {/* Logo */}
       <a href="/" className="flex items-center gap-[10px] md:gap-[14px] cursor-pointer hover:opacity-80 transition-opacity">
         <img src={logoPie} alt="Пайстартер" className="w-[44px] h-[44px] md:w-[60px] md:h-[60px]" />
