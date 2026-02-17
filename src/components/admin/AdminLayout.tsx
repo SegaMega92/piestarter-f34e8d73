@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { LogOut, FileText, HelpCircle, MessageSquare } from "lucide-react";
+import { LogOut, FileText, HelpCircle, MessageSquare, Home } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const AdminLayout = () => {
@@ -30,6 +30,10 @@ const AdminLayout = () => {
             <Link to="/admin" className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
               <FileText className="h-4 w-4" />
               Страницы
+            </Link>
+            <Link to="/admin/homepage" className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Home className="h-4 w-4" />
+              Главная
             </Link>
             <Link to="/admin/faq" className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
               <HelpCircle className="h-4 w-4" />
