@@ -71,4 +71,13 @@
   .content-container {
     @apply max-w-[1280px] mx-auto px-4 md:px-8 lg:px-[70px] w-full;
   }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

@@ -1,0 +1,10 @@
+export { default as CategoriesFilter } from "./CategoriesFilter";
+export { default as HeroSection } from "./HeroSection";
+export { default as FeaturedProperty } from "./FeaturedProperty";
+export { default as PropertyGrid } from "./PropertyGrid";
+export { default as TelegramSection } from "./TelegramSection";
+export { default as HowItWorks } from "./HowItWorks";
+export { default as InvestmentMap } from "./InvestmentMap";
+export { default as NewsSection } from "./NewsSection";
+export { default as BlogSection } from "./BlogSection";
+export { default as TestimonialsSection } from "./TestimonialsSection";
