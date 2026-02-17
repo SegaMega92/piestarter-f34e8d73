@@ -7,28 +7,30 @@ import { Upload, X, Loader2 } from "lucide-react";
 interface ImageUploaderProps {
   value: string;
   onChange: (url: string) => void;
-  pageId: string;
-  blockId: string;
+  pageId?: string;
+  blockId?: string;
   label?: string;
+  bucket?: string;
 }
 
-const ImageUploader = ({ value, onChange, pageId, blockId, label }: ImageUploaderProps) => {
+const ImageUploader = ({ value, onChange, pageId, blockId, label, bucket = "page-images" }: ImageUploaderProps) => {
   const [uploading, setUploading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const upload = async (file: File) => {
     setUploading(true);
     const ext = file.name.split(".").pop();
-    const path = `${pageId}/${blockId}/${Date.now()}.${ext}`;
+    const folder = pageId && blockId ? `${pageId}/${blockId}` : "homepage";
+    const path = `${folder}/${Date.now()}.${ext}`;
 
-    const { error } = await supabase.storage.from("page-images").upload(path, file, { upsert: true });
+    const { error } = await supabase.storage.from(bucket).upload(path, file, { upsert: true });
     if (error) {
       toast.error("Ошибка загрузки: " + error.message);
       setUploading(false);
       return;
     }
 
-    const { data } = supabase.storage.from("page-images").getPublicUrl(path);
+    const { data } = supabase.storage.from(bucket).getPublicUrl(path);
     onChange(data.publicUrl);
     setUploading(false);
     toast.success("Файл загружен");

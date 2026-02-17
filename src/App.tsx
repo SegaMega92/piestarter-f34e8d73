@@ -12,6 +12,7 @@ import AdminPages from "./pages/AdminPages";
 import AdminPageEditor from "./pages/AdminPageEditor";
 import AdminFAQ from "./pages/AdminFAQ";
 import AdminContactForm from "./pages/AdminContactForm";
+import AdminHomePage from "./pages/AdminHomePage";
 import AdminLayout from "./components/admin/AdminLayout";
 import PropertyPage from "./pages/PropertyPage";
 
@@ -34,6 +35,7 @@ const App = () => (
               <Route path="pages/:id" element={<AdminPageEditor />} />
               <Route path="faq" element={<AdminFAQ />} />
               <Route path="contact" element={<AdminContactForm />} />
+              <Route path="homepage" element={<AdminHomePage />} />
             </Route>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

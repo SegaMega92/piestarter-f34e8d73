@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
-const categories = [
+const defaultCategories = [
   { id: "all", label: "Все объекты", icon: "◼︎" },
   { id: "malls", label: "Торговые центры", icon: "🏪" },
   { id: "hotels", label: "Отели", icon: "🏨" },
@@ -10,6 +11,13 @@ const categories = [
 
 const CategoriesFilter = () => {
   const [active, setActive] = useState("all");
+  const [categories, setCategories] = useState(defaultCategories);
+
+  useEffect(() => {
+    supabase.from("site_settings").select("value").eq("key", "home_categories").maybeSingle().then(({ data }) => {
+      if (data?.value && (data.value as any).items) setCategories((data.value as any).items);
+    });
+  }, []);
 
   return (
     <div className="border-b border-grey-88 sticky top-[78px] md:top-[100px] bg-transparent backdrop-blur-sm z-40">
