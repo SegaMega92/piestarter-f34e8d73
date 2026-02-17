@@ -14,7 +14,8 @@ import FAQSection from "@/components/FAQSection";
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen bg-bg-main overflow-x-hidden">
+    <div className="min-h-screen bg-bg-main overflow-x-hidden relative">
+      <div className="aurora-glow" aria-hidden="true" />
       <Header />
       <main>
         <CategoriesFilter />
