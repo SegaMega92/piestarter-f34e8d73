@@ -15,6 +15,7 @@ import AdminContactForm from "./pages/AdminContactForm";
 import AdminHomePage from "./pages/AdminHomePage";
 import AdminLayout from "./components/admin/AdminLayout";
 import PropertyPage from "./pages/PropertyPage";
+import CatalogPage from "./pages/CatalogPage";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/catalog" element={<CatalogPage />} />
             <Route path="/property-template" element={<Index />} />
             <Route path="/objects/:slug" element={<PropertyPage />} />
             <Route path="/admin/login" element={<AdminLogin />} />

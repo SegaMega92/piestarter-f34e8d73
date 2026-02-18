@@ -16,10 +16,15 @@ const Header = () => {
           <p className="m-0">стартер</p>
         </div>
       </a>
-      {/* Search - hidden on mobile */}
-      <div className="hidden lg:flex bg-white border border-grey-88 items-center justify-between px-[20px] py-[18px] rounded-[40px] flex-1 max-w-[600px] min-w-[200px] mx-4 xl:mx-8 shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)] cursor-pointer hover:border-grey-71 hover:shadow-[0px_2px_6px_0px_rgba(0,0,0,0.15)] transition-all">
-        <span className="text-p-gray font-medium text-[15px]">Поиск по объектам</span>
-        <img src={svgSearch} alt="Поиск" className="w-[22px] h-[22px]" />
+      {/* Nav links + search */}
+      <div className="hidden lg:flex items-center gap-6 flex-1 mx-4 xl:mx-8">
+        <a href="/catalog" className="font-medium text-[15px] text-cyan-2 hover:text-blue-second transition-colors whitespace-nowrap">
+          Каталог
+        </a>
+        <div className="flex bg-white border border-grey-88 items-center justify-between px-[20px] py-[18px] rounded-[40px] flex-1 max-w-[600px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)] cursor-pointer hover:border-grey-71 hover:shadow-[0px_2px_6px_0px_rgba(0,0,0,0.15)] transition-all">
+          <span className="text-p-gray font-medium text-[15px]">Поиск по объектам</span>
+          <img src={svgSearch} alt="Поиск" className="w-[22px] h-[22px]" />
+        </div>
       </div>
       {/* CTA - hidden on mobile */}
       <button className="hidden md:flex bg-p-blue items-center gap-[10px] px-[20px] lg:px-[30px] py-[14px] lg:py-[18px] rounded-[30px] cursor-pointer hover:bg-[#96d9ec] active:scale-[0.98] transition-all whitespace-nowrap shrink-0">
@@ -42,6 +47,9 @@ const Header = () => {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="absolute top-full left-0 right-0 bg-bg-main/95 backdrop-blur-sm border-b border-grey-88 p-4 flex flex-col gap-3 md:hidden">
+          <a href="/catalog" className="font-medium text-[15px] text-cyan-2 px-4 py-3" onClick={() => setMenuOpen(false)}>
+            Каталог
+          </a>
           <div className="bg-white border border-grey-88 flex items-center justify-between px-4 py-3 rounded-[20px]">
             <span className="text-p-gray font-medium text-[15px]">Поиск по объектам</span>
             <img src={svgSearch} alt="Поиск" className="w-[20px] h-[20px]" />
