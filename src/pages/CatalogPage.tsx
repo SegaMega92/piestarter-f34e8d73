@@ -62,9 +62,11 @@ const CatalogPage = () => {
           // Try to extract hero/main block data
           let extra: Partial<PropertyCard> = {};
           if (blocks?.length) {
+            // First pass: extract metadata from all blocks
             for (const block of blocks) {
               const c = block.content as any;
-              if (c?.image) extra.image = c.image;
+              // Use PropertyHero image as fallback
+              if (!extra.image && block.block_type === "PropertyHero" && c?.image) extra.image = c.image;
               if (c?.city) extra.city = c.city;
               if (c?.area) extra.area = c.area;
               if (c?.term) extra.term = c.term;
@@ -72,7 +74,16 @@ const CatalogPage = () => {
               if (c?.shares) extra.shares = c.shares;
               if (c?.yield) extra.yield = c.yield;
               if (c?.rating) extra.rating = c.rating;
-              if (extra.image && extra.city) break;
+            }
+            // Second pass: prefer first image from PhotoGallery
+            const galleryBlock = blocks.find((b) => b.block_type === "PhotoGallery");
+            if (galleryBlock) {
+              const c = galleryBlock.content as any;
+              const imgs = c?.images;
+              if (Array.isArray(imgs) && imgs.length > 0) {
+                const first = imgs[0];
+                extra.image = typeof first === "string" ? first : first?.url;
+              }
             }
           }
 
