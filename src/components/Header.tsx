@@ -16,21 +16,25 @@ const Header = () => {
           <p className="m-0">стартер</p>
         </div>
       </a>
-      {/* Nav links + search */}
-      <div className="hidden lg:flex items-center gap-6 flex-1 mx-4 xl:mx-8">
-        <a href="/catalog" className="font-medium text-[15px] text-cyan-2 hover:text-blue-second transition-colors whitespace-nowrap">
-          Каталог
-        </a>
-        <div className="flex bg-white border border-grey-88 items-center justify-between px-[20px] py-[18px] rounded-[40px] flex-1 max-w-[600px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)] cursor-pointer hover:border-grey-71 hover:shadow-[0px_2px_6px_0px_rgba(0,0,0,0.15)] transition-all">
-          <span className="text-p-gray font-medium text-[15px]">Поиск по объектам</span>
-          <img src={svgSearch} alt="Поиск" className="w-[22px] h-[22px]" />
-        </div>
+      {/* Search */}
+      <div className="hidden lg:flex bg-white border border-grey-88 items-center justify-between px-[20px] py-[18px] rounded-[40px] flex-1 max-w-[600px] mx-4 xl:mx-8 shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)] cursor-pointer hover:border-grey-71 hover:shadow-[0px_2px_6px_0px_rgba(0,0,0,0.15)] transition-all">
+        <span className="text-p-gray font-medium text-[15px]">Поиск по объектам</span>
+        <img src={svgSearch} alt="Поиск" className="w-[22px] h-[22px]" />
       </div>
       {/* CTA - hidden on mobile */}
-      <button className="hidden md:flex bg-p-blue items-center gap-[10px] px-[20px] lg:px-[30px] py-[14px] lg:py-[18px] rounded-[30px] cursor-pointer hover:bg-[#96d9ec] active:scale-[0.98] transition-all whitespace-nowrap shrink-0">
-        <span className="font-medium text-[14px] lg:text-[14.9px] text-black">Личный кабинет</span>
-        <img src={svgUser} alt="" className="w-[22px] h-[22px]" />
-      </button>
+      <div className="hidden md:flex items-center gap-[10px] shrink-0">
+        <a href="/catalog" className="w-[50px] h-[50px] rounded-full bg-white border border-grey-88 flex items-center justify-center hover:border-grey-71 hover:shadow-[0px_2px_6px_0px_rgba(0,0,0,0.15)] transition-all" aria-label="Каталог">
+          <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="20" height="2" rx="1" fill="#1A1A2E"/>
+            <rect y="6" width="20" height="2" rx="1" fill="#1A1A2E"/>
+            <rect y="12" width="20" height="2" rx="1" fill="#1A1A2E"/>
+          </svg>
+        </a>
+        <button className="flex bg-p-blue items-center gap-[10px] px-[20px] lg:px-[30px] py-[14px] lg:py-[18px] rounded-[30px] cursor-pointer hover:bg-[#96d9ec] active:scale-[0.98] transition-all whitespace-nowrap">
+          <span className="font-medium text-[14px] lg:text-[14.9px] text-black">Личный кабинет</span>
+          <img src={svgUser} alt="" className="w-[22px] h-[22px]" />
+        </button>
+      </div>
       {/* Mobile buttons */}
       <div className="flex md:hidden items-center gap-3">
         <button className="w-[44px] h-[44px] rounded-full bg-white border border-grey-88 flex items-center justify-center">
