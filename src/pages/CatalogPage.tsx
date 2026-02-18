@@ -94,7 +94,7 @@ const CatalogPage = () => {
       <main>
         <div className="content-container py-[48px] md:py-[72px]">
           <h1 className="font-semibold text-[40px] md:text-[68px] lg:text-[85px] leading-[1.05] tracking-[-1px] md:tracking-[-2.55px] text-black w-full mb-[48px] md:mb-[72px]">
-            Каталог объектов
+            Каталог недвижимости
           </h1>
 
           {loading ? (
