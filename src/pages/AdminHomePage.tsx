@@ -4,15 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { Save, Plus, Trash2, GripVertical, ChevronDown } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import ImageUploader from "@/components/admin/ImageUploader";
 
 // Default data for each section
-const defaultHero = { title: "Коллективные инвестиции в\u00a0коммерческую недвижимость" };
+const defaultHero = { title: "Коллективные инвестиции в\u00a0коммерческую недвижимость", enabled: true };
 
 const defaultCategories = {
+  enabled: true,
   items: [
     { id: "all", label: "Все объекты", icon: "◼︎" },
     { id: "malls", label: "Торговые центры", icon: "🏪" },
@@ -23,6 +25,7 @@ const defaultCategories = {
 };
 
 const defaultFeatured = {
+  enabled: true,
   sectionTitle: "«Пайстартер Флиппинг» Москва",
   linkText: "Смотреть все →",
   image: "",
@@ -40,6 +43,7 @@ const defaultFeatured = {
 };
 
 const defaultProperties = {
+  enabled: true,
   items: [
     { title: "ТЦ «Зеленый берег»", city: "Тюмень", area: "19 560 м²", term: "2 года 1 мес", price: "1 126 959 346 ₽", shares: "200", yield: "25,9%", rating: "A+", image: "", slug: "tc-zeleniy-bereg" },
     { title: "Пай девятнадцать", city: "Ульяновск", area: "18 226 м²", term: "3 года 2 мес", price: "1 531 529 489 ₽", shares: "500", yield: "25,9%", rating: "B+", image: "", slug: "pai-19" },
@@ -48,6 +52,7 @@ const defaultProperties = {
 };
 
 const defaultPropertiesSecond = {
+  enabled: true,
   items: [
     { title: "БЦ «Москва-Сити»", city: "Москва", area: "45 000 м²", term: "5 лет", price: "2 500 000 000 ₽", shares: "1000", yield: "18,5%", rating: "A", image: "", slug: "bc-moscow-city" },
     { title: "Склад «Логистика+»", city: "Екатеринбург", area: "32 000 м²", term: "4 года", price: "980 000 000 ₽", shares: "400", yield: "22,3%", rating: "A-", image: "", slug: "sklad-logistika" },
@@ -56,6 +61,7 @@ const defaultPropertiesSecond = {
 };
 
 const defaultTelegram = {
+  enabled: true,
   label: "Телеграм-канал",
   title: "Рассказываем о\u00a0новых объектах каждую неделю",
   buttonText: "Перейти в телеграм",
@@ -67,6 +73,7 @@ const defaultTelegram = {
 };
 
 const defaultHowItWorks = {
+  enabled: true,
   title: "Всё просто.\nС первого шага",
   image: "",
   steps: [
@@ -78,11 +85,13 @@ const defaultHowItWorks = {
 };
 
 const defaultMap = {
+  enabled: true,
   title: "Инвестиционная температура",
   description: "Карта показывает, где растёт цена на коммерческую недвижимость — и куда уже сейчас стоит присмотреться. Точками отмечены объекты, в которых можно приобрести паи.",
 };
 
 const defaultNews = {
+  enabled: true,
   items: [
     { tag: "Рост спроса", title: "В Рязани растет спрос на коммерческую недвижимость", description: "Спрос поддерживают промышленные проекты и логистика, цены растут умеренно, аренда оживает последовательно каждый квартал.", date: "12 октября" },
     { tag: "Рост спроса", title: "В Ульяновске открылось три новых торговых центра", description: "Цены ниже соседей по Поволжью, корпоративный спрос поддерживает аренду и ликвидность, сейчас устойчиво.", date: "9 октября" },
@@ -91,6 +100,7 @@ const defaultNews = {
 };
 
 const defaultBlog = {
+  enabled: true,
   title: "События и\u00a0аналитика",
   description: "Свежие материалы из нашего Telegram-канала. Делимся новостями, аналитикой и тем, что влияет на рынок и решения инвесторов.",
   posts: [
@@ -101,6 +111,7 @@ const defaultBlog = {
 };
 
 const defaultTestimonials = {
+  enabled: true,
   title: "Ключевые люди индустрии\u00a0— о\u00a0нас",
   items: [
     { quote: "Пайстартер помог мне диверсифицировать портфель без необходимости вникать в тонкости управления недвижимостью.", name: "Алексей Петров", role: "Управляющий партнер инвестиционной компании", avatar: "" },
@@ -111,17 +122,38 @@ const defaultTestimonials = {
 };
 
 // Section wrapper component
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => {
+const Section = ({
+  title,
+  children,
+  enabled,
+  onToggle,
+}: {
+  title: string;
+  children: React.ReactNode;
+  enabled?: boolean;
+  onToggle?: (v: boolean) => void;
+}) => {
   const [open, setOpen] = useState(false);
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
-      <CollapsibleTrigger className="flex items-center justify-between w-full p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-        <span className="font-semibold text-sm">{title}</span>
-        <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
-      </CollapsibleTrigger>
-      <CollapsibleContent className="p-4 border border-t-0 rounded-b-lg space-y-4">
-        {children}
-      </CollapsibleContent>
+      <div className={`border rounded-lg transition-colors ${enabled === false ? "opacity-60" : ""}`}>
+        <div className="flex items-center gap-2 px-4 py-3">
+          {onToggle !== undefined && (
+            <Switch
+              checked={enabled !== false}
+              onCheckedChange={onToggle}
+              onClick={(e) => e.stopPropagation()}
+            />
+          )}
+          <CollapsibleTrigger className="flex-1 flex items-center justify-between text-left">
+            <span className="font-semibold text-sm">{title}</span>
+            <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
+          </CollapsibleTrigger>
+        </div>
+        <CollapsibleContent className="px-4 pb-4 pt-1 border-t space-y-4">
+          {children}
+        </CollapsibleContent>
+      </div>
     </Collapsible>
   );
 };
@@ -242,7 +274,7 @@ const AdminHomePage = () => {
       <h1 className="text-2xl font-bold text-foreground">Главная страница</h1>
 
       {/* Hero */}
-      <Section title="🏠 Hero — Заголовок">
+      <Section title="🏠 Hero — Заголовок" enabled={hero.enabled !== false} onToggle={(v) => setHero({ ...hero, enabled: v })}>
         <div className="space-y-1">
           <Label className="text-xs">Заголовок</Label>
           <Textarea value={hero.title} onChange={(e) => setHero({ ...hero, title: e.target.value })} rows={2} />
@@ -250,7 +282,7 @@ const AdminHomePage = () => {
       </Section>
 
       {/* Categories */}
-      <Section title="📂 Категории">
+      <Section title="📂 Категории" enabled={categories.enabled !== false} onToggle={(v) => setCategories({ ...categories, enabled: v })}>
         {categories.items.map((cat, idx) => (
           <DragItem key={idx} index={idx} {...catDrag} onRemove={(i: number) => setCategories({ ...categories, items: categories.items.filter((_, j) => j !== i) })}>
             <div className="grid grid-cols-3 gap-2">
@@ -266,7 +298,7 @@ const AdminHomePage = () => {
       </Section>
 
       {/* Featured Property */}
-      <Section title="⭐ Избранный объект">
+      <Section title="⭐ Избранный объект" enabled={featured.enabled !== false} onToggle={(v) => setFeatured({ ...featured, enabled: v })}>
         <div className="grid grid-cols-2 gap-3">
           <div className="col-span-2"><Label className="text-xs">Заголовок секции</Label><Input value={featured.sectionTitle} onChange={(e) => setFeatured({ ...featured, sectionTitle: e.target.value })} /></div>
           <div><Label className="text-xs">Текст ссылки</Label><Input value={featured.linkText} onChange={(e) => setFeatured({ ...featured, linkText: e.target.value })} /></div>
@@ -292,7 +324,7 @@ const AdminHomePage = () => {
       </Section>
 
       {/* Properties Grid 1 */}
-      <Section title="🏢 Карточки объектов (блок 1)">
+      <Section title="🏢 Карточки объектов (блок 1)" enabled={propertiesFirst.enabled !== false} onToggle={(v) => setPropertiesFirst({ ...propertiesFirst, enabled: v })}>
         {propertiesFirst.items.map((prop, idx) => (
           <DragItem key={idx} index={idx} {...prop1Drag} onRemove={(i: number) => setPropertiesFirst({ ...propertiesFirst, items: propertiesFirst.items.filter((_, j) => j !== i) })}>
             <div className="grid grid-cols-2 gap-2">
@@ -315,7 +347,7 @@ const AdminHomePage = () => {
       </Section>
 
       {/* Properties Grid 2 */}
-      <Section title="🏢 Карточки объектов (блок 2)">
+      <Section title="🏢 Карточки объектов (блок 2)" enabled={propertiesSecond.enabled !== false} onToggle={(v) => setPropertiesSecond({ ...propertiesSecond, enabled: v })}>
         {propertiesSecond.items.map((prop, idx) => (
           <DragItem key={idx} index={idx} {...prop2Drag} onRemove={(i: number) => setPropertiesSecond({ ...propertiesSecond, items: propertiesSecond.items.filter((_, j) => j !== i) })}>
             <div className="grid grid-cols-2 gap-2">
@@ -338,7 +370,7 @@ const AdminHomePage = () => {
       </Section>
 
       {/* Telegram */}
-      <Section title="📱 Telegram-блок">
+      <Section title="📱 Telegram-блок" enabled={telegram.enabled !== false} onToggle={(v) => setTelegram({ ...telegram, enabled: v })}>
         <div className="grid grid-cols-2 gap-3">
           <div><Label className="text-xs">Надпись</Label><Input value={telegram.label} onChange={(e) => setTelegram({ ...telegram, label: e.target.value })} /></div>
           <div><Label className="text-xs">Ссылка кнопки</Label><Input value={telegram.buttonLink} onChange={(e) => setTelegram({ ...telegram, buttonLink: e.target.value })} /></div>
@@ -362,7 +394,7 @@ const AdminHomePage = () => {
       </Section>
 
       {/* How It Works */}
-      <Section title="📋 Как это работает">
+      <Section title="📋 Как это работает" enabled={howItWorks.enabled !== false} onToggle={(v) => setHowItWorks({ ...howItWorks, enabled: v })}>
         <div className="space-y-3">
           <div><Label className="text-xs">Заголовок</Label><Textarea value={howItWorks.title} onChange={(e) => setHowItWorks({ ...howItWorks, title: e.target.value })} rows={2} /></div>
           <div><Label className="text-xs">Изображение</Label><ImageUploader value={howItWorks.image} onChange={(url) => setHowItWorks({ ...howItWorks, image: url })} bucket="page-images" /></div>
@@ -383,13 +415,13 @@ const AdminHomePage = () => {
       </Section>
 
       {/* Map */}
-      <Section title="🗺️ Карта инвестиций">
+      <Section title="🗺️ Карта инвестиций" enabled={map.enabled !== false} onToggle={(v) => setMap({ ...map, enabled: v })}>
         <div><Label className="text-xs">Заголовок</Label><Input value={map.title} onChange={(e) => setMap({ ...map, title: e.target.value })} /></div>
         <div><Label className="text-xs">Описание</Label><Textarea value={map.description} onChange={(e) => setMap({ ...map, description: e.target.value })} rows={3} /></div>
       </Section>
 
       {/* News */}
-      <Section title="📰 Новости">
+      <Section title="📰 Новости" enabled={news.enabled !== false} onToggle={(v) => setNews({ ...news, enabled: v })}>
         {news.items.map((item, idx) => (
           <DragItem key={idx} index={idx} {...newsDrag} onRemove={(i: number) => setNews({ ...news, items: news.items.filter((_, j) => j !== i) })}>
             <div className="grid grid-cols-2 gap-2">
@@ -406,7 +438,7 @@ const AdminHomePage = () => {
       </Section>
 
       {/* Blog */}
-      <Section title="📝 События и аналитика">
+      <Section title="📝 События и аналитика" enabled={blog.enabled !== false} onToggle={(v) => setBlog({ ...blog, enabled: v })}>
         <div><Label className="text-xs">Заголовок</Label><Input value={blog.title} onChange={(e) => setBlog({ ...blog, title: e.target.value })} /></div>
         <div><Label className="text-xs">Описание</Label><Textarea value={blog.description} onChange={(e) => setBlog({ ...blog, description: e.target.value })} rows={2} /></div>
         <p className="text-xs text-muted-foreground font-medium mt-3">Посты</p>
@@ -426,7 +458,7 @@ const AdminHomePage = () => {
       </Section>
 
       {/* Testimonials */}
-      <Section title="💬 Отзывы">
+      <Section title="💬 Отзывы" enabled={testimonials.enabled !== false} onToggle={(v) => setTestimonials({ ...testimonials, enabled: v })}>
         <div><Label className="text-xs">Заголовок</Label><Input value={testimonials.title} onChange={(e) => setTestimonials({ ...testimonials, title: e.target.value })} /></div>
         {testimonials.items.map((item, idx) => (
           <DragItem key={idx} index={idx} {...testDrag} onRemove={(i: number) => setTestimonials({ ...testimonials, items: testimonials.items.filter((_, j) => j !== i) })}>
