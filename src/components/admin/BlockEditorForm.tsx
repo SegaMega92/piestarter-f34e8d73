@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import ImageUploader, { MultiImageUploader, GalleryImage } from "./ImageUploader";
 import RichTextEditor from "./RichTextEditor";
 
@@ -71,8 +72,32 @@ const BlockEditorForm = ({ block, pageId, onUpdate }: BlockEditorFormProps) => {
           <Field label="Адрес" value={content.address} onChange={(v) => onUpdate("address", v)} />
           <Field label="Координаты (широта, долгота)" value={content.coordinates} onChange={(v) => onUpdate("coordinates", v)} placeholder="56.757702, 60.752964" />
           <RichTextEditor value={content.description_html || ""} onChange={(v) => onUpdate("description_html", v)} label="Описание" />
-          <ImageUploader value={content.card1_image || ""} onChange={(v) => onUpdate("card1_image", v)} pageId={pageId} blockId={block.id} label="Изображение карточки 1" />
-          <ImageUploader value={content.card2_image || ""} onChange={(v) => onUpdate("card2_image", v)} pageId={pageId} blockId={block.id} label="Изображение карточки 2" />
+          <div className="border rounded-lg p-3 space-y-3">
+            <div className="flex items-center gap-2">
+              <Switch checked={content.card1_enabled !== false} onCheckedChange={(v) => onUpdate("card1_enabled", v)} />
+              <Label className="text-xs font-medium">Карточка 1</Label>
+            </div>
+            {content.card1_enabled !== false && (
+              <>
+                <Field label="Заголовок карточки 1" value={content.card1_title} onChange={(v) => onUpdate("card1_title", v)} />
+                <Field label="Описание карточки 1" value={content.card1_description} onChange={(v) => onUpdate("card1_description", v)} />
+                <ImageUploader value={content.card1_image || ""} onChange={(v) => onUpdate("card1_image", v)} pageId={pageId} blockId={block.id} label="Изображение карточки 1" />
+              </>
+            )}
+          </div>
+          <div className="border rounded-lg p-3 space-y-3">
+            <div className="flex items-center gap-2">
+              <Switch checked={content.card2_enabled !== false} onCheckedChange={(v) => onUpdate("card2_enabled", v)} />
+              <Label className="text-xs font-medium">Карточка 2</Label>
+            </div>
+            {content.card2_enabled !== false && (
+              <>
+                <Field label="Заголовок карточки 2" value={content.card2_title} onChange={(v) => onUpdate("card2_title", v)} />
+                <Field label="Описание карточки 2" value={content.card2_description} onChange={(v) => onUpdate("card2_description", v)} />
+                <ImageUploader value={content.card2_image || ""} onChange={(v) => onUpdate("card2_image", v)} pageId={pageId} blockId={block.id} label="Изображение карточки 2" />
+              </>
+            )}
+          </div>
         </div>
       );
     default:
