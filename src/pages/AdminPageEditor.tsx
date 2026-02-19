@@ -30,7 +30,8 @@ const BLOCK_LABELS: Record<string, string> = {
   PropertyStats: "Статистика",
   PhotoGallery: "Фотогалерея",
   PropertyDetails: "Детали объекта",
-  LocationSection: "Локация",
+  LocationSection: "Локация (карта)",
+  LocationAdvantages: "Локация (карточки преимуществ)",
   FinancialSection: "Финансы",
   SimilarProperties: "Похожие объекты",
 };

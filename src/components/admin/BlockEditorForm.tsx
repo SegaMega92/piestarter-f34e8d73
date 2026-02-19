@@ -72,6 +72,11 @@ const BlockEditorForm = ({ block, pageId, onUpdate }: BlockEditorFormProps) => {
           <Field label="Адрес" value={content.address} onChange={(v) => onUpdate("address", v)} />
           <Field label="Координаты (широта, долгота)" value={content.coordinates} onChange={(v) => onUpdate("coordinates", v)} placeholder="56.757702, 60.752964" />
           <RichTextEditor value={content.description_html || ""} onChange={(v) => onUpdate("description_html", v)} label="Описание" />
+        </div>
+      );
+    case "LocationAdvantages":
+      return (
+        <div className="space-y-3">
           <div className="border rounded-lg p-3 space-y-3">
             <div className="flex items-center gap-2">
               <Switch checked={content.card1_enabled !== false} onCheckedChange={(v) => onUpdate("card1_enabled", v)} />
@@ -79,9 +84,9 @@ const BlockEditorForm = ({ block, pageId, onUpdate }: BlockEditorFormProps) => {
             </div>
             {content.card1_enabled !== false && (
               <>
-                <Field label="Заголовок карточки 1" value={content.card1_title} onChange={(v) => onUpdate("card1_title", v)} />
-                <Field label="Описание карточки 1" value={content.card1_description} onChange={(v) => onUpdate("card1_description", v)} />
-                <ImageUploader value={content.card1_image || ""} onChange={(v) => onUpdate("card1_image", v)} pageId={pageId} blockId={block.id} label="Изображение карточки 1" />
+                <Field label="Заголовок" value={content.card1_title} onChange={(v) => onUpdate("card1_title", v)} placeholder="Будущий транспортно-торговый хаб" />
+                <Field label="Описание" value={content.card1_description} onChange={(v) => onUpdate("card1_description", v)} />
+                <ImageUploader value={content.card1_image || ""} onChange={(v) => onUpdate("card1_image", v)} pageId={pageId} blockId={block.id} label="Изображение" />
               </>
             )}
           </div>
@@ -92,9 +97,9 @@ const BlockEditorForm = ({ block, pageId, onUpdate }: BlockEditorFormProps) => {
             </div>
             {content.card2_enabled !== false && (
               <>
-                <Field label="Заголовок карточки 2" value={content.card2_title} onChange={(v) => onUpdate("card2_title", v)} />
-                <Field label="Описание карточки 2" value={content.card2_description} onChange={(v) => onUpdate("card2_description", v)} />
-                <ImageUploader value={content.card2_image || ""} onChange={(v) => onUpdate("card2_image", v)} pageId={pageId} blockId={block.id} label="Изображение карточки 2" />
+                <Field label="Заголовок" value={content.card2_title} onChange={(v) => onUpdate("card2_title", v)} placeholder="Стабильный спрос на складские площади" />
+                <Field label="Описание" value={content.card2_description} onChange={(v) => onUpdate("card2_description", v)} />
+                <ImageUploader value={content.card2_image || ""} onChange={(v) => onUpdate("card2_image", v)} pageId={pageId} blockId={block.id} label="Изображение" />
               </>
             )}
           </div>
