@@ -7,6 +7,7 @@ import PropertyStats from "@/components/PropertyStats";
 import PhotoGallery from "@/components/PhotoGallery";
 import PropertyDetails from "@/components/PropertyDetails";
 import LocationSection from "@/components/LocationSection";
+import LocationAdvantages from "@/components/LocationAdvantages";
 import FinancialSection from "@/components/FinancialSection";
 import SimilarProperties from "@/components/SimilarProperties";
 import FAQSection from "@/components/FAQSection";
@@ -95,6 +96,7 @@ const PropertyPage = () => {
           {isEnabled("PhotoGallery") && <PhotoGallery content={getContent("PhotoGallery")} />}
           {isEnabled("PropertyDetails") && <PropertyDetails content={getContent("PropertyDetails")} />}
           {isEnabled("LocationSection") && <LocationSection content={getContent("LocationSection")} />}
+          {isEnabled("LocationAdvantages") && <LocationAdvantages content={getContent("LocationAdvantages")} />}
         </div>
         {isEnabled("FinancialSection") && <FinancialSection />}
         <div className="content-container">
