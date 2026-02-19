@@ -6,8 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { ArrowLeft, Save, GripVertical, Eye, ChevronDown, Check, AlertCircle } from "lucide-react";
+import { ArrowLeft, Save, GripVertical, Eye, ChevronDown, Check, AlertCircle, Plus } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import BlockEditorForm from "@/components/admin/BlockEditorForm";
 
 interface PageData {
@@ -119,6 +120,19 @@ const AdminPageEditor = () => {
     );
   };
 
+  const addBlock = async (blockType: string) => {
+    if (!page) return;
+    const maxOrder = blocks.length > 0 ? Math.max(...blocks.map((b) => b.sort_order)) + 1 : 0;
+    const { data, error } = await supabase
+      .from("page_blocks")
+      .insert({ page_id: page.id, block_type: blockType, sort_order: maxOrder, enabled: true, content: {} })
+      .select()
+      .single();
+    if (error) { toast.error("Ошибка при добавлении блока"); return; }
+    if (data) setBlocks((prev) => [...prev, data as Block]);
+    toast.success(`Блок «${BLOCK_LABELS[blockType] || blockType}» добавлен`);
+  };
+
   if (!page) return <p className="text-muted-foreground">Загрузка...</p>;
 
   return (
@@ -183,6 +197,29 @@ const AdminPageEditor = () => {
             {saving ? "Сохранение..." : "Сохранить"}
           </Button>
         </div>
+      </div>
+
+      {/* Add block */}
+      <div className="flex justify-end">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="sm">
+              <Plus className="h-4 w-4 mr-1" /> Добавить блок
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {Object.entries(BLOCK_LABELS)
+              .filter(([type]) => !blocks.some((b) => b.block_type === type))
+              .map(([type, label]) => (
+                <DropdownMenuItem key={type} onClick={() => addBlock(type)}>
+                  {label}
+                </DropdownMenuItem>
+              ))}
+            {Object.entries(BLOCK_LABELS).every(([type]) => blocks.some((b) => b.block_type === type)) && (
+              <DropdownMenuItem disabled>Все блоки уже добавлены</DropdownMenuItem>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       {/* Blocks accordion */}
