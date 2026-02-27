@@ -1,54 +1,48 @@
 
 
-## Улучшение админ-панели
+## Plan: Комбинированный редактор графиков (таблица + импорт XLS)
 
-### Что будет сделано
+### Что делаем
 
-**1. Загрузка медиафайлов (фото) в блоках**
-- Добавляется компонент `ImageUploader` -- кнопка выбора файла с превью загруженного изображения
-- Файлы загружаются в уже существующее хранилище `page-images` (bucket уже создан и публичный)
-- В JSONB-контент блока сохраняется только URL загруженного файла
-- Загрузка фото добавляется в блоки: PropertyHero (фон баннера), PhotoGallery (массив фотографий), LocationSection (фото карточек)
+Превращаем захардкоженный `FinancialSection` в управляемый блок с тремя наборами данных (доход, стоимость, оборот), редактируемыми через табличный интерфейс в админке с возможностью импорта из XLS.
 
-**2. Все блоки видны сразу (без кликов)**
-- Убирается текущая логика "выбери блок -- увидь форму". Вместо этого все блоки отображаются подряд в виде аккордеона (Collapsible-секции), каждый раскрыт по умолчанию
-- Левая колонка с выбором блоков убирается; весь редактор -- единый список секций, прокручиваемый вертикально
-- Drag-and-drop порядок блоков и переключатель включения/выключения сохраняются
+### Структура данных в `content` блока `FinancialSection`
 
-**3. Базовое форматирование текста (WYSIWYG)**
-- Устанавливается легковесная библиотека `tiptap` (самый популярный WYSIWYG для React, маленький бандл)
-- Добавляется компонент `RichTextEditor` с тулбаром: жирный, курсив, маркированный список, нумерованный список
-- Контент хранится как HTML-строка в JSONB
-- Применяется к текстовым полям блоков (описания в PropertyDetails, LocationSection, FAQ и т.д.)
-- На публичной странице HTML рендерится через `dangerouslySetInnerHTML` с санитизацией
-
----
-
-### Техническая часть
-
-**Новые зависимости:**
-- `@tiptap/react`, `@tiptap/starter-kit`, `@tiptap/extension-bold`, `@tiptap/extension-italic`, `@tiptap/extension-bullet-list`, `@tiptap/extension-ordered-list`, `@tiptap/extension-list-item` -- WYSIWYG-редактор
-
-**Новые компоненты:**
-- `src/components/admin/ImageUploader.tsx` -- загрузка файла в storage + превью
-- `src/components/admin/RichTextEditor.tsx` -- tiptap-обертка с тулбаром
-
-**Изменяемые файлы:**
-- `src/pages/AdminPageEditor.tsx` -- полная переработка: убрать двухколоночный макет, показать все блоки подряд как аккордеон, интегрировать ImageUploader и RichTextEditor в формы блоков
-- `src/components/PropertyHero.tsx` -- принимать URL фонового изображения из `content.image`
-- `src/components/PhotoGallery.tsx` -- принимать массив URL изображений из `content.images[]`
-- `src/components/PropertyDetails.tsx` -- рендерить HTML из `content.description_html`
-- `src/components/LocationSection.tsx` -- рендерить HTML из `content.description_html`, принимать URL изображений карточек
-
-**Структура загрузки изображений:**
-- Путь в storage: `page-images/{page_id}/{block_id}/{filename}`
-- RLS: нужно добавить политику INSERT/UPDATE для авторизованных админов на `storage.objects` для bucket `page-images`
-
-**Структура контента блоков после обновления (примеры JSONB):**
+```text
+content: {
+  income_data:   [{ month: "янв. 25", value: 200 }, ...],
+  value_data:    [{ month: "фев. 25", value: 500 }, ...],
+  turnover_data: [{ month: "мар. 25", value: 100 }, ...],
+  buy_url:       "https://...",
+  contact_url:   "https://..."
+}
 ```
-PropertyHero: { title, subtitle, rating, image: "https://...url" }
-PhotoGallery: { images: ["url1", "url2", ...] }
-PropertyDetails: { price, presentation_url, description_html: "<p>текст...</p>" }
-LocationSection: { title, address, description_html, card1_image, card2_image }
-```
+
+### Шаги реализации
+
+**1. Установить библиотеку `xlsx` (SheetJS)**
+- Нужна для парсинга загруженных XLS/XLSX файлов на клиенте.
+
+**2. Создать компонент `ChartDataEditor`** (`src/components/admin/ChartDataEditor.tsx`)
+- Табличный редактор с колонками "Месяц" и "Значение"
+- Кнопки: "Добавить строку", "Удалить строку" (иконка корзины у каждой строки)
+- Кнопка "Импорт из XLS" — открывает file input, парсит первые две колонки файла как month/value, заполняет таблицу
+- Три вкладки (Tabs): "Доход на пай", "Стоимость пая", "Оборот паев" — каждая со своим набором данных
+- Используем существующие UI-компоненты: `Input`, `Button`, `Tabs`, `Table`
+
+**3. Добавить case `FinancialSection` в `BlockEditorForm`**
+- Рендерит `ChartDataEditor` с тремя наборами данных
+- Поля для `buy_url` и `contact_url` (ссылки на кнопках)
+
+**4. Обновить компонент `FinancialSection`**
+- Принимает `content` через пропсы (как остальные блоки)
+- Читает `income_data`, `value_data`, `turnover_data` из `content`
+- Fallback на текущие захардкоженные данные, если `content` пуст (обратная совместимость)
+- Переключение вкладок показывает данные соответствующего набора
+
+**5. Обновить `PropertyPage.tsx`**
+- Передать `content` в `FinancialSection`: `<FinancialSection content={getContent("FinancialSection")} />`
+
+**6. Добавить блок `FinancialSection` на существующие страницы**
+- Выполнить SQL: вставить записи `FinancialSection` в `page_blocks` для всех существующих страниц, у которых его ещё нет.
 
