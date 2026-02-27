@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
+import CategoriesFilter from "@/components/home/CategoriesFilter";
 
 const AboutPage = () => {
   const [mapActive, setMapActive] = useState(false);
@@ -10,6 +11,7 @@ const AboutPage = () => {
     <div className="min-h-screen bg-bg-main overflow-x-hidden relative">
       <div className="aurora-glow" aria-hidden="true" />
       <Header />
+      <CategoriesFilter variant="nav" />
       <main>
         {/* Hero */}
         <section className="content-container pt-[40px] md:pt-[80px] pb-[40px] md:pb-[60px]">
