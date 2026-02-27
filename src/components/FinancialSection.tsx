@@ -2,13 +2,22 @@ import { useState } from "react";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import arrowRight from "@/assets/arrow-right.svg";
 
+interface ChartPoint {
+  month: string;
+  value: number;
+}
+
+interface FinancialSectionProps {
+  content?: Record<string, any>;
+}
+
 const tabs = [
-  { key: "income", label: "Доход на пай", desc: "Это прибыль, приходящаяся на один инвестиционный пай фонда. Начисляется ежемесячно." },
-  { key: "value", label: "Стоимость пая", desc: "Текущая рыночная стоимость одного инвестиционного пая фонда." },
-  { key: "turnover", label: "Оборот паев", desc: "Объём торгов паями за выбранный период." },
+  { key: "income", label: "Доход на пай", desc: "Это прибыль, приходящаяся на один инвестиционный пай фонда. Начисляется ежемесячно.", dataKey: "income_data" },
+  { key: "value", label: "Стоимость пая", desc: "Текущая рыночная стоимость одного инвестиционного пая фонда.", dataKey: "value_data" },
+  { key: "turnover", label: "Оборот паев", desc: "Объём торгов паями за выбранный период.", dataKey: "turnover_data" },
 ];
 
-const chartDataAll = [
+const defaultChartData: ChartPoint[] = [
   { month: "янв. 25", value: 200 },
   { month: "фев. 25", value: 800 },
   { month: "мар. 25", value: 1700 },
@@ -23,8 +32,6 @@ const chartDataAll = [
   { month: "дек. 25", value: 560 },
 ];
 
-const chartData12m = chartDataAll.slice(-6);
-
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
@@ -37,12 +44,21 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-const FinancialSection = () => {
+const FinancialSection = ({ content = {} }: FinancialSectionProps) => {
   const [period, setPeriod] = useState<"12m" | "all">("all");
   const [activeTab, setActiveTab] = useState("income");
 
+  const activeTabConfig = tabs.find((t) => t.key === activeTab)!;
+  const chartDataAll: ChartPoint[] = (content[activeTabConfig.dataKey] as ChartPoint[])?.length
+    ? content[activeTabConfig.dataKey]
+    : defaultChartData;
+  const chartData12m = chartDataAll.slice(-6);
+
   const data = period === "all" ? chartDataAll : chartData12m;
-  const total = period === "all" ? "8 560₽" : "5 310₽";
+  const total = data.reduce((sum, d) => sum + d.value, 0).toLocaleString("ru-RU") + "₽";
+
+  const buyUrl = content.buy_url || "#";
+  const contactUrl = content.contact_url || "#";
 
   return (
     <section className="bg-azure-13 rounded-[24px] md:rounded-[40px] w-full py-[60px] md:py-[120px]">
@@ -138,12 +154,12 @@ const FinancialSection = () => {
         </div>
         {/* Bottom buttons */}
         <div className="flex flex-wrap gap-[8px] md:gap-[12px] items-center px-[16px] md:px-[30px] py-[16px] md:py-[24px]">
-          <button className="bg-p-blue flex items-center justify-center px-[20px] md:px-[30px] py-[12px] md:py-[18px] rounded-[30px] cursor-pointer hover:bg-[#96d9ec] active:scale-[0.98] transition-all">
+          <a href={buyUrl} target="_blank" rel="noopener noreferrer" className="bg-p-blue flex items-center justify-center px-[20px] md:px-[30px] py-[12px] md:py-[18px] rounded-[30px] cursor-pointer hover:bg-[#96d9ec] active:scale-[0.98] transition-all">
             <span className="font-medium text-[13px] md:text-[14.9px] text-black">Купить паи</span>
-          </button>
-          <button className="border border-grey-96 flex gap-[10px] items-center justify-center px-[20px] md:px-[30px] py-[12px] md:py-[18px] rounded-[30px] cursor-pointer hover:bg-white/10 transition-colors">
+          </a>
+          <a href={contactUrl} target="_blank" rel="noopener noreferrer" className="border border-grey-96 flex gap-[10px] items-center justify-center px-[20px] md:px-[30px] py-[12px] md:py-[18px] rounded-[30px] cursor-pointer hover:bg-white/10 transition-colors">
             <span className="font-medium text-[13px] md:text-[14.9px] text-white">Связаться с менеджером</span>
-          </button>
+          </a>
         </div>
       </div>
       </div>
