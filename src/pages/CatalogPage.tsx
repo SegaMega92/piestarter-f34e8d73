@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -31,6 +32,8 @@ const getRatingStyles = (rating?: string) => {
 };
 
 const CatalogPage = () => {
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get("q")?.toLowerCase() || "";
   const [properties, setProperties] = useState<PropertyCard[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -98,15 +101,29 @@ const CatalogPage = () => {
     fetchProperties();
   }, []);
 
+  const filtered = searchQuery
+    ? properties.filter((p) =>
+        p.title.toLowerCase().includes(searchQuery) ||
+        p.city?.toLowerCase().includes(searchQuery) ||
+        p.area?.toLowerCase().includes(searchQuery)
+      )
+    : properties;
+
   return (
     <div className="min-h-screen bg-bg-main overflow-x-hidden relative">
       <div className="aurora-glow" aria-hidden="true" />
       <Header />
       <main>
         <div className="content-container py-[48px] md:py-[72px]">
-          <h1 className="font-semibold text-[40px] md:text-[68px] lg:text-[85px] leading-[1.05] tracking-[-1px] md:tracking-[-2.55px] text-black w-full mb-[48px] md:mb-[72px]">
+          <h1 className="font-semibold text-[40px] md:text-[68px] lg:text-[85px] leading-[1.05] tracking-[-1px] md:tracking-[-2.55px] text-black w-full mb-[24px] md:mb-[48px]">
             Каталог недвижимости
           </h1>
+
+          {searchQuery && !loading && (
+            <p className="text-[16px] md:text-[18px] text-grey-44 mb-[24px] md:mb-[48px]">
+              Результаты поиска по запросу «<span className="text-cyan-2 font-medium">{searchQuery}</span>»: {filtered.length}
+            </p>
+          )}
 
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[24px] md:gap-[30px]">
@@ -121,14 +138,14 @@ const CatalogPage = () => {
                 </div>
               ))}
             </div>
-          ) : properties.length === 0 ? (
+          ) : filtered.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-[120px] gap-[16px]">
-              <p className="text-[24px] font-semibold text-grey-44">Объектов пока нет</p>
-              <p className="text-[16px] text-grey-71">Объекты появятся здесь после публикации через админ-панель</p>
+              <p className="text-[24px] font-semibold text-grey-44">{searchQuery ? "Ничего не найдено" : "Объектов пока нет"}</p>
+              <p className="text-[16px] text-grey-71">{searchQuery ? "Попробуйте изменить запрос" : "Объекты появятся здесь после публикации через админ-панель"}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[24px] md:gap-[30px]">
-              {properties.map((property, idx) => {
+              {filtered.map((property, idx) => {
                 const styles = getRatingStyles(property.rating);
                 const img = property.image || defaultImages[idx % defaultImages.length];
                 return (
