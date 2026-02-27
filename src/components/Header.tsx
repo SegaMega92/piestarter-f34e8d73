@@ -281,6 +281,9 @@ const Header = () => {
           <a href="/catalog" className="font-medium text-[15px] text-cyan-2 px-4 py-3" onClick={() => setMenuOpen(false)}>
             Каталог
           </a>
+          <a href="/about" className="font-medium text-[15px] text-cyan-2 px-4 py-3" onClick={() => setMenuOpen(false)}>
+            О Пайстартер
+          </a>
           <button className="bg-p-blue flex items-center justify-center gap-[10px] px-[20px] py-[14px] rounded-[30px]">
             <span className="font-medium text-[14.9px] text-black">Личный кабинет</span>
             <img src={svgUser} alt="" className="w-[22px] h-[22px]" />

@@ -37,6 +37,13 @@ const CategoriesFilter = () => {
               <span>{cat.label}</span>
             </button>
           ))}
+          <a
+            href="/about"
+            className="flex items-center gap-[6px] whitespace-nowrap text-[14px] md:text-[16px] leading-[24px] text-grey-44 hover:text-black transition-colors ml-auto"
+          >
+            <span>ℹ️</span>
+            <span>О Пайстартер</span>
+          </a>
         </div>
       </div>
     </div>

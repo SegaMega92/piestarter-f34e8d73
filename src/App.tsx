@@ -19,6 +19,7 @@ import AdminCharts from "./pages/AdminCharts";
 import AdminLayout from "./components/admin/AdminLayout";
 import PropertyPage from "./pages/PropertyPage";
 import CatalogPage from "./pages/CatalogPage";
+import AboutPage from "./pages/AboutPage";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/catalog" element={<CatalogPage />} />
+            <Route path="/about" element={<AboutPage />} />
             <Route path="/property-template" element={<Index />} />
             <Route path="/objects/:slug" element={<PropertyPage />} />
             <Route path="/admin/login" element={<AdminLogin />} />
