@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { LogOut, FileText, HelpCircle, MessageSquare, Home, Inbox, Bell } from "lucide-react";
+import { LogOut, FileText, HelpCircle, MessageSquare, Home, Inbox, Bell, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const AdminLayout = () => {
@@ -46,6 +46,10 @@ const AdminLayout = () => {
             <Link to="/admin/leads" className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
               <Inbox className="h-4 w-4" />
               Заявки
+            </Link>
+            <Link to="/admin/charts" className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <BarChart3 className="h-4 w-4" />
+              Графики
             </Link>
             <Link to="/admin/notifications" className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
               <Bell className="h-4 w-4" />
