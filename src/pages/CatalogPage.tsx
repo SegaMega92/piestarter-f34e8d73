@@ -114,7 +114,7 @@ const CatalogPage = () => {
     <div className="min-h-screen bg-bg-main overflow-x-hidden relative">
       <div className="aurora-glow" aria-hidden="true" />
       <Header />
-      <CategoriesFilter variant="nav" />
+      <CategoriesFilter />
       <main>
         <div className="content-container py-[48px] md:py-[72px]">
           <h1 className="font-semibold text-[40px] md:text-[68px] lg:text-[85px] leading-[1.05] tracking-[-1px] md:tracking-[-2.55px] text-black w-full mb-[24px] md:mb-[48px]">

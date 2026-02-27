@@ -11,7 +11,7 @@ const AboutPage = () => {
     <div className="min-h-screen bg-bg-main overflow-x-hidden relative">
       <div className="aurora-glow" aria-hidden="true" />
       <Header />
-      <CategoriesFilter variant="nav" />
+      <CategoriesFilter />
       <main>
         {/* Hero */}
         <section className="content-container pt-[40px] md:pt-[80px] pb-[40px] md:pb-[60px]">

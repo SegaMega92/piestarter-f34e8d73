@@ -90,7 +90,7 @@ const PropertyPage = () => {
   return (
     <div className="min-h-screen bg-bg-main overflow-x-hidden">
       <Header />
-      <CategoriesFilter variant="nav" />
+      <CategoriesFilter />
       <main>
         <div className="content-container">
           {isEnabled("PropertyHero") && <PropertyHero content={getContent("PropertyHero")} />}
