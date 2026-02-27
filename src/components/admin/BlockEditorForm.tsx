@@ -3,6 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import ImageUploader, { MultiImageUploader, GalleryImage } from "./ImageUploader";
 import RichTextEditor from "./RichTextEditor";
+import ChartDataEditor from "./ChartDataEditor";
 
 interface Block {
   id: string;
@@ -103,6 +104,21 @@ const BlockEditorForm = ({ block, pageId, onUpdate }: BlockEditorFormProps) => {
               </>
             )}
           </div>
+        </div>
+      );
+    case "FinancialSection":
+      return (
+        <div className="space-y-3">
+          <ChartDataEditor
+            incomeData={content.income_data || []}
+            valueData={content.value_data || []}
+            turnoverData={content.turnover_data || []}
+            onIncomeChange={(v) => onUpdate("income_data", v)}
+            onValueChange={(v) => onUpdate("value_data", v)}
+            onTurnoverChange={(v) => onUpdate("turnover_data", v)}
+          />
+          <Field label="Ссылка «Купить паи»" value={content.buy_url} onChange={(v) => onUpdate("buy_url", v)} placeholder="https://..." />
+          <Field label="Ссылка «Связаться с менеджером»" value={content.contact_url} onChange={(v) => onUpdate("contact_url", v)} placeholder="https://..." />
         </div>
       );
     default:
