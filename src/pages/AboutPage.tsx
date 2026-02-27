@@ -18,9 +18,6 @@ const AboutPage = () => {
           <h1 className="font-semibold text-[36px] md:text-[56px] leading-[1.1] tracking-[-1px] text-azure-4 m-0">
             О Пайстартер
           </h1>
-          <p className="mt-[16px] md:mt-[24px] text-[16px] md:text-[18px] text-grey-44 leading-[26px] max-w-[700px]">
-            Мы помогаем инвесторам находить и приобретать доли в коммерческой недвижимости. Свяжитесь с нами любым удобным способом.
-          </p>
         </section>
 
         {/* Contacts + Map */}
