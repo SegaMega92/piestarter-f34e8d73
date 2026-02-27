@@ -1,15 +1,24 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 import logoPie from "@/assets/logo_pie.svg";
 import svgSearch from "@/assets/svg-search.svg";
 import svgUser from "@/assets/svg-user.svg";
+
+interface Suggestion {
+  title: string;
+  slug: string;
+}
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const mobileInputRef = useRef<HTMLInputElement>(null);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,25 +30,111 @@ const Header = () => {
     }
   }, [location]);
 
+  // Fetch suggestions on query change
+  useEffect(() => {
+    const trimmed = query.trim();
+    if (trimmed.length < 2) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+
+    const timeout = setTimeout(async () => {
+      const { data } = await supabase
+        .from("pages")
+        .select("title, slug")
+        .eq("status", "published")
+        .ilike("title", `%${trimmed}%`)
+        .limit(5);
+
+      if (data && data.length > 0) {
+        setSuggestions(data);
+        setShowSuggestions(true);
+      } else {
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
+    }, 200);
+
+    return () => clearTimeout(timeout);
+  }, [query]);
+
+  // Close suggestions on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (suggestionsRef.current && !suggestionsRef.current.contains(e.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
   const doSearch = () => {
     const trimmed = query.trim();
     navigate(trimmed ? `/catalog?q=${encodeURIComponent(trimmed)}` : "/catalog");
     setSearchOpen(false);
     setMenuOpen(false);
+    setShowSuggestions(false);
+  };
+
+  const goToObject = (slug: string) => {
+    navigate(`/objects/${slug}`);
+    setShowSuggestions(false);
+    setSearchOpen(false);
+    setMenuOpen(false);
+    setQuery("");
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") doSearch();
-    if (e.key === "Escape") { setSearchOpen(false); setQuery(""); }
+    if (e.key === "Escape") { setSearchOpen(false); setQuery(""); setShowSuggestions(false); }
   };
 
-  // Focus input when search opens
   useEffect(() => {
     if (searchOpen) {
       inputRef.current?.focus();
       mobileInputRef.current?.focus();
     }
   }, [searchOpen]);
+
+  const highlightMatch = (text: string) => {
+    const trimmed = query.trim();
+    if (!trimmed) return text;
+    const idx = text.toLowerCase().indexOf(trimmed.toLowerCase());
+    if (idx === -1) return text;
+    return (
+      <>
+        {text.slice(0, idx)}
+        <span className="text-cyan-2 font-semibold">{text.slice(idx, idx + trimmed.length)}</span>
+        {text.slice(idx + trimmed.length)}
+      </>
+    );
+  };
+
+  const SuggestionsList = () => {
+    if (!showSuggestions || suggestions.length === 0) return null;
+    return (
+      <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-grey-88 rounded-[16px] shadow-[0px_4px_16px_rgba(0,0,0,0.12)] overflow-hidden z-[60]">
+        {suggestions.map((s) => (
+          <button
+            key={s.slug}
+            onClick={() => goToObject(s.slug)}
+            className="w-full text-left px-4 py-3 hover:bg-grey-88/20 transition-colors flex items-center gap-2"
+          >
+            <img src={svgSearch} alt="" className="w-[16px] h-[16px] opacity-40 shrink-0" />
+            <span className="text-[14px] text-grey-44 truncate">{highlightMatch(s.title)}</span>
+          </button>
+        ))}
+        <button
+          onClick={doSearch}
+          className="w-full text-left px-4 py-3 border-t border-grey-88/50 hover:bg-grey-88/20 transition-colors"
+        >
+          <span className="text-[13px] text-p-gray">Показать все результаты по «{query.trim()}»</span>
+        </button>
+      </div>
+    );
+  };
 
   return (
     <header className="flex items-center justify-between px-4 md:px-8 lg:px-[70px] py-[14px] md:py-[20px] w-full sticky top-0 bg-transparent backdrop-blur-sm z-50">
@@ -53,38 +148,46 @@ const Header = () => {
       </a>
 
       {/* Desktop Search */}
-      <div className="hidden lg:flex bg-white border border-grey-88 items-center px-[20px] py-[14px] rounded-[40px] flex-1 max-w-[600px] mx-4 xl:mx-8 shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)] hover:border-grey-71 hover:shadow-[0px_2px_6px_0px_rgba(0,0,0,0.15)] transition-all gap-[10px]">
-        <input
-          ref={inputRef}
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Поиск по объектам"
-          className="flex-1 bg-transparent outline-none text-cyan-2 font-medium text-[15px] placeholder:text-p-gray"
-        />
-        <button onClick={doSearch} className="shrink-0 hover:opacity-70 transition-opacity">
-          <img src={svgSearch} alt="Поиск" className="w-[22px] h-[22px]" />
-        </button>
+      <div className="hidden lg:flex relative flex-1 max-w-[600px] mx-4 xl:mx-8" ref={suggestionsRef}>
+        <div className="bg-white border border-grey-88 flex items-center px-[20px] py-[14px] rounded-[40px] w-full shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)] hover:border-grey-71 hover:shadow-[0px_2px_6px_0px_rgba(0,0,0,0.15)] transition-all gap-[10px]">
+          <input
+            ref={inputRef}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
+            placeholder="Поиск по объектам"
+            className="flex-1 bg-transparent outline-none text-cyan-2 font-medium text-[15px] placeholder:text-p-gray"
+          />
+          <button onClick={doSearch} className="shrink-0 hover:opacity-70 transition-opacity">
+            <img src={svgSearch} alt="Поиск" className="w-[22px] h-[22px]" />
+          </button>
+        </div>
+        <SuggestionsList />
       </div>
 
       {/* Tablet Search (md but not lg) */}
       <div className="hidden md:flex lg:hidden flex-1 mx-4">
         {searchOpen ? (
-          <div className="flex bg-white border border-grey-88 items-center px-[16px] py-[12px] rounded-[30px] flex-1 shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)] gap-[8px]">
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Поиск по объектам"
-              autoFocus
-              className="flex-1 bg-transparent outline-none text-cyan-2 font-medium text-[14px] placeholder:text-p-gray"
-            />
-            <button onClick={doSearch} className="shrink-0">
-              <img src={svgSearch} alt="Поиск" className="w-[20px] h-[20px]" />
-            </button>
-            <button onClick={() => { setSearchOpen(false); setQuery(""); }} className="text-grey-44 text-[13px] font-medium ml-1">
-              ✕
-            </button>
+          <div className="relative flex-1" ref={suggestionsRef}>
+            <div className="flex bg-white border border-grey-88 items-center px-[16px] py-[12px] rounded-[30px] w-full shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)] gap-[8px]">
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
+                onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
+                placeholder="Поиск по объектам"
+                autoFocus
+                className="flex-1 bg-transparent outline-none text-cyan-2 font-medium text-[14px] placeholder:text-p-gray"
+              />
+              <button onClick={doSearch} className="shrink-0">
+                <img src={svgSearch} alt="Поиск" className="w-[20px] h-[20px]" />
+              </button>
+              <button onClick={() => { setSearchOpen(false); setQuery(""); setShowSuggestions(false); }} className="text-grey-44 text-[13px] font-medium ml-1">
+                ✕
+              </button>
+            </div>
+            <SuggestionsList />
           </div>
         ) : (
           <div />
@@ -134,7 +237,7 @@ const Header = () => {
 
       {/* Mobile search dropdown */}
       {searchOpen && (
-        <div className="absolute top-full left-0 right-0 bg-bg-main/95 backdrop-blur-sm border-b border-grey-88 p-4 md:hidden">
+        <div className="absolute top-full left-0 right-0 bg-bg-main/95 backdrop-blur-sm border-b border-grey-88 p-4 md:hidden z-[60]">
           <div className="flex bg-white border border-grey-88 items-center px-4 py-3 rounded-[20px] gap-[8px]">
             <input
               ref={mobileInputRef}
@@ -148,6 +251,27 @@ const Header = () => {
               <img src={svgSearch} alt="Поиск" className="w-[20px] h-[20px]" />
             </button>
           </div>
+          {/* Mobile suggestions */}
+          {showSuggestions && suggestions.length > 0 && (
+            <div className="mt-2 bg-white border border-grey-88 rounded-[16px] overflow-hidden">
+              {suggestions.map((s) => (
+                <button
+                  key={s.slug}
+                  onClick={() => goToObject(s.slug)}
+                  className="w-full text-left px-4 py-3 hover:bg-grey-88/20 transition-colors flex items-center gap-2"
+                >
+                  <img src={svgSearch} alt="" className="w-[16px] h-[16px] opacity-40 shrink-0" />
+                  <span className="text-[14px] text-grey-44 truncate">{highlightMatch(s.title)}</span>
+                </button>
+              ))}
+              <button
+                onClick={doSearch}
+                className="w-full text-left px-4 py-3 border-t border-grey-88/50 hover:bg-grey-88/20 transition-colors"
+              >
+                <span className="text-[13px] text-p-gray">Показать все результаты</span>
+              </button>
+            </div>
+          )}
         </div>
       )}
 
