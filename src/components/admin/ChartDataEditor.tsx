@@ -59,7 +59,7 @@ const ChartDataEditor = ({
   const updateRow = (tab: string, index: number, field: "month" | "value", val: string) => {
     const { data, setter } = getDataAndSetter(tab);
     const updated = data.map((row, i) =>
-      i === index ? { ...row, [field]: field === "value" ? Number(val) || 0 : val } : row
+      i === index ? { ...row, [field]: field === "value" ? (val === "" ? 0 : Number(val)) : val } : row
     );
     setter(updated);
   };
@@ -143,8 +143,9 @@ const ChartDataEditor = ({
                 />
                 <Input
                   type="number"
-                  value={row.value}
+                  value={row.value === 0 ? "" : row.value}
                   onChange={(e) => updateRow(tab, i, "value", e.target.value)}
+                  onBlur={(e) => { if (e.target.value === "") updateRow(tab, i, "value", "0"); }}
                   placeholder="0"
                   className="h-8 text-xs"
                 />
