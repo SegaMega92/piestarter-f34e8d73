@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
+import CategoriesFilter from "@/components/home/CategoriesFilter";
 import PropertyHero from "@/components/PropertyHero";
 import PropertyStats from "@/components/PropertyStats";
 import PhotoGallery from "@/components/PhotoGallery";
@@ -89,6 +90,7 @@ const PropertyPage = () => {
   return (
     <div className="min-h-screen bg-bg-main overflow-x-hidden">
       <Header />
+      <CategoriesFilter variant="nav" />
       <main>
         <div className="content-container">
           {isEnabled("PropertyHero") && <PropertyHero content={getContent("PropertyHero")} />}

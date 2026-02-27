@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
+import CategoriesFilter from "@/components/home/CategoriesFilter";
 import Footer from "@/components/Footer";
 import propertyCard1 from "@/assets/home/property-card-1.png";
 import propertyCard2 from "@/assets/home/property-card-2.png";
@@ -113,6 +114,7 @@ const CatalogPage = () => {
     <div className="min-h-screen bg-bg-main overflow-x-hidden relative">
       <div className="aurora-glow" aria-hidden="true" />
       <Header />
+      <CategoriesFilter variant="nav" />
       <main>
         <div className="content-container py-[48px] md:py-[72px]">
           <h1 className="font-semibold text-[40px] md:text-[68px] lg:text-[85px] leading-[1.05] tracking-[-1px] md:tracking-[-2.55px] text-black w-full mb-[24px] md:mb-[48px]">
