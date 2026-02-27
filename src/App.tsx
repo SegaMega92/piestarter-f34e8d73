@@ -13,6 +13,8 @@ import AdminPageEditor from "./pages/AdminPageEditor";
 import AdminFAQ from "./pages/AdminFAQ";
 import AdminContactForm from "./pages/AdminContactForm";
 import AdminHomePage from "./pages/AdminHomePage";
+import AdminLeads from "./pages/AdminLeads";
+import AdminNotifications from "./pages/AdminNotifications";
 import AdminLayout from "./components/admin/AdminLayout";
 import PropertyPage from "./pages/PropertyPage";
 import CatalogPage from "./pages/CatalogPage";
@@ -38,6 +40,8 @@ const App = () => (
               <Route path="faq" element={<AdminFAQ />} />
               <Route path="contact" element={<AdminContactForm />} />
               <Route path="homepage" element={<AdminHomePage />} />
+              <Route path="leads" element={<AdminLeads />} />
+              <Route path="notifications" element={<AdminNotifications />} />
             </Route>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

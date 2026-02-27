@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import calendarAlt from "@/assets/calendar-alt.svg";
 import briefcase from "@/assets/briefcase.svg";
 import fileDownload from "@/assets/file-download.svg";
@@ -9,12 +10,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface PropertyDetailsProps {
   content?: Record<string, any>;
 }
 
 const PropertyDetails = ({ content }: PropertyDetailsProps) => {
+  const { slug } = useParams<{ slug: string }>();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", email: "" });
   const [agreed, setAgreed] = useState(false);
@@ -24,7 +27,7 @@ const PropertyDetails = ({ content }: PropertyDetailsProps) => {
   const presentationUrl = content?.presentation_url || "";
   const descriptionHtml = content?.description_html;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!agreed) {
       toast.error("Необходимо согласие на обработку данных");
@@ -35,14 +38,26 @@ const PropertyDetails = ({ content }: PropertyDetailsProps) => {
       return;
     }
     setSubmitting(true);
-    // For now just show success
-    setTimeout(() => {
+    try {
+      const { error } = await supabase.functions.invoke("submit-lead", {
+        body: {
+          name: form.name.trim(),
+          phone: form.phone.trim(),
+          email: form.email.trim(),
+          source: "buy_form",
+          page_slug: slug || null,
+        },
+      });
+      if (error) throw error;
       toast.success("Заявка отправлена!");
       setDrawerOpen(false);
       setForm({ name: "", phone: "", email: "" });
       setAgreed(false);
+    } catch {
+      toast.error("Ошибка отправки, попробуйте позже");
+    } finally {
       setSubmitting(false);
-    }, 500);
+    }
   };
 
   return (
