@@ -30,21 +30,16 @@ const Footer = () => {
         {/* Footer Columns */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-[24px] md:gap-[30px] w-full md:w-auto">
           <div className="flex flex-col gap-[20px] md:gap-[30px] items-start">
-            <h4 className="font-semibold text-[16px] md:text-[18px] text-grey-96 leading-[24px] m-0">Категории</h4>
+            <h4 className="font-semibold text-[16px] md:text-[18px] text-grey-96 leading-[24px] m-0">Каталог</h4>
             <div className="flex flex-col gap-[12px] md:gap-[15px] text-[14px] md:text-[16px] text-grey-71 leading-[22px] md:leading-[24px] font-normal">
-              <a href="#" className="cursor-pointer hover:text-white transition-colors">Все объекты</a>
-              <a href="#" className="cursor-pointer hover:text-white transition-colors">Торговые центры</a>
-              <a href="#" className="cursor-pointer hover:text-white transition-colors">Отели</a>
-              <a href="#" className="cursor-pointer hover:text-white transition-colors">Супермаркеты</a>
-              <a href="#" className="cursor-pointer hover:text-white transition-colors">Квартиры</a>
+              <a href="/catalog" className="cursor-pointer hover:text-white transition-colors">Все объекты</a>
             </div>
           </div>
           <div className="flex flex-col gap-[20px] md:gap-[30px] items-start">
             <h4 className="font-semibold text-[16px] md:text-[18px] text-grey-96 leading-[24px] m-0">О компании</h4>
             <div className="flex flex-col gap-[12px] md:gap-[15px] text-[14px] md:text-[16px] text-grey-71 leading-[22px] md:leading-[24px] font-normal">
-              <a href="#" className="cursor-pointer hover:text-white transition-colors">Пайстартер сегодня</a>
-              <a href="#" className="cursor-pointer hover:text-white transition-colors">О команде</a>
-              <a href="#" className="cursor-pointer hover:text-white transition-colors">Блог</a>
+              <a href="/about" className="cursor-pointer hover:text-white transition-colors">Пайстартер сегодня</a>
+              <a href="/about" className="cursor-pointer hover:text-white transition-colors">О команде</a>
             </div>
           </div>
           <div className="flex flex-col gap-[20px] md:gap-[30px] items-start col-span-2 sm:col-span-1">

@@ -38,10 +38,14 @@ const BlogSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-[24px] md:gap-[30px]">
-          {d.posts.map((post, index) => (
-            <a
+          {d.posts.map((post, index) => {
+            const link = (post as any).link;
+            const Wrapper = link ? 'a' as const : 'div' as const;
+            const wrapperProps = link ? { href: link, target: link.startsWith("http") ? "_blank" : undefined, rel: link.startsWith("http") ? "noopener noreferrer" : undefined } : {};
+            return (
+            <Wrapper
               key={index}
-              href="#"
+              {...wrapperProps}
               className={`flex flex-col gap-[20px] group ${index === 1 ? "md:row-span-1" : ""}`}
             >
               <div className={`rounded-[24px] md:rounded-[40px] overflow-hidden ${index === 1 ? "h-[250px] md:h-[410px]" : "h-[200px] md:h-[300px]"}`}>
@@ -58,8 +62,9 @@ const BlogSection = () => {
                 </h3>
                 <span className="text-grey-44 text-[14px]">{post.date}</span>
               </div>
-            </a>
-          ))}
+            </Wrapper>
+            );
+          })}
         </div>
       </div>
     </section>

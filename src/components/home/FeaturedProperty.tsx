@@ -36,7 +36,7 @@ const FeaturedProperty = () => {
         <h2 className="font-semibold text-[24px] md:text-[30px] leading-[1.2] text-black">
           {d.sectionTitle}
         </h2>
-        <a href="#" className="text-grey-44 text-[14px] md:text-[18px] hover:text-black transition-colors">
+        <a href="/catalog" className="text-grey-44 text-[14px] md:text-[18px] hover:text-black transition-colors">
           {d.linkText}
         </a>
       </div>
