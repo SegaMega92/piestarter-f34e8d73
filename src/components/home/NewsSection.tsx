@@ -26,10 +26,13 @@ const NewsSection = () => {
     <section className="py-[40px] md:py-[60px] bg-bg-main">
       <div className="content-container">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-[20px] md:gap-[30px]">
-          {items.map((item, idx) => (
-            <a
+          {items.map((item, idx) => {
+            const Wrapper = (item as any).link ? 'a' as const : 'div' as const;
+            const wrapperProps = (item as any).link ? { href: (item as any).link, target: (item as any).link?.startsWith("http") ? "_blank" : undefined, rel: (item as any).link?.startsWith("http") ? "noopener noreferrer" : undefined } : {};
+            return (
+            <Wrapper
               key={idx}
-              href="#"
+              {...wrapperProps}
               className="flex flex-col gap-[16px] p-[20px] bg-white rounded-[20px] border border-grey-88 hover:border-grey-71 hover:shadow-lg transition-all group"
             >
               <div className="flex flex-col gap-[12px]">
@@ -46,8 +49,9 @@ const NewsSection = () => {
                 {item.description}
               </p>
               <span className="text-grey-44 text-[14px]">{item.date}</span>
-            </a>
-          ))}
+            </Wrapper>
+            );
+          })}
         </div>
       </div>
     </section>

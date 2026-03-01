@@ -1,4 +1,5 @@
 import shareAlt from "@/assets/share-alt.svg";
+import { toast } from "sonner";
 
 interface PropertyHeroProps {
   content?: Record<string, any>;
@@ -8,6 +9,15 @@ const PropertyHero = ({ content }: PropertyHeroProps) => {
   const title = content?.title || "Терминал Чкаловский, Екатеринбург";
   const subtitle = content?.subtitle || "ЗПИФН «Пайстартер двадцать один»";
   const rating = content?.rating || "А";
+
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      toast.success("Ссылка скопирована");
+    } catch {
+      toast.error("Не удалось скопировать ссылку");
+    }
+  };
 
   return (
     <section className="flex items-start justify-center pt-[60px] md:pt-[90px] lg:pt-[120px] pb-[24px] md:pb-[36px] w-full py-[60px]">
@@ -20,7 +30,7 @@ const PropertyHero = ({ content }: PropertyHeroProps) => {
             <span className="hidden sm:inline">Рейтинг: {rating}</span>
             <span className="hidden sm:inline">•</span>
           </div>
-          <button className="flex gap-[8px] md:gap-[12px] items-center group hover:opacity-80 transition-opacity">
+          <button onClick={handleShare} className="flex gap-[8px] md:gap-[12px] items-center group hover:opacity-80 transition-opacity">
             <span className="font-medium text-[14px] md:text-[18px] text-cyan-2 cursor-pointer">Поделиться</span>
             <img src={shareAlt} alt="" className="w-[16px] h-[16px] md:w-[18px] md:h-[18px]" />
           </button>

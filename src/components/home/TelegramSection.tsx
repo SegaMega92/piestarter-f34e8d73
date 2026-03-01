@@ -46,7 +46,7 @@ const TelegramSection = () => {
 
           <div className="flex flex-col sm:flex-row gap-[24px] md:gap-[30px] flex-1">
             {d.cards.map((card, idx) => (
-              <a key={idx} href="#" className="flex flex-col gap-[24px] flex-1 group">
+              <a key={idx} href={(card as any).link || "#"} target={(card as any).link?.startsWith("http") ? "_blank" : undefined} rel={(card as any).link?.startsWith("http") ? "noopener noreferrer" : undefined} className="flex flex-col gap-[24px] flex-1 group">
                 <div className="h-[280px] md:h-[544px] rounded-[24px] md:rounded-[40px] overflow-hidden">
                   <img
                     src={card.image || defaultCardImages[idx % defaultCardImages.length]}

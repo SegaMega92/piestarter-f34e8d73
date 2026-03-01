@@ -384,6 +384,7 @@ const AdminHomePage = () => {
               <div><Label className="text-xs">Тег</Label><Input value={card.tag} onChange={(e) => setTelegram({ ...telegram, cards: updateArrayItem(telegram.cards, idx, "tag", e.target.value) })} /></div>
               <div><Label className="text-xs">Дата</Label><Input value={card.date} onChange={(e) => setTelegram({ ...telegram, cards: updateArrayItem(telegram.cards, idx, "date", e.target.value) })} /></div>
               <div className="col-span-2"><Label className="text-xs">Заголовок</Label><Textarea value={card.title} onChange={(e) => setTelegram({ ...telegram, cards: updateArrayItem(telegram.cards, idx, "title", e.target.value) })} rows={2} /></div>
+              <div className="col-span-2"><Label className="text-xs">Ссылка</Label><Input value={(card as any).link || ""} onChange={(e) => setTelegram({ ...telegram, cards: updateArrayItem(telegram.cards, idx, "link", e.target.value) })} placeholder="https://..." /></div>
             </div>
             <div><Label className="text-xs">Изображение</Label><ImageUploader value={card.image} onChange={(url) => setTelegram({ ...telegram, cards: updateArrayItem(telegram.cards, idx, "image", url) })} bucket="page-images" /></div>
           </DragItem>
@@ -429,6 +430,7 @@ const AdminHomePage = () => {
               <div><Label className="text-xs">Дата</Label><Input value={item.date} onChange={(e) => setNews({ ...news, items: updateArrayItem(news.items, idx, "date", e.target.value) })} /></div>
               <div className="col-span-2"><Label className="text-xs">Заголовок</Label><Input value={item.title} onChange={(e) => setNews({ ...news, items: updateArrayItem(news.items, idx, "title", e.target.value) })} /></div>
               <div className="col-span-2"><Label className="text-xs">Описание</Label><Textarea value={item.description} onChange={(e) => setNews({ ...news, items: updateArrayItem(news.items, idx, "description", e.target.value) })} rows={2} /></div>
+              <div className="col-span-2"><Label className="text-xs">Ссылка</Label><Input value={(item as any).link || ""} onChange={(e) => setNews({ ...news, items: updateArrayItem(news.items, idx, "link", e.target.value) })} placeholder="https://..." /></div>
             </div>
           </DragItem>
         ))}
@@ -448,6 +450,7 @@ const AdminHomePage = () => {
               <div><Label className="text-xs">Категория</Label><Input value={post.category} onChange={(e) => setBlog({ ...blog, posts: updateArrayItem(blog.posts, idx, "category", e.target.value) })} /></div>
               <div><Label className="text-xs">Дата</Label><Input value={post.date} onChange={(e) => setBlog({ ...blog, posts: updateArrayItem(blog.posts, idx, "date", e.target.value) })} /></div>
               <div className="col-span-2"><Label className="text-xs">Заголовок</Label><Input value={post.title} onChange={(e) => setBlog({ ...blog, posts: updateArrayItem(blog.posts, idx, "title", e.target.value) })} /></div>
+              <div className="col-span-2"><Label className="text-xs">Ссылка</Label><Input value={(post as any).link || ""} onChange={(e) => setBlog({ ...blog, posts: updateArrayItem(blog.posts, idx, "link", e.target.value) })} placeholder="https://..." /></div>
             </div>
             <div><Label className="text-xs">Изображение</Label><ImageUploader value={post.image} onChange={(url) => setBlog({ ...blog, posts: updateArrayItem(blog.posts, idx, "image", url) })} bucket="page-images" /></div>
           </DragItem>
