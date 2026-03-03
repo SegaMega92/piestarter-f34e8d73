@@ -7,9 +7,8 @@ import propertyCard3 from "@/assets/home/property-card-3.png";
 const defaultImages = [propertyCard1, propertyCard2, propertyCard3];
 
 const defaultFirst = [
-  { title: "ТЦ «Зеленый берег»", city: "Тюмень", area: "19 560 м²", term: "2 года 1 мес", price: "1 126 959 346 ₽", shares: "200", yield: "25,9%", rating: "A+", ratingBg: "bg-p-blue", ratingColor: "text-black", image: "", slug: "tc-zeleniy-bereg" },
-  { title: "Пай девятнадцать", city: "Ульяновск", area: "18 226 м²", term: "3 года 2 мес", price: "1 531 529 489 ₽", shares: "500", yield: "25,9%", rating: "B+", ratingBg: "bg-blue-second", ratingColor: "text-white", image: "", slug: "pai-19" },
-  { title: "ТРК «Малина»", city: "Рязань", area: "27 184 м²", term: "2 года 10 мес", price: "840 376 659 ₽", shares: "500", yield: "37.1%", rating: "B+", ratingBg: "bg-blue-second", ratingColor: "text-white", image: "", slug: "trk-malina" },
+  { title: "Фитнес-клуб ANVIL", city: "Москва", area: "1 942,3 м²", term: "2 года", price: "1,97 млрд ₽", shares: "200", yield: "30%", rating: "A", ratingBg: "bg-p-blue", ratingColor: "text-black", image: "", slug: "object-1771242581206" },
+  { title: "Склад под Оренбургом", city: "Оренбург", area: "49 200 м²", term: "3 года", price: "1 531 529 489 ₽", shares: "200", yield: "25,9%", rating: "B", ratingBg: "bg-blue-second", ratingColor: "text-white", image: "", slug: "object-1771082698894" },
 ];
 
 const defaultSecond = [

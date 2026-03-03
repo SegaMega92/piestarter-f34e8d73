@@ -15,7 +15,7 @@ const defaultData = {
     { label: "Среднегодовая доходность", value: "9,25%" },
   ],
   buttonText: "Подробнее",
-  buttonLink: "/objects/activo-flipping",
+  buttonLink: "/objects/object-1771242581206",
   description: "Первый в России ЗПИФН по флиппингу квартир премиум-класса. Вторичный оборот паев будет организован на Московской Бирже.",
 };
 
