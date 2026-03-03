@@ -21,8 +21,8 @@ const ConsentPage = () => {
             <p className="text-[15px] md:text-[16px] text-grey-71 leading-[1.7] m-0">
               Настоящим в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных
               данных» я, пользователь сайта{" "}
-              <a href="https://piestarter.lovable.app/" className="text-cyan-2 hover:underline">
-                https://piestarter.lovable.app/
+              <a href="https://piestarter.ru/" className="text-cyan-2 hover:underline">
+                https://piestarter.ru/
               </a>{" "}
               (далее – Сайт), свободно, своей волей и в своем интересе даю согласие АО «Холдинг
               Кронос» (ИНН/ОГРН: 9726025555/1227700696871, адрес: 108842, г. Москва, вн. тер. г.

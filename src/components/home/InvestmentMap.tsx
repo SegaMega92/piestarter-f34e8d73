@@ -75,7 +75,7 @@ const InvestmentMap = () => {
                   <div className="flex gap-[8px] text-[14px]"><span className="text-grey-44">Стоимость:</span><span className="text-black">1 531 529 489 ₽</span></div>
                   <div className="flex gap-[8px] text-[14px]"><span className="text-grey-44">Доходность:</span><span className="text-black">25%</span></div>
                 </div>
-                <a href="#" className="block w-full text-center py-[14px] border border-grey-88 rounded-[30px] text-[14px] font-medium text-black hover:bg-grey-96 transition-colors">Подробнее</a>
+                <a href="/catalog" className="block w-full text-center py-[14px] border border-grey-88 rounded-[30px] text-[14px] font-medium text-black hover:bg-grey-96 transition-colors">Подробнее</a>
               </div>
             )}
 
