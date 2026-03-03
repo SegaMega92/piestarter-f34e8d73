@@ -29,16 +29,45 @@ interface PropertyGridProps {
   variant?: "first" | "second";
 }
 
+const PropertyGridSkeleton = ({ count }: { count: number }) => (
+  <section className="py-[30px] md:py-[60px]">
+    <div className="flex flex-col md:flex-row gap-[24px] md:gap-[30px]">
+      {Array.from({ length: count }).map((_, idx) => (
+        <div key={idx} className="flex flex-col gap-[16px] md:gap-[24px] w-full md:flex-1 animate-pulse">
+          <div className="h-[200px] sm:h-[260px] md:h-[320px] rounded-[24px] md:rounded-[40px] bg-gray-200" />
+          <div className="flex flex-col gap-[12px]">
+            <div className="flex flex-col gap-[6px]">
+              <div className="h-6 w-3/4 bg-gray-200 rounded-lg" />
+              <div className="h-4 w-1/2 bg-gray-200 rounded-lg" />
+            </div>
+            <div className="flex flex-col gap-[4px]">
+              <div className="h-4 w-full bg-gray-200 rounded-lg" />
+              <div className="h-4 w-full bg-gray-200 rounded-lg" />
+              <div className="h-4 w-2/3 bg-gray-200 rounded-lg" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
 const PropertyGrid = ({ variant = "first" }: PropertyGridProps) => {
   const settingsKey = variant === "first" ? "home_properties_first" : "home_properties_second";
   const defaults = variant === "first" ? defaultFirst : defaultSecond;
-  const [properties, setProperties] = useState(defaults);
+  const [properties, setProperties] = useState<typeof defaults | null>(null);
 
   useEffect(() => {
     supabase.from("site_settings").select("value").eq("key", settingsKey).maybeSingle().then(({ data }) => {
-      if (data?.value && (data.value as any).items?.length) setProperties((data.value as any).items);
+      if (data?.value && (data.value as any).items?.length) {
+        setProperties((data.value as any).items);
+      } else {
+        setProperties(defaults);
+      }
     });
   }, [settingsKey]);
+
+  if (!properties) return <PropertyGridSkeleton count={defaults.length} />;
 
   return (
     <section className="py-[30px] md:py-[60px]">

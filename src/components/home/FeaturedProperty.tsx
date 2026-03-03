@@ -19,14 +19,37 @@ const defaultData = {
   description: "Первый в России ЗПИФН по флиппингу квартир премиум-класса. Вторичный оборот паев будет организован на Московской Бирже.",
 };
 
+const FeaturedPropertySkeleton = () => (
+  <section className="pb-[40px] md:pb-[60px] animate-pulse">
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-[16px] mb-[24px] md:mb-[36px]">
+      <div className="h-8 w-64 bg-gray-200 rounded-lg" />
+      <div className="h-5 w-28 bg-gray-200 rounded-lg" />
+    </div>
+    <div className="rounded-[24px] md:rounded-[40px] overflow-hidden h-[400px] md:h-[692px] bg-gray-200" />
+    <div className="flex flex-col md:flex-row md:items-center gap-[16px] md:gap-[40px] mt-[24px] md:mt-[36px]">
+      <div className="h-[56px] w-[160px] bg-gray-200 rounded-[30px]" />
+      <div className="flex flex-col gap-[8px] flex-1 max-w-[642px]">
+        <div className="h-4 w-full bg-gray-200 rounded-lg" />
+        <div className="h-4 w-3/4 bg-gray-200 rounded-lg" />
+      </div>
+    </div>
+  </section>
+);
+
 const FeaturedProperty = () => {
-  const [d, setD] = useState(defaultData);
+  const [d, setD] = useState<typeof defaultData | null>(null);
 
   useEffect(() => {
     supabase.from("site_settings").select("value").eq("key", "home_featured").maybeSingle().then(({ data }) => {
-      if (data?.value) setD({ ...defaultData, ...(data.value as any) });
+      if (data?.value) {
+        setD({ ...defaultData, ...(data.value as any) });
+      } else {
+        setD(defaultData);
+      }
     });
   }, []);
+
+  if (!d) return <FeaturedPropertySkeleton />;
 
   const img = d.image || featuredImgDefault;
 
