@@ -65,7 +65,7 @@ const SimilarProperties = ({ currentSlug }: SimilarPropertiesProps) => {
         return {
           slug: page.slug,
           title: heroContent?.title || page.title,
-          image: galleryContent?.images?.[0] || "",
+          image: (() => { const img = galleryContent?.images?.[0]; return img ? (typeof img === "string" ? img : img?.url || "") : ""; })(),
           city: findStat("город") || findStat("локац"),
           area: findStat("площ"),
           term: findStat("срок"),
