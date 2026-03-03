@@ -20,11 +20,11 @@ const Footer = () => {
             Общество с ограниченной ответственностью «ПАЙСТАРТЕР»<br />
             ОГРН: 1187746382941, ИНН: 7731456723
           </p>
-          <a href="https://t.me/piestarer" target="_blank" rel="noopener noreferrer" className="flex gap-[12px] items-start hover:opacity-80 transition-opacity">
+          <a href="https://t.me/piestarter" target="_blank" rel="noopener noreferrer" className="flex gap-[12px] items-start hover:opacity-80 transition-opacity">
             <img src={telegram} alt="Telegram" className="w-[40px] h-[40px] md:w-[45px] md:h-[45px]" />
             <div className="text-[14px] md:text-[16px] text-grey-96 leading-[22px] md:leading-[24px] font-normal">
               <p className="m-0">Подпишитесь</p>
-              <p className="m-0">на телеграм-канал <span className="underline">@piestarer</span></p>
+              <p className="m-0">на телеграм-канал <span className="underline">@piestarter</span></p>
             </div>
           </a>
         </div>
