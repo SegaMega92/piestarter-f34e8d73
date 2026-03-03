@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import logoPie from "@/assets/logo_pie.svg";
 import telegram from "@/assets/telegram.svg";
 
@@ -8,13 +9,13 @@ const Footer = () => {
       <div className="flex flex-col md:flex-row gap-[30px] items-start w-full">
         {/* Logo & Info */}
         <div className="flex flex-col gap-[24px] items-start w-full md:w-[640px]">
-          <a href="/" className="flex items-center gap-[14px] hover:opacity-80 transition-opacity">
+          <Link to="/" className="flex items-center gap-[14px] hover:opacity-80 transition-opacity">
             <img src={logoPie} alt="Пайстартер" className="w-[44px] h-[44px] md:w-[60px] md:h-[60px]" />
             <div className="logo-text text-[18px] md:text-[22px] leading-[18px] md:leading-[21px] tracking-[0.66px] text-white">
               <p className="m-0">пай</p>
               <p className="m-0">стартер</p>
             </div>
-          </a>
+          </Link>
           <p className="text-[14px] md:text-[16px] text-grey-96 leading-[22px] md:leading-[24px] font-normal m-0">
             Общество с ограниченной ответственностью «ПАЙСТАРТЕР»<br />
             ОГРН: 1187746382941, ИНН: 7731456723
@@ -32,14 +33,14 @@ const Footer = () => {
           <div className="flex flex-col gap-[20px] md:gap-[30px] items-start">
             <h4 className="font-semibold text-[16px] md:text-[18px] text-grey-96 leading-[24px] m-0">Каталог</h4>
             <div className="flex flex-col gap-[12px] md:gap-[15px] text-[14px] md:text-[16px] text-grey-71 leading-[22px] md:leading-[24px] font-normal">
-              <a href="/catalog" className="cursor-pointer hover:text-white transition-colors">Все объекты</a>
+              <Link to="/catalog" className="cursor-pointer hover:text-white transition-colors">Все объекты</Link>
             </div>
           </div>
           <div className="flex flex-col gap-[20px] md:gap-[30px] items-start">
             <h4 className="font-semibold text-[16px] md:text-[18px] text-grey-96 leading-[24px] m-0">О компании</h4>
             <div className="flex flex-col gap-[12px] md:gap-[15px] text-[14px] md:text-[16px] text-grey-71 leading-[22px] md:leading-[24px] font-normal">
-              <a href="/about" className="cursor-pointer hover:text-white transition-colors">Пайстартер сегодня</a>
-              <a href="/about" className="cursor-pointer hover:text-white transition-colors">О команде</a>
+              <Link to="/about" className="cursor-pointer hover:text-white transition-colors">Пайстартер сегодня</Link>
+              <Link to="/about" className="cursor-pointer hover:text-white transition-colors">О команде</Link>
             </div>
           </div>
           <div className="flex flex-col gap-[20px] md:gap-[30px] items-start col-span-2 sm:col-span-1">
@@ -58,8 +59,8 @@ const Footer = () => {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-[12px] w-full text-[12px] md:text-[16px] text-grey-96 leading-[20px] md:leading-[24px] font-normal">
         <span>© 2025 ООО «Пайстартер». Все права защищены</span>
         <div className="flex flex-col sm:flex-row gap-[8px] sm:gap-[24px] items-start sm:items-center">
-          <a href="/privacy" className="hover:text-white transition-colors">Политика конфиденциальности</a>
-          <a href="/consent" className="hover:text-white transition-colors">Согласие на обработку персональных данных</a>
+          <Link to="/privacy" className="hover:text-white transition-colors">Политика конфиденциальности</Link>
+          <Link to="/consent" className="hover:text-white transition-colors">Согласие на обработку персональных данных</Link>
         </div>
       </div>
       </div>
