@@ -58,8 +58,8 @@ const Footer = () => {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-[12px] w-full text-[12px] md:text-[16px] text-grey-96 leading-[20px] md:leading-[24px] font-normal">
         <span>© 2025 ООО «Пайстартер». Все права защищены</span>
         <div className="flex flex-col sm:flex-row gap-[8px] sm:gap-[24px] items-start sm:items-center">
-          <a href="#" className="hover:text-white transition-colors">Политика обработки персональных данных</a>
-          <a href="#" className="hover:text-white transition-colors">Политика видов деятельности</a>
+          <a href="/privacy" className="hover:text-white transition-colors">Политика конфиденциальности</a>
+          <a href="/consent" className="hover:text-white transition-colors">Согласие на обработку персональных данных</a>
         </div>
       </div>
       </div>

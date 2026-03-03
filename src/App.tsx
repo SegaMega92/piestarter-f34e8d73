@@ -20,6 +20,8 @@ import AdminLayout from "./components/admin/AdminLayout";
 import PropertyPage from "./pages/PropertyPage";
 import CatalogPage from "./pages/CatalogPage";
 import AboutPage from "./pages/AboutPage";
+import PrivacyPage from "./pages/PrivacyPage";
+import ConsentPage from "./pages/ConsentPage";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +36,8 @@ const App = () => (
             <Route path="/" element={<HomePage />} />
             <Route path="/catalog" element={<CatalogPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/consent" element={<ConsentPage />} />
             <Route path="/property-template" element={<Index />} />
             <Route path="/objects/:slug" element={<PropertyPage />} />
             <Route path="/admin/login" element={<AdminLogin />} />
