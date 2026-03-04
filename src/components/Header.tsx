@@ -11,8 +11,19 @@ interface Suggestion {
   slug: string;
 }
 
+interface MenuItem {
+  text: string;
+  url: string;
+}
+
+const defaultMenuItems: MenuItem[] = [
+  { text: "Каталог", url: "/catalog" },
+  { text: "О Пайстартер", url: "/about" },
+];
+
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [navItems, setNavItems] = useState<MenuItem[]>(defaultMenuItems);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
@@ -25,6 +36,19 @@ const Header = () => {
   const suggestionsRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    supabase
+      .from("site_settings")
+      .select("value")
+      .eq("key", "menu_settings")
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data?.value && (data.value as any).items?.length) {
+          setNavItems((data.value as any).items);
+        }
+      });
+  }, []);
 
   // Sync query from URL on catalog page
   useEffect(() => {
@@ -306,12 +330,16 @@ const Header = () => {
         {/* Mobile menu */}
         {menuOpen && (
           <div className="absolute top-full left-0 right-0 bg-bg-main/95 backdrop-blur-sm border-b border-grey-88 p-4 flex flex-col gap-3 md:hidden">
-            <a href="/catalog" className="font-medium text-[15px] text-cyan-2 px-4 py-3" onClick={() => setMenuOpen(false)}>
-              Каталог
-            </a>
-            <a href="/about" className="font-medium text-[15px] text-cyan-2 px-4 py-3" onClick={() => setMenuOpen(false)}>
-              О Пайстартер
-            </a>
+            {navItems.map((item, i) => (
+              <a
+                key={i}
+                href={item.url}
+                className="font-medium text-[15px] text-cyan-2 px-4 py-3"
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.text}
+              </a>
+            ))}
             <button
               onClick={() => { setMenuOpen(false); setLeadFormOpen(true); }}
               className="bg-p-blue flex items-center justify-center gap-[10px] px-[20px] py-[14px] rounded-[30px]"
