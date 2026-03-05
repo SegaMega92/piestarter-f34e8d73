@@ -44,14 +44,15 @@ Deno.serve(async (req) => {
       supabase.from("site_settings").select("value").eq("key", "telegram_subscribers").maybeSingle(),
     ]);
 
-    if (tgSettings?.value) {
+    const botToken = Deno.env.get("TELEGRAM_BOT_TOKEN");
+
+    if (botToken && tgSettings?.value) {
       const config = tgSettings.value as {
-        bot_token?: string;
         usernames?: string[];
         enabled?: boolean;
       };
 
-      if (config.enabled && config.bot_token && config.usernames?.length) {
+      if (config.enabled && config.usernames?.length) {
         const subscribers: Record<string, string> =
           (subsData?.value as any)?.subscribers || {};
 
@@ -79,7 +80,7 @@ Deno.serve(async (req) => {
           for (const chatId of chatIds) {
             try {
               await fetch(
-                `https://api.telegram.org/bot${config.bot_token}/sendMessage`,
+                `https://api.telegram.org/bot${botToken}/sendMessage`,
                 {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },

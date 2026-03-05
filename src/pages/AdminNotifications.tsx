@@ -9,13 +9,11 @@ import { Plus, Trash2, Save, RefreshCw, CheckCircle, Circle } from "lucide-react
 
 interface TelegramConfig {
   enabled: boolean;
-  bot_token: string;
   usernames: string[];
 }
 
 const DEFAULT_CONFIG: TelegramConfig = {
   enabled: false,
-  bot_token: "",
   usernames: [""],
 };
 
@@ -37,7 +35,6 @@ const AdminNotifications = () => {
         const val = tgData.value as any;
         setConfig({
           enabled: val.enabled ?? false,
-          bot_token: val.bot_token ?? "",
           usernames: val.usernames?.length ? val.usernames : [""],
         });
       }
@@ -131,23 +128,6 @@ const AdminNotifications = () => {
 
         {config.enabled && (
           <>
-            <div className="space-y-2">
-              <Label className="text-sm">Токен бота</Label>
-              <Input
-                value={config.bot_token}
-                onChange={(e) => setConfig((c) => ({ ...c, bot_token: e.target.value }))}
-                placeholder="123456:ABC-DEF..."
-                type="password"
-              />
-              <p className="text-xs text-muted-foreground">
-                Создайте бота через{" "}
-                <a href="https://t.me/BotFather" target="_blank" rel="noopener" className="underline">
-                  @BotFather
-                </a>{" "}
-                и вставьте сюда токен
-              </p>
-            </div>
-
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label className="text-sm">Получатели</Label>

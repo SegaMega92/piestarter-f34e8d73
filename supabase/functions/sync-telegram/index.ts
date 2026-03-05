@@ -27,7 +27,15 @@ Deno.serve(async (req) => {
     });
   }
 
-  // Load telegram config
+  const botToken = Deno.env.get("TELEGRAM_BOT_TOKEN");
+  if (!botToken) {
+    return new Response(JSON.stringify({ error: "Токен бота не настроен" }), {
+      status: 400,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
+  // Load telegram config (usernames)
   const { data: tgData } = await supabase
     .from("site_settings")
     .select("value")
@@ -41,14 +49,7 @@ Deno.serve(async (req) => {
     });
   }
 
-  const config = tgData.value as { bot_token?: string; usernames?: string[] };
-
-  if (!config.bot_token) {
-    return new Response(JSON.stringify({ error: "Токен бота не настроен" }), {
-      status: 400,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
-  }
+  const config = tgData.value as { usernames?: string[] };
 
   // Load current subscribers + last offset
   const { data: subsData } = await supabase
@@ -65,7 +66,7 @@ Deno.serve(async (req) => {
 
   // Fetch updates from Telegram
   const tgRes = await fetch(
-    `https://api.telegram.org/bot${config.bot_token}/getUpdates?offset=${current.offset}&limit=100&timeout=0`
+    `https://api.telegram.org/bot${botToken}/getUpdates?offset=${current.offset}&limit=100&timeout=0`
   );
   const tgJson = await tgRes.json();
 
@@ -96,7 +97,7 @@ Deno.serve(async (req) => {
       newlyLinked.push(username);
 
       // Welcome message
-      await fetch(`https://api.telegram.org/bot${config.bot_token}/sendMessage`, {
+      await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
