@@ -39,44 +39,60 @@ Deno.serve(async (req) => {
     }
 
     // Try to send Telegram notification
-    const { data: tgSettings } = await supabase
-      .from("site_settings")
-      .select("value")
-      .eq("key", "telegram_notifications")
-      .single();
+    const [{ data: tgSettings }, { data: subsData }] = await Promise.all([
+      supabase.from("site_settings").select("value").eq("key", "telegram_notifications").maybeSingle(),
+      supabase.from("site_settings").select("value").eq("key", "telegram_subscribers").maybeSingle(),
+    ]);
 
     if (tgSettings?.value) {
-      const config = tgSettings.value as { bot_token?: string; chat_ids?: string[]; enabled?: boolean };
-      
-      if (config.enabled && config.bot_token && config.chat_ids?.length) {
-        const lines = [
-          "📩 *Новая заявка с сайта*",
-          "",
-          name ? `👤 *Имя:* ${escapeMarkdown(name)}` : "",
-          phone ? `📞 *Телефон:* ${escapeMarkdown(phone)}` : "",
-          email ? `📧 *Email:* ${escapeMarkdown(email)}` : "",
-          message ? `💬 *Сообщение:* ${escapeMarkdown(message)}` : "",
-          "",
-          `📋 *Источник:* ${escapeMarkdown(source || "contact_form")}`,
-          page_slug ? `🔗 *Страница:* ${escapeMarkdown(page_slug)}` : "",
-        ].filter(Boolean).join("\n");
+      const config = tgSettings.value as {
+        bot_token?: string;
+        usernames?: string[];
+        enabled?: boolean;
+      };
 
-        for (const chatId of config.chat_ids) {
-          try {
-            await fetch(
-              `https://api.telegram.org/bot${config.bot_token}/sendMessage`,
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  chat_id: chatId.trim(),
-                  text: lines,
-                  parse_mode: "Markdown",
-                }),
-              }
-            );
-          } catch (tgErr) {
-            console.error("Telegram send error for chat", chatId, tgErr);
+      if (config.enabled && config.bot_token && config.usernames?.length) {
+        const subscribers: Record<string, string> =
+          (subsData?.value as any)?.subscribers || {};
+
+        const allowedUsernames = config.usernames
+          .map((u) => u.replace("@", "").trim().toLowerCase())
+          .filter(Boolean);
+
+        const chatIds = allowedUsernames
+          .map((u) => subscribers[u])
+          .filter(Boolean);
+
+        if (chatIds.length) {
+          const lines = [
+            "📩 *Новая заявка с сайта*",
+            "",
+            name ? `👤 *Имя:* ${escapeMarkdown(name)}` : "",
+            phone ? `📞 *Телефон:* ${escapeMarkdown(phone)}` : "",
+            email ? `📧 *Email:* ${escapeMarkdown(email)}` : "",
+            message ? `💬 *Сообщение:* ${escapeMarkdown(message)}` : "",
+            "",
+            `📋 *Источник:* ${escapeMarkdown(source || "contact_form")}`,
+            page_slug ? `🔗 *Страница:* ${escapeMarkdown(page_slug)}` : "",
+          ].filter(Boolean).join("\n");
+
+          for (const chatId of chatIds) {
+            try {
+              await fetch(
+                `https://api.telegram.org/bot${config.bot_token}/sendMessage`,
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    chat_id: chatId,
+                    text: lines,
+                    parse_mode: "Markdown",
+                  }),
+                }
+              );
+            } catch (tgErr) {
+              console.error("Telegram send error for chat", chatId, tgErr);
+            }
           }
         }
       }
