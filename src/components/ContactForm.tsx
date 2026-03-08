@@ -135,7 +135,10 @@ const ContactForm = () => {
               )}
             </button>
             <span className="text-[14px] md:text-[18px] text-grey-44 leading-[22px] md:leading-[24px] cursor-pointer select-none" onClick={() => setAgreed(!agreed)}>
-              Соглашаюсь с <span className="hover:underline">политикой обработки данных</span>
+              Соглашаюсь с{" "}
+              <a href="/privacy" target="_blank" className="underline hover:text-grey-44/70 transition-colors" onClick={(e) => e.stopPropagation()}>
+                политикой обработки данных
+              </a>
             </span>
           </div>
           <button

@@ -195,7 +195,8 @@ const PropertyDetails = ({ content }: PropertyDetailsProps) => {
                 className="mt-0.5"
               />
               <Label htmlFor="buy-agree" className="text-sm text-muted-foreground leading-tight cursor-pointer">
-                Согласен на обработку персональных данных
+                Согласен на обработку персональных данных в соответствии с{" "}
+                <a href="/privacy" target="_blank" className="underline hover:text-foreground transition-colors">политикой конфиденциальности</a>
               </Label>
             </div>
             <Button type="submit" disabled={submitting} className="w-full rounded-full py-5">

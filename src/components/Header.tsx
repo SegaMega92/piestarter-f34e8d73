@@ -31,6 +31,7 @@ const Header = () => {
   const [leadFormOpen, setLeadFormOpen] = useState(false);
   const [leadSubmitting, setLeadSubmitting] = useState(false);
   const [leadForm, setLeadForm] = useState({ name: "", phone: "", email: "" });
+  const [leadAgreed, setLeadAgreed] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const mobileInputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
@@ -144,6 +145,10 @@ const Header = () => {
       toast.error("Заполните имя и телефон");
       return;
     }
+    if (!leadAgreed) {
+      toast.error("Необходимо согласие на обработку данных");
+      return;
+    }
     setLeadSubmitting(true);
     try {
       const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-lead`;
@@ -154,6 +159,7 @@ const Header = () => {
       });
       toast.success("Заявка отправлена!");
       setLeadForm({ name: "", phone: "", email: "" });
+      setLeadAgreed(false);
       setLeadFormOpen(false);
     } catch {
       toast.error("Ошибка при отправке");
@@ -385,16 +391,28 @@ const Header = () => {
                 className="w-full px-4 py-3 border border-grey-88 rounded-[12px] text-[15px] outline-none focus:border-cyan-2 transition-colors"
               />
             </div>
+            <div className="flex items-start gap-2">
+              <input
+                type="checkbox"
+                id="lead-agree"
+                checked={leadAgreed}
+                onChange={(e) => setLeadAgreed(e.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-grey-88 accent-cyan-2 cursor-pointer shrink-0"
+              />
+              <label htmlFor="lead-agree" className="text-[13px] text-grey-44 leading-snug cursor-pointer">
+                Соглашаюсь с{" "}
+                <a href="/privacy" target="_blank" className="underline hover:text-grey-44/70 transition-colors" onClick={(e) => e.stopPropagation()}>
+                  политикой обработки персональных данных
+                </a>
+              </label>
+            </div>
             <button
               type="submit"
-              disabled={leadSubmitting}
+              disabled={leadSubmitting || !leadAgreed}
               className="w-full bg-azure-13 text-white font-medium py-[14px] rounded-[30px] hover:bg-cyan-2 transition-colors disabled:opacity-60"
             >
               {leadSubmitting ? "Отправка..." : "Отправить"}
             </button>
-            <p className="text-[12px] text-grey-44 text-center">
-              Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных
-            </p>
           </form>
         </DialogContent>
       </Dialog>
