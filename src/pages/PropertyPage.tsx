@@ -108,7 +108,7 @@ const PropertyPage = () => {
         <div className="content-container">
           <FAQSection />
         </div>
-        <TelegramSection />
+        {isEnabled("TelegramSection") && <TelegramSection />}
         <ContactForm />
       </main>
       <Footer />

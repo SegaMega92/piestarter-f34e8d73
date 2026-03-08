@@ -35,6 +35,7 @@ const BLOCK_LABELS: Record<string, string> = {
   LocationAdvantages: "Локация (карточки преимуществ)",
   FinancialSection: "Финансы",
   SimilarProperties: "Похожие объекты",
+  TelegramSection: "Telegram-канал",
 };
 
 const AdminPageEditor = () => {
