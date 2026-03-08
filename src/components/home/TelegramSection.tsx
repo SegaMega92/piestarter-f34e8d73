@@ -9,21 +9,47 @@ const defaultData = {
   label: "Телеграм-канал",
   title: "Рассказываем о\u00a0новых объектах каждую неделю",
   buttonText: "Перейти в телеграм",
-  buttonLink: "https://t.me/piestarer",
+  buttonLink: "https://t.me/piestarter",
   cards: [
     { image: "", tag: "Обзор", title: "ЗПИФ «ЖК Симфония 34» (Symphony): обзор фонда недвижимости, доходность, стоимость пая и СЧА", date: "9 октября 2025" },
     { image: "", tag: "Обзор", title: "ЗПИФ «Альфа. Промышленные парки-2» от Альфа-Капитал: обзор фонда недвижимости от Альфа-Банка", date: "1 октября 2025" },
   ],
 };
 
+interface ChannelPost {
+  message_id: number;
+  text: string;
+  date: string;
+  link: string;
+}
+
 const TelegramSection = () => {
   const [d, setD] = useState(defaultData);
+  const [channelPosts, setChannelPosts] = useState<ChannelPost[]>([]);
 
   useEffect(() => {
     supabase.from("site_settings").select("value").eq("key", "home_telegram").maybeSingle().then(({ data }) => {
       if (data?.value) setD({ ...defaultData, ...(data.value as any) });
     });
+
+    supabase.from("site_settings").select("value").eq("key", "telegram_channel_posts").maybeSingle().then(({ data }) => {
+      if (data?.value) {
+        const posts = (data.value as any).posts || [];
+        setChannelPosts(posts.slice(0, 2));
+      }
+    });
   }, []);
+
+  // Use channel posts if available, otherwise fall back to static cards
+  const cards = channelPosts.length > 0
+    ? channelPosts.map((post, idx) => ({
+        image: "",
+        tag: "Канал",
+        title: post.text.length > 120 ? post.text.slice(0, 120).trimEnd() + "…" : post.text,
+        date: post.date,
+        link: post.link,
+      }))
+    : d.cards;
 
   return (
     <section className="py-[40px] md:py-[60px] bg-bg-main">
@@ -45,8 +71,14 @@ const TelegramSection = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-[24px] md:gap-[30px] flex-1">
-            {d.cards.map((card, idx) => (
-              <a key={idx} href={(card as any).link || "#"} target={(card as any).link?.startsWith("http") ? "_blank" : undefined} rel={(card as any).link?.startsWith("http") ? "noopener noreferrer" : undefined} className="flex flex-col gap-[24px] flex-1 group">
+            {cards.map((card, idx) => (
+              <a
+                key={idx}
+                href={(card as any).link || "#"}
+                target={(card as any).link?.startsWith("http") ? "_blank" : undefined}
+                rel={(card as any).link?.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="flex flex-col gap-[24px] flex-1 group"
+              >
                 <div className="h-[280px] md:h-[544px] rounded-[24px] md:rounded-[40px] overflow-hidden">
                   <img
                     src={card.image || defaultCardImages[idx % defaultCardImages.length]}

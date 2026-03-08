@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
-import { Plus, Trash2, Save, RefreshCw, CheckCircle, Circle } from "lucide-react";
+import { Plus, Trash2, Save, RefreshCw, CheckCircle, Circle, Rss } from "lucide-react";
 
 interface TelegramConfig {
   enabled: boolean;
@@ -22,6 +22,7 @@ const AdminNotifications = () => {
   const [linkedMap, setLinkedMap] = useState<Record<string, boolean>>({});
   const [saving, setSaving] = useState(false);
   const [syncing, setSyncing] = useState(false);
+  const [syncingPosts, setSyncingPosts] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -126,6 +127,36 @@ const AdminNotifications = () => {
     setSyncing(false);
   };
 
+  const syncPosts = async () => {
+    setSyncingPosts(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/sync-channel-posts`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${session?.access_token}`,
+          },
+        }
+      );
+      const data = await res.json();
+      if (data.success) {
+        if (data.new_posts > 0) {
+          toast.success(`Загружено новых постов: ${data.new_posts}. Всего в базе: ${data.total}`);
+        } else {
+          toast.info(`Новых постов нет. Всего в базе: ${data.total}`);
+        }
+      } else {
+        toast.error(data.error || "Ошибка синхронизации постов");
+      }
+    } catch {
+      toast.error("Ошибка связи с сервером");
+    }
+    setSyncingPosts(false);
+  };
+
   const addUsername = () => setConfig((c) => ({ ...c, usernames: [...c.usernames, ""] }));
   const removeUsername = (i: number) =>
     setConfig((c) => ({ ...c, usernames: c.usernames.filter((_, idx) => idx !== i) }));
@@ -208,6 +239,24 @@ const AdminNotifications = () => {
         <Save className="h-4 w-4 mr-1" />
         {saving ? "Сохранение..." : "Сохранить"}
       </Button>
+
+      {/* Telegram channel posts sync */}
+      <div className="border rounded-lg p-5 space-y-4 bg-card">
+        <div>
+          <h2 className="font-semibold text-base">Посты из Telegram-канала</h2>
+          <p className="text-sm text-muted-foreground">Последние 2 поста отображаются на главной странице в блоке «Телеграм-канал»</p>
+        </div>
+        <div className="rounded-md bg-muted p-3 space-y-1">
+          <p className="text-xs font-medium">Как настроить:</p>
+          <p className="text-xs text-muted-foreground">1. Добавьте бота в канал @piestarter как администратора</p>
+          <p className="text-xs text-muted-foreground">2. Нажмите «Синхронизировать посты» — новые посты появятся на сайте</p>
+          <p className="text-xs text-muted-foreground">3. После каждой новой публикации нажимайте синхронизацию</p>
+        </div>
+        <Button variant="outline" onClick={syncPosts} disabled={syncingPosts}>
+          <Rss className={`h-4 w-4 mr-2 ${syncingPosts ? "animate-pulse" : ""}`} />
+          {syncingPosts ? "Синхронизация..." : "Синхронизировать посты"}
+        </Button>
+      </div>
     </div>
   );
 };
