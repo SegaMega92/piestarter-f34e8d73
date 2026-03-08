@@ -212,7 +212,6 @@ const AdminHomePage = () => {
   const featStatsDrag = useDrag(featured.stats, (stats) => setFeatured({ ...featured, stats }));
   const prop1Drag = useDrag(propertiesFirst.items, (items) => setPropertiesFirst({ ...propertiesFirst, items }));
   const prop2Drag = useDrag(propertiesSecond.items, (items) => setPropertiesSecond({ ...propertiesSecond, items }));
-  const telCardsDrag = useDrag(telegram.cards, (cards) => setTelegram({ ...telegram, cards }));
   const stepsDrag = useDrag(howItWorks.steps, (steps) => setHowItWorks({ ...howItWorks, steps }));
   const newsDrag = useDrag(news.items, (items) => setNews({ ...news, items }));
   const blogDrag = useDrag(blog.posts, (posts) => setBlog({ ...blog, posts }));
@@ -377,21 +376,9 @@ const AdminHomePage = () => {
           <div className="col-span-2"><Label className="text-xs">Заголовок</Label><Textarea value={telegram.title} onChange={(e) => setTelegram({ ...telegram, title: e.target.value })} rows={2} /></div>
           <div><Label className="text-xs">Текст кнопки</Label><Input value={telegram.buttonText} onChange={(e) => setTelegram({ ...telegram, buttonText: e.target.value })} /></div>
         </div>
-        <p className="text-xs text-muted-foreground font-medium mt-3">Карточки</p>
-        {telegram.cards.map((card, idx) => (
-          <DragItem key={idx} index={idx} {...telCardsDrag} onRemove={(i: number) => setTelegram({ ...telegram, cards: telegram.cards.filter((_, j) => j !== i) })}>
-            <div className="grid grid-cols-2 gap-2">
-              <div><Label className="text-xs">Тег</Label><Input value={card.tag} onChange={(e) => setTelegram({ ...telegram, cards: updateArrayItem(telegram.cards, idx, "tag", e.target.value) })} /></div>
-              <div><Label className="text-xs">Дата</Label><Input value={card.date} onChange={(e) => setTelegram({ ...telegram, cards: updateArrayItem(telegram.cards, idx, "date", e.target.value) })} /></div>
-              <div className="col-span-2"><Label className="text-xs">Заголовок</Label><Textarea value={card.title} onChange={(e) => setTelegram({ ...telegram, cards: updateArrayItem(telegram.cards, idx, "title", e.target.value) })} rows={2} /></div>
-              <div className="col-span-2"><Label className="text-xs">Ссылка</Label><Input value={(card as any).link || ""} onChange={(e) => setTelegram({ ...telegram, cards: updateArrayItem(telegram.cards, idx, "link", e.target.value) })} placeholder="https://..." /></div>
-            </div>
-            <div><Label className="text-xs">Изображение</Label><ImageUploader value={card.image} onChange={(url) => setTelegram({ ...telegram, cards: updateArrayItem(telegram.cards, idx, "image", url) })} bucket="page-images" /></div>
-          </DragItem>
-        ))}
-        <Button variant="outline" size="sm" onClick={() => setTelegram({ ...telegram, cards: [...telegram.cards, { image: "", tag: "", title: "", date: "" }] })}>
-          <Plus className="h-4 w-4 mr-1" /> Добавить карточку
-        </Button>
+        <div className="rounded-md bg-muted px-3 py-2 mt-1">
+          <p className="text-xs text-muted-foreground">Карточки постов подтягиваются автоматически из канала @piestarter. Управление синхронизацией — в разделе <strong>Уведомления</strong>.</p>
+        </div>
       </Section>
 
       {/* How It Works */}
