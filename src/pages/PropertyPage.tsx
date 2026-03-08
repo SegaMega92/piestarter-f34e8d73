@@ -12,6 +12,7 @@ import LocationAdvantages from "@/components/LocationAdvantages";
 import FinancialSection from "@/components/FinancialSection";
 import SimilarProperties from "@/components/SimilarProperties";
 import FAQSection from "@/components/FAQSection";
+import TelegramSection from "@/components/home/TelegramSection";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import type { Json } from "@/integrations/supabase/types";
@@ -107,6 +108,7 @@ const PropertyPage = () => {
         <div className="content-container">
           <FAQSection />
         </div>
+        <TelegramSection />
         <ContactForm />
       </main>
       <Footer />
