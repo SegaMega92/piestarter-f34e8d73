@@ -21,6 +21,7 @@ interface ChannelPost {
   text: string;
   date: string;
   link: string;
+  image_url?: string;
 }
 
 const TelegramSection = () => {
@@ -42,8 +43,8 @@ const TelegramSection = () => {
 
   // Use channel posts if available, otherwise fall back to static cards
   const cards = channelPosts.length > 0
-    ? channelPosts.map((post, idx) => ({
-        image: "",
+    ? channelPosts.map((post) => ({
+        image: post.image_url || "",
         tag: "Канал",
         title: post.text.length > 120 ? post.text.slice(0, 120).trimEnd() + "…" : post.text,
         date: post.date,

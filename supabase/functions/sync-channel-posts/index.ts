@@ -7,6 +7,8 @@ const corsHeaders = {
 };
 
 const CHANNEL_USERNAME = "piestarter";
+const BUCKET = "tg-channel-posts";
+const MAX_POSTS = 10;
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
@@ -35,7 +37,13 @@ Deno.serve(async (req) => {
     });
   }
 
-  // Load current state (posts + offset)
+  // Ensure storage bucket exists
+  const { error: bucketError } = await supabase.storage.createBucket(BUCKET, { public: true });
+  if (bucketError && !bucketError.message.includes("already exists")) {
+    console.error("Bucket error:", bucketError);
+  }
+
+  // Load current state
   const { data: channelData } = await supabase
     .from("site_settings")
     .select("value")
@@ -80,9 +88,43 @@ Deno.serve(async (req) => {
 
     const link = `https://t.me/${CHANNEL_USERNAME}/${post.message_id}`;
 
-    // Update existing or add new
+    // Download first photo if present
+    let imageUrl = "";
+    if (post.photo?.length) {
+      try {
+        // Telegram sorts photos by size, take the largest (last)
+        const photo = post.photo[post.photo.length - 1];
+        const fileRes = await fetch(`https://api.telegram.org/bot${botToken}/getFile?file_id=${photo.file_id}`);
+        const fileJson = await fileRes.json();
+
+        if (fileJson.ok && fileJson.result?.file_path) {
+          const imgRes = await fetch(`https://api.telegram.org/file/bot${botToken}/${fileJson.result.file_path}`);
+          const imgBytes = await imgRes.arrayBuffer();
+
+          const fileName = `${post.message_id}.jpg`;
+          const { error: uploadError } = await supabase.storage
+            .from(BUCKET)
+            .upload(fileName, imgBytes, { contentType: "image/jpeg", upsert: true });
+
+          if (!uploadError) {
+            const { data: { publicUrl } } = supabase.storage.from(BUCKET).getPublicUrl(fileName);
+            imageUrl = publicUrl;
+          }
+        }
+      } catch (e) {
+        console.error("Photo upload error:", e);
+      }
+    }
+
+    const entry = {
+      message_id: post.message_id,
+      text: text.slice(0, 300),
+      date,
+      link,
+      image_url: imageUrl,
+    };
+
     const existingIdx = posts.findIndex((p) => p.message_id === post.message_id);
-    const entry = { message_id: post.message_id, text: text.slice(0, 300), date, link };
     if (existingIdx !== -1) {
       posts[existingIdx] = entry;
     } else {
@@ -91,9 +133,21 @@ Deno.serve(async (req) => {
     }
   }
 
-  // Sort by message_id desc, keep last 10
+  // Sort by message_id desc
   posts.sort((a, b) => b.message_id - a.message_id);
-  const trimmed = posts.slice(0, 10);
+
+  // Delete images for posts that will be removed
+  const removed = posts.slice(MAX_POSTS);
+  if (removed.length > 0) {
+    const filesToDelete = removed
+      .filter((p) => p.image_url)
+      .map((p) => `${p.message_id}.jpg`);
+    if (filesToDelete.length > 0) {
+      await supabase.storage.from(BUCKET).remove(filesToDelete);
+    }
+  }
+
+  const trimmed = posts.slice(0, MAX_POSTS);
 
   await supabase.from("site_settings").upsert(
     { key: "telegram_channel_posts", value: { posts: trimmed, offset: newOffset } as any },
