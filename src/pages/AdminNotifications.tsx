@@ -60,8 +60,32 @@ const AdminNotifications = () => {
       .from("site_settings")
       .upsert({ key: "telegram_notifications", value: payload as any }, { onConflict: "key" });
 
-    if (error) toast.error("Ошибка сохранения");
-    else toast.success("Настройки сохранены");
+    if (error) {
+      toast.error("Ошибка сохранения");
+      setSaving(false);
+      return;
+    }
+
+    // Чистим telegram_subscribers — удаляем тех, кого убрали из списка
+    const { data: subsData } = await supabase
+      .from("site_settings")
+      .select("value")
+      .eq("key", "telegram_subscribers")
+      .maybeSingle();
+
+    if (subsData?.value) {
+      const current = subsData.value as any;
+      const filtered = Object.fromEntries(
+        Object.entries(current.subscribers || {}).filter(([u]) => cleanUsernames.includes(u))
+      );
+      await supabase.from("site_settings").upsert(
+        { key: "telegram_subscribers", value: { ...current, subscribers: filtered } as any },
+        { onConflict: "key" }
+      );
+      setLinkedMap(Object.fromEntries(Object.keys(filtered).map((u) => [u, true])));
+    }
+
+    toast.success("Настройки сохранены");
     setSaving(false);
   };
 
@@ -157,11 +181,9 @@ const AdminNotifications = () => {
                         onChange={(e) => updateUsername(i, e.target.value)}
                         placeholder="username (без @)"
                       />
-                      {config.usernames.length > 1 && (
-                        <Button variant="ghost" size="icon" onClick={() => removeUsername(i)}>
-                          <Trash2 className="h-4 w-4 text-destructive" />
-                        </Button>
-                      )}
+                      <Button variant="ghost" size="icon" onClick={() => removeUsername(i)}>
+                        <Trash2 className="h-4 w-4 text-destructive" />
+                      </Button>
                     </div>
                   );
                 })}
